@@ -8,6 +8,25 @@ export interface User {
   totalLikes: number;
 }
 
+export interface Character {
+  id: string;
+  name: string;
+  element: 'fire' | 'ice' | 'electric' | 'physical' | 'ether';
+  avatar: string;
+  artwork: string;
+  rarity: number;
+}
+
+export interface Squad {
+  id: string;
+  title: string;
+  description: string;
+  characterIds: string[];
+  tags: string[];
+  author: string;
+  likes: number;
+}
+
 export interface Blueprint {
   id: string;
   title: string;
@@ -75,6 +94,103 @@ export const MOCK_USERS: User[] = [
     bio: 'Defense layout specialist. Creating fortified outposts and security systems.',
     blueprintsCreated: 1,
     totalLikes: 224
+  }
+];
+
+export const CHARACTERS: Character[] = [
+  {
+    id: 'char-1',
+    name: 'Endministrator',
+    element: 'ether',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Endministrator',
+    artwork: '/characters/Endministrator.webp',
+    rarity: 6
+  },
+  {
+    id: 'char-2',
+    name: 'Perlica',
+    element: 'ice',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Perlica',
+    artwork: '/characters/Perlica.webp',
+    rarity: 6
+  },
+  {
+    id: 'char-3',
+    name: 'Chen',
+    element: 'electric',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Chen',
+    artwork: '/characters/Chen_Qianyu.webp',
+    rarity: 6
+  },
+  {
+    id: 'char-4',
+    name: 'Angelina',
+    element: 'electric',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Angelina',
+    artwork: '/characters/Alesh.webp',
+    rarity: 6
+  },
+  {
+    id: 'char-5',
+    name: 'Wulfgard',
+    element: 'physical',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Wulfgard',
+    artwork: '/characters/Wulfgard.webp',
+    rarity: 5
+  },
+  {
+    id: 'char-6',
+    name: 'Xaihi',
+    element: 'fire',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Xaihi',
+    artwork: '/characters/Xaihi.webp',
+    rarity: 5
+  },
+  {
+    id: 'char-7',
+    name: 'Ember',
+    element: 'fire',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ember',
+    artwork: '/characters/Ember.webp',
+    rarity: 5
+  },
+  {
+    id: 'char-8',
+    name: 'Avy',
+    element: 'ice',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Avy',
+    artwork: '/characters/Avywenna.webp',
+    rarity: 4
+  }
+];
+
+export const MOCK_SQUADS: Squad[] = [
+  {
+    id: 'squad-1',
+    title: 'Perlica Perma-Freeze Team',
+    description: 'A freeze-focused team built around Perlica\'s ice abilities. Excellent for crowd control and sustained damage.',
+    characterIds: ['char-2', 'char-8', 'char-3', 'char-4'],
+    tags: ['Freeze', 'CC', 'Sustained'],
+    author: 'EndAdmin',
+    likes: 256
+  },
+  {
+    id: 'squad-2',
+    title: 'Electric Burst Squad',
+    description: 'High burst damage team centered around electric element characters. Great for quick eliminations.',
+    characterIds: ['char-3', 'char-4', 'char-1', 'char-5'],
+    tags: ['Burst', 'Electric', 'Damage'],
+    author: 'Builder123',
+    likes: 192
+  },
+  {
+    id: 'squad-3',
+    title: 'Fire & Physical Hybrid',
+    description: 'Balanced team combining fire and physical elements for versatile combat situations.',
+    characterIds: ['char-6', 'char-7', 'char-5', 'char-2'],
+    tags: ['Hybrid', 'Versatile', 'Balanced'],
+    author: 'AICMaster',
+    likes: 128
   }
 ];
 
@@ -178,4 +294,31 @@ export function getUserById(id: string): User | undefined {
  */
 export function getBlueprintsByAuthor(authorId: string): Blueprint[] {
   return MOCK_BLUEPRINTS.filter(blueprint => blueprint.author_id === authorId);
+}
+
+/**
+ * Get a character by its ID
+ * @param id The ID of the character to retrieve
+ * @returns The character if found, undefined otherwise
+ */
+export function getCharacterById(id: string): Character | undefined {
+  return CHARACTERS.find(character => character.id === id);
+}
+
+/**
+ * Get a squad by its ID
+ * @param id The ID of the squad to retrieve
+ * @returns The squad if found, undefined otherwise
+ */
+export function getSquadById(id: string): Squad | undefined {
+  return MOCK_SQUADS.find(squad => squad.id === id);
+}
+
+/**
+ * Get characters by their IDs
+ * @param ids Array of character IDs
+ * @returns Array of characters
+ */
+export function getCharactersByIds(ids: string[]): Character[] {
+  return ids.map(id => getCharacterById(id)).filter((char): char is Character => char !== undefined);
 }
