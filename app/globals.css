@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* Pure White */
+    --foreground: 0 0% 7%;   /* Ink Black */
+    --brand: 56 98% 56%;     /* #FCEE21 Warning Yellow */
+    --radius: 0rem;          /* Industrial sharp edges */
+  }
+}
+
+body {
+  @apply bg-white text-zinc-900 font-sans antialiased;
+}
