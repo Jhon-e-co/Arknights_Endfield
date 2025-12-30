@@ -138,7 +138,9 @@ export default async function SquadDetailPage({ params }: PageProps) {
                  </div>
                  <div>
                     <p className="text-sm text-zinc-500">Created by</p>
-                    <p className="font-bold">{squad.profiles?.username || "Unknown"}</p>
+                    <Link href={`/users/${squad.author_id}`} className="font-bold hover:text-[#FCEE21] transition-colors">
+                      {squad.profiles?.username || "Unknown"}
+                    </Link>
                  </div>
               </div>
 
