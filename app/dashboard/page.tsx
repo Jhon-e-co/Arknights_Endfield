@@ -28,7 +28,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   // 2. 获取用户详情 (Profile)
   const { data: profile } = await supabase
     .from("profiles")
-    .select("role")
+    .select("*")
     .eq("id", user.id)
     .single();
 
