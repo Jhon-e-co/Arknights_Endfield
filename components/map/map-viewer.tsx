@@ -14,7 +14,7 @@ L.Icon.Default.mergeOptions({
 
 export default function MapViewer() {
   // Default center: Somewhere in Asia for demo
-  const center = [35.6762, 139.6503]; // Tokyo coordinates as placeholder
+  const center: [number, number] = [35.6762, 139.6503]; // Tokyo coordinates as placeholder
   const zoom = 13;
 
   return (

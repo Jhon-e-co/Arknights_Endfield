@@ -1,3 +1,5 @@
+import { CHARACTERS, getCharacterAvatar } from './mock-data';
+
 export interface Character {
   id: string;
   name: string;
@@ -20,39 +22,6 @@ export interface CalculationResult {
     quantity: number;
   }>;
 }
-
-export const MOCK_CHARACTERS: Character[] = [
-  {
-    id: '1',
-    name: 'Aurora',
-    avatar: 'https://via.placeholder.com/80/ffffff/000000?text=A',
-    element: 'Heat'
-  },
-  {
-    id: '2',
-    name: 'Specter',
-    avatar: 'https://via.placeholder.com/80/ffffff/000000?text=S',
-    element: 'Volt'
-  },
-  {
-    id: '3',
-    name: 'Texas',
-    avatar: 'https://via.placeholder.com/80/ffffff/000000?text=T',
-    element: 'Physical'
-  },
-  {
-    id: '4',
-    name: 'Lappland',
-    avatar: 'https://via.placeholder.com/80/ffffff/000000?text=L',
-    element: 'Ice'
-  },
-  {
-    id: '5',
-    name: 'Exusiai',
-    avatar: 'https://via.placeholder.com/80/ffffff/000000?text=E',
-    element: 'Radiation'
-  }
-];
 
 export const MOCK_MATERIALS: Material[] = [
   {
@@ -81,12 +50,13 @@ export const MOCK_MATERIALS: Material[] = [
   }
 ];
 
-/**
- * Calculate the cost to upgrade a character from start level to end level
- * @param startLv Current level
- * @param endLv Target level
- * @returns CalculationResult with digiCash, expRecords, and materials
- */
+export const MOCK_CHARACTERS: Character[] = CHARACTERS.map((char) => ({
+  id: char.id,
+  name: char.name,
+  avatar: getCharacterAvatar(char),
+  element: char.element.charAt(0).toUpperCase() + char.element.slice(1)
+}));
+
 export function calculateCost(startLv: number, endLv: number): CalculationResult {
   if (endLv <= startLv) {
     return {
@@ -100,18 +70,17 @@ export function calculateCost(startLv: number, endLv: number): CalculationResult
   const digiCash = levelDiff * 1000;
   const expRecords = levelDiff * 10;
 
-  // Simulate material requirements based on level difference
   const materials = [
     {
-      material: MOCK_MATERIALS[0], // Oroberyl
+      material: MOCK_MATERIALS[0],
       quantity: Math.floor(levelDiff / 5) + 1
     },
     {
-      material: MOCK_MATERIALS[1], // Nephrite
+      material: MOCK_MATERIALS[1],
       quantity: Math.floor(levelDiff / 3) + 1
     },
     {
-      material: MOCK_MATERIALS[2], // Aurumite
+      material: MOCK_MATERIALS[2],
       quantity: Math.floor(levelDiff / 10) + 1
     }
   ];

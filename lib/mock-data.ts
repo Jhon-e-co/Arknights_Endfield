@@ -8,13 +8,38 @@ export interface User {
   totalLikes: number;
 }
 
+export interface CharacterGuide {
+  overview: {
+    tier: 'T0' | 'T1' | 'T2' | 'T3';
+    role: string[];
+    tips: string;
+  };
+  skillPriority: {
+    name: string;
+    type: 'Normal' | 'Ultimate' | 'Combo' | 'Passive';
+    priority: 'High' | 'Medium' | 'Low';
+    description: string;
+  }[];
+  loadout: {
+    bestWeapons: string[];
+    bestEquipment: string[];
+    statsPriority: string[];
+  };
+  teams: {
+    name: string;
+    members: string[];
+    description: string;
+  }[];
+}
+
 export interface Character {
   id: string;
   name: string;
-  element: 'fire' | 'ice' | 'electric' | 'physical' | 'ether';
-  avatar: string;
-  artwork: string;
+  element: 'heat' | 'cryo' | 'electric' | 'physical' | 'nature';
+  avatar?: string;
+  portrait?: string;
   rarity: number;
+  guide?: CharacterGuide;
 }
 
 export interface Squad {
@@ -46,7 +71,7 @@ export const MOCK_USERS: User[] = [
     name: 'EndAdmin',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=EndAdmin',
     banner: 'https://via.placeholder.com/1200x300/1a1a1a/FFFFFF?text=EndAdmin+Banner',
-    bio: 'Official Endfield Tools Administrator. Creating high-quality blueprints for the community.',
+    bio: 'Official Endfield Lab Administrator. Creating high-quality blueprints for the community.',
     blueprintsCreated: 2,
     totalLikes: 384
   },
@@ -101,66 +126,222 @@ export const CHARACTERS: Character[] = [
   {
     id: 'char-1',
     name: 'Endministrator',
-    element: 'ether',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Endministrator',
-    artwork: '/characters/Endministrator.webp',
-    rarity: 6
+    element: 'physical',
+    portrait: 'Endministrator.webp',
+    rarity: 6,
+    guide: {
+      overview: {
+        tier: 'T0',
+        role: ['Main DPS', 'Physics', 'Breaker'],
+        tips: 'A powerful physical carry that excels at breaking enemy stances and dealing massive burst damage via Ultimate.'
+      },
+      skillPriority: [
+        {
+          name: 'Constructive Sequence',
+          type: 'Normal',
+          priority: 'High',
+          description: 'A forceful burst of Originium Arts that attacks enemies within the area of effect. Deals Physical DMG and applies Crush.'
+        },
+        {
+          name: 'Bombardment Sequence',
+          type: 'Ultimate',
+          priority: 'High',
+          description: 'Bombards the ground with Originium Arts, dealing massive Physical DMG to all enemies within a fan-shaped area. Consumes Originium Crystals for extra DMG.'
+        },
+        {
+          name: 'Sealing Sequence',
+          type: 'Combo',
+          priority: 'Medium',
+          description: 'COMBO TRIGGER: Rushes to the enemy side to deal Physical DMG and attach Originium Crystals that temporarily seals them.'
+        }
+      ],
+      loadout: {
+        bestWeapons: ['Judgement', 'Standard Issue Blade'],
+        bestEquipment: ['Frontline Assault Set'],
+        statsPriority: ['Atk%', 'Crit Dmg', 'Physical DMG Bonus']
+      },
+      teams: [
+        {
+          name: 'Fast Break Comp',
+          members: ['char-3', 'char-1'],
+          description: 'Chen Qianyu rapidly builds up the Break gauge with her skills. Once broken, Endministrator follows up with Bombardment Sequence for massive burst damage.'
+        },
+        {
+          name: 'Starter Combo',
+          members: ['char-2', 'char-1'],
+          description: 'Perlica initiates with Chain skills to trigger Endministrator\'s QTE entry, allowing for a smooth combat flow.'
+        }
+      ]
+    }
   },
   {
     id: 'char-2',
     name: 'Perlica',
-    element: 'ice',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Perlica',
-    artwork: '/characters/Perlica.webp',
-    rarity: 6
+    element: 'electric',
+    portrait: 'Perlica.webp',
+    rarity: 5
   },
   {
     id: 'char-3',
-    name: 'Chen',
-    element: 'electric',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Chen',
-    artwork: '/characters/Chen_Qianyu.webp',
-    rarity: 6
+    name: 'Chen Qianyu',
+    element: 'physical',
+    portrait: 'Chen_Qianyu.webp',
+    rarity: 5
   },
   {
     id: 'char-4',
-    name: 'Angelina',
-    element: 'electric',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Angelina',
-    artwork: '/characters/Alesh.webp',
-    rarity: 6
+    name: 'Alesh',
+    element: 'cryo',
+    portrait: 'Alesh.webp',
+    rarity: 5
   },
   {
     id: 'char-5',
     name: 'Wulfgard',
-    element: 'physical',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Wulfgard',
-    artwork: '/characters/Wulfgard.webp',
+    element: 'heat',
+    portrait: 'Wulfgard.webp',
     rarity: 5
   },
   {
     id: 'char-6',
     name: 'Xaihi',
-    element: 'fire',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Xaihi',
-    artwork: '/characters/Xaihi.webp',
+    element: 'cryo',
+    portrait: 'Xaihi.webp',
     rarity: 5
   },
   {
     id: 'char-7',
     name: 'Ember',
-    element: 'fire',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ember',
-    artwork: '/characters/Ember.webp',
-    rarity: 5
+    element: 'heat',
+    portrait: 'Ember.webp',
+    rarity: 6
   },
   {
     id: 'char-8',
-    name: 'Avy',
-    element: 'ice',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Avy',
-    artwork: '/characters/Avywenna.webp',
+    name: 'Avywenna',
+    element: 'electric',
+    portrait: 'Avywenna.webp',
+    rarity: 5
+  },
+  {
+    id: 'char-9',
+    name: 'Akekuri',
+    element: 'heat',
+    portrait: 'Akekuri.webp',
+    avatar: 'Akekuri.webp',
     rarity: 4
+  },
+  {
+    id: 'char-10',
+    name: 'Antal',
+    element: 'electric',
+    portrait: 'Antal.webp',
+    avatar: 'Antal.webp',
+    rarity: 4
+  },
+  {
+    id: 'char-11',
+    name: 'Arclight',
+    element: 'electric',
+    portrait: 'Arclight.webp',
+    avatar: 'Arclight.webp',
+    rarity: 5
+  },
+  {
+    id: 'char-12',
+    name: 'Ardelia',
+    element: 'nature',
+    portrait: 'Ardelia.webp',
+    avatar: 'Ardelia.webp',
+    rarity: 6
+  },
+  {
+    id: 'char-13',
+    name: 'Catcher',
+    element: 'physical',
+    portrait: 'Catcher.webp',
+    avatar: 'Catcher.webp',
+    rarity: 4
+  },
+  {
+    id: 'char-14',
+    name: 'Da_Pan',
+    element: 'physical',
+    portrait: 'Da_Pan.webp',
+    avatar: 'Da_Pan.webp',
+    rarity: 5
+  },
+  {
+    id: 'char-15',
+    name: 'Estella',
+    element: 'cryo',
+    portrait: 'Estella.webp',
+    avatar: 'Estella.webp',
+    rarity: 4
+  },
+  {
+    id: 'char-16',
+    name: 'Fluorite',
+    element: 'nature',
+    portrait: 'Fluorite.webp',
+    avatar: 'Fluorite.webp',
+    rarity: 4
+  },
+  {
+    id: 'char-17',
+    name: 'Gilberta',
+    element: 'nature',
+    portrait: 'Gilberta.webp',
+    avatar: 'Gilberta.webp',
+    rarity: 6
+  },
+  {
+    id: 'char-18',
+    name: 'Laevatain',
+    element: 'heat',
+    portrait: 'Laevatain.webp',
+    avatar: 'Laevatain.webp',
+    rarity: 6
+  },
+  {
+    id: 'char-19',
+    name: 'Last_Rite',
+    element: 'cryo',
+    portrait: 'Last_Rite.webp',
+    avatar: 'Last_Rite.webp',
+    rarity: 6
+  },
+  {
+    id: 'char-20',
+    name: 'Lifeng',
+    element: 'physical',
+    portrait: 'Lifeng.webp',
+    avatar: 'Lifeng.webp',
+    rarity: 6
+  },
+  {
+    id: 'char-21',
+    name: 'Pogranichnik',
+    element: 'physical',
+    portrait: 'Pogranichnik.webp',
+    avatar: 'Pogranichnik.webp',
+    rarity: 6
+  },
+  {
+    id: 'char-22',
+    name: 'Snowshine',
+    element: 'cryo',
+    portrait: 'Snowshine.webp',
+    avatar: 'Snowshine.webp',
+    rarity: 5
+  },
+  {
+    id: 'char-23',
+    name: 'Yvonne',
+    element: 'cryo',
+    portrait: 'Yvonne.webp',
+    avatar: 'Yvonne.webp',
+    rarity: 6
   }
 ];
 
@@ -173,24 +354,6 @@ export const MOCK_SQUADS: Squad[] = [
     tags: ['Freeze', 'CC', 'Sustained'],
     author: 'EndAdmin',
     likes: 256
-  },
-  {
-    id: 'squad-2',
-    title: 'Electric Burst Squad',
-    description: 'High burst damage team centered around electric element characters. Great for quick eliminations.',
-    characterIds: ['char-3', 'char-4', 'char-1', 'char-5'],
-    tags: ['Burst', 'Electric', 'Damage'],
-    author: 'Builder123',
-    likes: 192
-  },
-  {
-    id: 'squad-3',
-    title: 'Fire & Physical Hybrid',
-    description: 'Balanced team combining fire and physical elements for versatile combat situations.',
-    characterIds: ['char-6', 'char-7', 'char-5', 'char-2'],
-    tags: ['Hybrid', 'Versatile', 'Balanced'],
-    author: 'AICMaster',
-    likes: 128
   }
 ];
 
@@ -206,66 +369,6 @@ export const MOCK_BLUEPRINTS: Blueprint[] = [
     code: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
     description: 'A highly efficient iron smelting layout that maximizes output while minimizing energy consumption. Ideal for early game resource production.',
     createdAt: '2024-01-15'
-  },
-  {
-    id: '2',
-    title: 'Starter Hub Layout',
-    author: 'Builder123',
-    author_id: 'user-2',
-    image: 'https://via.placeholder.com/800x450/ffffff/000000?text=STARTER+HUB',
-    tags: ['Base Layout', 'Early Game', 'Logistics'],
-    likes: 256,
-    code: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
-    description: 'A well-designed starter hub that includes all essential facilities for a smooth early game experience. Easy to expand as your base grows.',
-    createdAt: '2024-01-20'
-  },
-  {
-    id: '3',
-    title: 'End-game AIC Complex',
-    author: 'AICMaster',
-    author_id: 'user-3',
-    image: 'https://via.placeholder.com/800x450/ffffff/000000?text=AIC+COMPLEX',
-    tags: ['AIC', 'End Game', 'Automation'],
-    likes: 512,
-    code: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
-    description: 'A massive AIC complex that automates almost all aspects of your base. Requires advanced technology and resources, but provides unparalleled efficiency.',
-    createdAt: '2024-02-05'
-  },
-  {
-    id: '4',
-    title: 'Water Purification Plant',
-    author: 'HydroEngineer',
-    author_id: 'user-4',
-    image: 'https://via.placeholder.com/800x450/ffffff/000000?text=WATER+PLANT',
-    tags: ['Water', 'Mid Game', 'Sustainability'],
-    likes: 192,
-    code: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
-    description: 'A self-sustaining water purification plant that converts contaminated water into clean, usable resources. Essential for mid-game expansion.',
-    createdAt: '2024-01-28'
-  },
-  {
-    id: '5',
-    title: 'Solar Power Array',
-    author: 'SolarExpert',
-    author_id: 'user-5',
-    image: 'https://via.placeholder.com/800x450/ffffff/000000?text=SOLAR+ARRAY',
-    tags: ['Power', 'Renewable', 'Mid Game'],
-    likes: 384,
-    code: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
-    description: 'A large-scale solar power array that provides clean, renewable energy for your base. Works best in sunny environments.',
-    createdAt: '2024-02-01'
-  },
-  {
-    id: '6',
-    title: 'Defense Outpost Layout',
-    author: 'Strategist007',
-    author_id: 'user-6',
-    image: 'https://via.placeholder.com/800x450/ffffff/000000?text=DEFENSE+OUTPOST',
-    tags: ['Defense', 'Mid Game', 'Security'],
-    likes: 224,
-    code: 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==',
-    description: 'A robust defense outpost that can withstand waves of enemy attacks. Features multiple layers of defenses and emergency systems.',
-    createdAt: '2024-02-10'
   }
 ];
 
@@ -321,4 +424,21 @@ export function getSquadById(id: string): Squad | undefined {
  */
 export function getCharactersByIds(ids: string[]): Character[] {
   return ids.map(id => getCharacterById(id)).filter((char): char is Character => char !== undefined);
+}
+
+export function getCharacterAvatar(character: Character): string {
+  if (character.avatar && character.avatar.startsWith('http')) {
+    return character.avatar;
+  }
+  if (character.avatar) {
+    return character.avatar.startsWith('/images/avatars/')
+      ? character.avatar
+      : `/images/avatars/${character.avatar}`;
+  }
+  return `/images/avatars/${character.name.replace(/\s+/g, '_')}.webp`;
+}
+
+export function getCharacterPortrait(character: Character): string {
+  if (character.portrait) return `/characters/${character.portrait}`;
+  return `/characters/${character.name.replace(/\s+/g, '_')}.webp`;
 }

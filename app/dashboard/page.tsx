@@ -1,171 +1,205 @@
-"use client";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Book, LayoutGrid, Users, Star, Plus } from "lucide-react";
+import { BlueprintCard } from "@/components/blueprints/blueprint-card";
+import { TeamCard } from "@/components/teams/team-card";
+import { ProfileEditor } from "@/components/dashboard/profile-editor";
 
-import React from 'react';
-import { User, Book, Star, Plus, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabList, Tab, TabContent } from '@/components/ui/tabs';
-import { BlueprintCard } from '@/components/blueprints/blueprint-card';
-import { MOCK_BLUEPRINTS } from '@/lib/mock-data';
-import { FadeIn } from '@/components/ui/motion-wrapper';
-import { TERMINOLOGY } from '@/lib/constants';
-import { motion } from 'framer-motion';
+export const dynamic = "force-dynamic";
 
-export default function DashboardPage() {
-  // Split mock data for demo
-  const myBlueprints = MOCK_BLUEPRINTS.slice(0, 2);
-  const favoriteBlueprints = MOCK_BLUEPRINTS.slice(-2);
+export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
+  const params = await searchParams;
+  const activeTab = params.tab || 'blueprints';
+  const supabase = await createClient();
+
+  // 1. 获取用户信息
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    redirect("/auth/login");
+  }
+
+  // 2. 获取用户详情 (Profile)
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  // 3. 按需获取数据
+  let myBlueprints: any[] = [];
+  let mySquads: any[] = [];
+  let dbError: any = null;
+
+  if (activeTab === 'blueprints') {
+    const { data, error } = await supabase
+      .from("blueprints")
+      .select("*, profiles (username, avatar_url)")
+      .eq("author_id", user.id)
+      .order("created_at", { ascending: false });
+    myBlueprints = data || [];
+    dbError = error;
+  } else if (activeTab === 'squads') {
+    const { data: rawSquads } = await supabase
+      .from("squads")
+      .select("*, profiles(*)")
+      .eq("author_id", user.id)
+      .order("created_at", { ascending: false });
+
+    const { data: allChars } = await supabase.from("characters").select("*");
+    const charMap = new Map((allChars || []).map((c) => [c.id, c]));
+
+    mySquads = (rawSquads || []).map(squad => ({
+      ...squad,
+      members: (squad.members || [])
+        .map((id: string) => charMap.get(id))
+        .filter((c: any) => c !== undefined)
+    }));
+  }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Header */}
-      <FadeIn>
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold uppercase">
-            <span className="bg-[#FCEE21] px-1">{TERMINOLOGY.PLAYER_ROLE.toUpperCase()}</span> DASHBOARD
-          </h1>
-        </div>
-      </FadeIn>
+    <div className="container mx-auto px-4 py-8 min-h-screen">
+      {/* 1. 顶部标题区域 */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold uppercase tracking-wider flex items-center gap-2">
+          <span className="bg-[#FCEE21] px-2 py-1 text-black">
+            Endministrator
+          </span>
+          <span>Dashboard</span>
+        </h1>
+      </div>
 
-      {/* Overview Card */}
-      <FadeIn delay={0.1}>
-        <div className="border border-zinc-200 bg-white rounded-none shadow-sm p-6 mb-8">
-          <div className="flex items-center gap-6">
-            {/* Avatar */}
-            <div className="w-20 h-20 bg-zinc-200 rounded-full flex items-center justify-center">
-              <User className="w-10 h-10 text-zinc-500" />
-            </div>
-            
-            {/* User Info */}
-            <div>
-              <h2 className="text-xl font-bold mb-1">EndAdmin#001</h2>
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span>{TERMINOLOGY.PLAYER_ROLE}</span>
-                </div>
-                <span className="text-zinc-500">ID: END-001</span>
-              </div>
-            </div>
-            
-            {/* Actions */}
-            <div className="ml-auto">
-              <Link href="/blueprints/create">
-                <Button className="bg-[#FCEE21] text-black hover:bg-[#FCEE21]/90 rounded-none font-bold flex items-center gap-2">
-                  <Plus className="w-4 h-4" />
-                  Upload Blueprint
-                </Button>
-              </Link>
+      {/* 2. 个人信息卡片 (Profile Card) */}
+      <div className="bg-white border border-zinc-200 p-6 shadow-sm mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* 左侧：头像与信息 */}
+        <div className="flex items-center gap-4 w-full md:w-auto">
+          <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-zinc-100">
+             {/* 优先显示 profile avatar, 否则显示默认 */}
+            <Image
+              src={profile?.avatar_url || "/images/avatars/default.png"}
+              alt="Avatar"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-zinc-900">
+              {profile?.username || "Endministrator"}
+            </h2>
+            <div className="flex items-center gap-2 text-sm text-zinc-500">
+              <span className="w-2 h-2 rounded-full bg-green-500"></span>
+              <span>Endministrator</span>
+              <span className="uppercase">ID: {user.id.slice(0, 8)}</span>
             </div>
           </div>
         </div>
-      </FadeIn>
 
-      {/* Tabs */}
-      <FadeIn delay={0.2}>
-        <Tabs defaultValue="my-blueprints">
-          <TabList>
-            <Tab value="my-blueprints" className="flex items-center gap-2">
-              <Book className="w-4 h-4" />
-              My Blueprints
-            </Tab>
-            <Tab value="favorites" className="flex items-center gap-2">
-              <Star className="w-4 h-4" />
-              Favorites
-            </Tab>
-          </TabList>
+        {/* 右侧：操作按钮 */}
+        <div className="flex items-center gap-3 w-full md:w-auto">
+          <ProfileEditor user={user} profile={profile} />
+          <Link href="/blueprints/create">
+            <Button className="bg-[#FCEE21] text-black hover:bg-[#FCEE21]/90 rounded-none font-bold border-0">
+              <Plus className="w-4 h-4 mr-2" />
+              Upload Blueprint
+            </Button>
+          </Link>
+        </div>
+      </div>
 
-          {/* My Blueprints */}
-          <TabContent value="my-blueprints">
-            {myBlueprints.length > 0 ? (
-              <motion.div 
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                initial="hidden"
-                animate="visible"
-                variants={{
-                  hidden: {},
-                  visible: {
-                    transition: {
-                      staggerChildren: 0.1
-                    }
-                  }
-                }}
-              >
+      {/* 3. 标签栏 (Tabs) - 使用 URL 参数控制 */}
+      <div className="flex items-center gap-8 border-b border-zinc-200 mb-8 pb-1">
+        <Link
+          href="/dashboard?tab=blueprints"
+          className={`flex items-center gap-2 pb-3 border-b-2 transition-colors ${
+            activeTab === 'blueprints'
+              ? 'border-black font-bold text-black'
+              : 'border-transparent text-zinc-500 hover:text-black'
+          }`}
+        >
+          <Book className="w-4 h-4" />
+          My Blueprints
+        </Link>
+        <Link
+          href="/dashboard?tab=squads"
+          className={`flex items-center gap-2 pb-3 border-b-2 transition-colors ${
+            activeTab === 'squads'
+              ? 'border-black font-bold text-black'
+              : 'border-transparent text-zinc-500 hover:text-black'
+          }`}
+        >
+          <Users className="w-4 h-4" />
+          My Squads
+        </Link>
+        <Link
+          href="/dashboard?tab=favorites"
+          className={`flex items-center gap-2 pb-3 border-b-2 transition-colors ${
+            activeTab === 'favorites'
+              ? 'border-black font-bold text-black'
+              : 'border-transparent text-zinc-500 hover:text-black'
+          }`}
+        >
+          <Star className="w-4 h-4" />
+          Favorites
+        </Link>
+      </div>
+
+      {/* 4. 内容展示区 - 根据 Tab 条件渲染 */}
+      <div>
+        {activeTab === 'blueprints' && (
+          <>
+            {dbError && (
+              <div className="text-red-500 mb-4">Error loading blueprints: {dbError.message}</div>
+            )}
+
+            {!dbError && myBlueprints && myBlueprints.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {myBlueprints.map((blueprint) => (
-                  <motion.div
-                    key={blueprint.id}
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-                    }}
-                  >
+                  <div key={blueprint.id}>
                     <BlueprintCard blueprint={blueprint} />
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             ) : (
-              <div className="border border-zinc-200 bg-white rounded-none shadow-sm p-12 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 text-zinc-300">
-                  <Book className="w-full h-full" />
-                </div>
-                <h3 className="text-lg font-bold mb-2">No blueprints found.</h3>
-                <p className="text-zinc-500 mb-6">Start building your blueprint library!</p>
-                <Link href="/blueprints/create">
-                  <Button className="bg-[#FCEE21] text-black hover:bg-[#FCEE21]/90 rounded-none font-bold flex items-center gap-2">
-                    Create Blueprint
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
-                </Link>
+              <div className="border border-dashed border-zinc-300 bg-zinc-50 p-12 text-center rounded-none">
+                <LayoutGrid className="w-12 h-12 mx-auto mb-4 text-zinc-300" />
+                <p className="text-zinc-500">No blueprints found yet.</p>
               </div>
             )}
-          </TabContent>
+          </>
+        )}
 
-          {/* Favorites */}
-          <TabContent value="favorites">
-            {favoriteBlueprints.length > 0 ? (
-              <motion.div 
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                initial="hidden"
-                animate="visible"
-                variants={{
-                  hidden: {},
-                  visible: {
-                    transition: {
-                      staggerChildren: 0.1
-                    }
-                  }
-                }}
-              >
-                {favoriteBlueprints.map((blueprint) => (
-                  <motion.div
-                    key={blueprint.id}
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-                    }}
-                  >
-                    <BlueprintCard blueprint={blueprint} />
-                  </motion.div>
+        {activeTab === 'squads' && (
+          <>
+            {mySquads && mySquads.length > 0 ? (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {mySquads.map((squad) => (
+                  <div key={squad.id}>
+                    <TeamCard squad={squad} />
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             ) : (
-              <div className="border border-zinc-200 bg-white rounded-none shadow-sm p-12 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 text-zinc-300">
-                  <Star className="w-full h-full" />
-                </div>
-                <h3 className="text-lg font-bold mb-2">No favorites found.</h3>
-                <p className="text-zinc-500 mb-6">Browse blueprints and add to favorites!</p>
-                <Link href="/blueprints">
-                  <Button className="bg-[#FCEE21] text-black hover:bg-[#FCEE21]/90 rounded-none font-bold flex items-center gap-2">
-                    Browse Blueprints
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
-                </Link>
+              <div className="border border-dashed border-zinc-300 bg-zinc-50 p-12 text-center rounded-none">
+                <Users className="w-12 h-12 mx-auto mb-4 text-zinc-300" />
+                <p className="text-zinc-500">No squads found yet.</p>
               </div>
             )}
-          </TabContent>
-        </Tabs>
-      </FadeIn>
+          </>
+        )}
+
+        {activeTab === 'favorites' && (
+          <div className="border border-dashed border-zinc-300 bg-zinc-50 p-12 text-center rounded-none">
+            <Star className="w-12 h-12 mx-auto mb-4 text-zinc-300" />
+            <p className="text-zinc-500">Favorites feature coming soon.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

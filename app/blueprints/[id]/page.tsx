@@ -5,19 +5,27 @@ import Image from 'next/image';
 import { User, Calendar, ThumbsUp, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { getBlueprintById } from '@/lib/mock-data';
 import { Metadata } from "next";
 import { CopyButton } from '@/components/blueprints/copy-button';
 import { AdUnit } from '@/components/ui/ad-unit';
+import { createClient } from '@/lib/supabase/server';
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const blueprint = getBlueprintById(id);
+  const supabase = await createClient();
+  
+  const { data: blueprint } = await supabase
+    .from('blueprints')
+    .select('title, description')
+    .eq('id', id)
+    .single();
   
   if (!blueprint) return { title: "Blueprint Not Found" };
 
   return {
-    title: `${blueprint.title} | Endfield Tools`,
+    title: blueprint.title,
     description: blueprint.description,
   };
 }
@@ -28,11 +36,23 @@ export default async function BlueprintDetail({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params;
-  const blueprint = getBlueprintById(id);
+  const supabase = await createClient();
 
-  if (!blueprint) {
+  const { data: blueprint, error } = await supabase
+    .from('blueprints')
+    .select(`
+      *,
+      profiles (username, avatar_url)
+    `)
+    .eq('id', id)
+    .single();
+
+  if (error || !blueprint) {
     notFound();
   }
+
+  const author = blueprint.profiles?.username || 'Unknown';
+  const authorAvatar = blueprint.profiles?.avatar_url;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -56,7 +76,7 @@ export default async function BlueprintDetail({
           {/* Image */}
           <div className="relative aspect-video border border-zinc-200 bg-zinc-100">
             <Image
-              src={blueprint.image}
+              src={blueprint.image_url}
               alt={blueprint.title}
               width={1280}
               height={720}
@@ -73,7 +93,7 @@ export default async function BlueprintDetail({
           <div>
             <h1 className="text-3xl font-bold mb-3">{blueprint.title}</h1>
             <div className="flex flex-wrap gap-2">
-              {blueprint.tags.map((tag, index) => (
+              {(blueprint.tags || []).map((tag, index) => (
                 <Badge key={index} className="rounded-none bg-zinc-100 text-zinc-900 border-zinc-300">
                   {tag}
                 </Badge>
@@ -103,7 +123,7 @@ export default async function BlueprintDetail({
                 <div>
                   <p className="text-sm font-medium">Author</p>
                   <Link href={`/users/${blueprint.author_id}`} className="font-bold hover:underline">
-                    {blueprint.author}
+                    {author}
                   </Link>
                 </div>
               </div>
@@ -113,7 +133,7 @@ export default async function BlueprintDetail({
                 <Calendar className="w-5 h-5 text-zinc-500" />
                 <div>
                   <p className="text-sm font-medium">Created</p>
-                  <p className="font-bold">{blueprint.createdAt}</p>
+                  <p className="font-bold">{new Date(blueprint.created_at).toLocaleDateString()}</p>
                 </div>
               </div>
 
@@ -122,7 +142,7 @@ export default async function BlueprintDetail({
                 <ThumbsUp className="w-5 h-5 text-zinc-500" />
                 <div>
                   <p className="text-sm font-medium">Likes</p>
-                  <p className="font-bold">{blueprint.likes}</p>
+                  <p className="font-bold">{blueprint.likes || 0}</p>
                 </div>
               </div>
             </div>
@@ -149,13 +169,15 @@ export default async function BlueprintDetail({
 
             {/* Action Button */}
             <div className="flex gap-3">
-              <Button
-                variant="outline"
-                className="flex-1 border-2 border-zinc-200 bg-white hover:bg-zinc-50 rounded-none font-bold flex items-center justify-center gap-2"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Back to List
-              </Button>
+              <Link href="/blueprints" className="flex-1">
+                <Button
+                  variant="outline"
+                  className="w-full border-2 border-zinc-200 bg-white hover:bg-zinc-50 rounded-none font-bold flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back to List
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

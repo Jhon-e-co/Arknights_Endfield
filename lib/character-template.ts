@@ -12,21 +12,21 @@ import { Character } from "./mock-data";
 // 复制下面的对象进行填写 👇
 export const NEW_CHARACTER_ENTRY: Character = {
   id: "character-id-here",
-  name: "角色中文名",
-  element: "fire",
+  name: "Endministrator",
+  element: "physical",
   avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=character-id-here",
-  artwork: "/characters/xxx.png",
-  rarity: 5
+  portrait: "Endministrator.webp",
+  rarity: 6
 };
 
 // ==============================================================================
 // 元素类型说明 (Element Types)
 // ==============================================================================
-// - "fire": 火焰元素 (红色系)
-// - "ice": 冰霜元素 (蓝色系)
+// - "heat": 热熔元素 (红色系)
+// - "cryo": 低温元素 (蓝色系)
 // - "electric": 雷电元素 (黄色系)
 // - "physical": 物理元素 (灰色系)
-// - "ether": 以太元素 (紫色系)
+// - "nature": 源石元素 (绿色系)
 
 // ==============================================================================
 // 稀有度说明 (Rarity Levels)
@@ -42,9 +42,9 @@ export const NEW_CHARACTER_ENTRY: Character = {
 export const PERLICA_EXAMPLE: Character = {
   id: "perlica",
   name: "佩里卡",
-  element: "ice",
+  element: "cryo",
   avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=perlica",
-  artwork: "/characters/perlica.png",
+  portrait: "Perlica.webp",
   rarity: 6
 };
 */
@@ -53,7 +53,7 @@ export const PERLICA_EXAMPLE: Character = {
 // 快速录入检查清单 (Quick Checklist)
 // ==============================================================================
 // [ ] 图片已放入 public/characters/ 目录
-// [ ] 图片文件名与 artwork 路径一致
+// [ ] 图片文件名与 portrait 字段一致 (使用 .webp 格式)
 // [ ] id 使用英文小写字母和连字符 (如: "perlica", "end-admin")
 // [ ] name 使用中文官方名称
 // [ ] element 选择正确的元素类型

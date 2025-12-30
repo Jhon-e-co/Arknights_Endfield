@@ -1,16 +1,39 @@
-"use client";
-
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { BlueprintCard } from '@/components/blueprints/blueprint-card';
-import { MOCK_BLUEPRINTS } from '@/lib/mock-data';
 import { FadeIn } from '@/components/ui/motion-wrapper';
 import { TERMINOLOGY } from '@/lib/constants';
-import { motion } from 'framer-motion';
 import { AdUnit } from '@/components/ui/ad-unit';
+import { createClient } from '@/lib/supabase/server';
+import { Blueprint } from '@/lib/mock-data';
+import { BlueprintsGrid } from '@/components/blueprints/blueprints-grid';
 
-export default function BlueprintsPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function BlueprintsPage() {
+  const supabase = await createClient();
+
+  const { data: blueprints } = await supabase
+    .from('blueprints')
+    .select(`
+      *,
+      profiles (username, avatar_url)
+    `)
+    .order('created_at', { ascending: false });
+
+  const mappedBlueprints: Blueprint[] = (blueprints || []).map(bp => ({
+    id: bp.id,
+    title: bp.title,
+    author: bp.profiles?.username || 'Unknown',
+    author_id: bp.author_id,
+    image: bp.image_url,
+    tags: bp.tags || [],
+    likes: bp.likes || 0,
+    code: bp.code,
+    description: bp.description || '',
+    createdAt: bp.created_at
+  }));
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Header */}
@@ -86,31 +109,26 @@ export default function BlueprintsPage() {
       </FadeIn>
 
       {/* Blueprints Grid with Stagger Animation */}
-      <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: {},
-          visible: {
-            transition: {
-              staggerChildren: 0.1
-            }
-          }
-        }}
-      >
-        {MOCK_BLUEPRINTS.map((blueprint) => (
-          <motion.div
-            key={blueprint.id}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-            }}
-          >
-            <BlueprintCard blueprint={blueprint} />
-          </motion.div>
-        ))}
-      </motion.div>
+      <BlueprintsGrid blueprints={mappedBlueprints} />
+
+      {/* Empty State */}
+      {mappedBlueprints.length === 0 && (
+        <div className="border border-zinc-200 bg-white rounded-none shadow-sm p-12 text-center">
+          <div className="w-16 h-16 mx-auto mb-4 text-zinc-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <h3 className="text-lg font-bold mb-2">No blueprints found.</h3>
+          <p className="text-zinc-500 mb-6">Be the first to upload a blueprint!</p>
+          <Link href="/blueprints/create">
+            <Button className="bg-[#FCEE21] text-black hover:bg-[#FCEE21]/90 rounded-none font-bold flex items-center gap-2">
+              Create Blueprint
+            </Button>
+          </Link>
+        </div>
+      )}
 
       {/* Empty Space for Better Layout */}
       <div className="h-16"></div>

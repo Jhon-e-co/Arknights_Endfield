@@ -1,174 +1,166 @@
-"use client";
+import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
+import Image from "next/image"; // 确保导入 Image
+import { notFound } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { SquadActions } from "@/components/teams/squad-actions";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { ArrowLeft, Heart, Eye, Flame, Snowflake, Zap, Shield, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { getSquadById, getCharactersByIds, Character } from '@/lib/mock-data';
-import { motion } from 'framer-motion';
+export const dynamic = "force-dynamic";
 
-const elementIcons = {
-  fire: Flame,
-  ice: Snowflake,
-  electric: Zap,
-  physical: Shield,
-  ether: Sparkles
-};
+// 定义 params 类型
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
 
-const elementColors = {
-  fire: 'from-orange-600 to-red-700',
-  ice: 'from-cyan-500 to-blue-600',
-  electric: 'from-yellow-400 to-amber-500',
-  physical: 'from-zinc-500 to-zinc-700',
-  ether: 'from-purple-500 to-violet-700'
-};
+export default async function SquadDetailPage({ params }: PageProps) {
+  // Await params mainly for Next.js 15+ compatibility
+  const { id } = await params;
+  const supabase = await createClient();
 
-export default function SquadDetailPage({ params }: { params: { id: string } }) {
-  const router = useRouter();
-  const squad = getSquadById(params.id);
-  const characters = squad ? getCharactersByIds(squad.characterIds) : [];
+  // 1. 获取队伍详情
+  const { data: squad, error } = await supabase
+    .from("squads")
+    .select("*, profiles(username, avatar_url)")
+    .eq("id", id)
+    .single();
 
-  if (!squad) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center py-16">
-          <h1 className="text-2xl font-bold mb-4">Squad Not Found</h1>
-          <Button onClick={() => router.back()}>Go Back</Button>
-        </div>
-      </div>
-    );
+  if (error || !squad) {
+    console.error("Squad not found error:", error);
+    return notFound(); // 显示 Next.js 默认 404 或自定义 Not Found 组件
   }
+
+  // 2. 获取该队伍的成员角色信息
+  // squad.members 是一个 UUID 数组
+  const memberIds = squad.members || [];
+  let characters: any[] = [];
+
+  if (memberIds.length > 0) {
+    const { data: chars } = await supabase
+      .from("characters")
+      .select("*")
+      .in("id", memberIds);
+    
+    // 按 squad.members 的顺序重新排序角色 (保持 1,2,3,4 号位顺序)
+    const charMap = new Map(chars?.map(c => [c.id, c]));
+    characters = memberIds.map((mid: string) => charMap.get(mid)).filter(Boolean);
+  }
+
+  // 元素颜色映射 (复制自 team-card 的逻辑，确保一致)
+  const elementColors: Record<string, string> = {
+    heat: "from-red-500 to-orange-600",
+    cryo: "from-blue-400 to-cyan-500",
+    electric: "from-yellow-400 to-amber-500",
+    physical: "from-zinc-400 to-zinc-600",
+    nature: "from-green-500 to-emerald-600",
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Button
-          variant="outline"
-          onClick={() => router.back()}
-          className="border-2 border-zinc-200 rounded-none mb-6"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
-        </Button>
+      {/* Back Button */}
+      <div className="mb-6">
+        <Link href="/teams">
+          <Button variant="ghost" className="pl-0 hover:bg-transparent hover:text-[#FCEE21]">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Squads
+          </Button>
+        </Link>
+      </div>
 
-        <div className="border border-zinc-700 bg-zinc-900 rounded-none shadow-lg overflow-hidden">
-          <div className="p-6 mb-8">
-            <h1 className="text-4xl font-black text-white mb-3 uppercase tracking-tight">
-              {squad.title}
-            </h1>
-            <p className="text-zinc-400 mb-6 text-lg">by <span className="text-zinc-300 font-semibold">{squad.author}</span></p>
-
-            <div className="flex flex-wrap gap-3 mb-4">
-              {squad.tags.map((tag, index) => (
-                <Badge key={index} className="rounded-none bg-zinc-700 text-zinc-300 border-zinc-600 px-4 py-1.5 text-sm">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          </div>
-
-          <div className="px-6 mb-8">
-            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-              <span className="w-1 h-8 bg-[#FCEE21]"></span>
-              TEAM LINEUP
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {characters.map((character, index) => {
-                const ElementIcon = elementIcons[character.element];
-                const colorClass = elementColors[character.element];
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Left Column: Characters Display (2/3 width) */}
+        <div className="lg:col-span-2 space-y-8">
+          
+          {/* Hero Section: 4 Characters */}
+          <div className="grid grid-cols-4 gap-2 h-64 md:h-96 w-full bg-zinc-900 rounded-none overflow-hidden border border-zinc-800">
+             {characters.map((char, index) => {
+                const elementKey = (char.element || '').toLowerCase();
+                const colorClass = elementColors[elementKey] || 'from-zinc-500 to-zinc-700';
+                
                 return (
-                  <motion.div
-                    key={character.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className="relative aspect-[2/3] bg-zinc-900 rounded-lg overflow-hidden group"
-                  >
-                    <Image
-                      src={character.artwork}
-                      alt={character.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      unoptimized
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${colorClass} flex items-center justify-center shadow-lg`}>
-                          <ElementIcon className="w-4 h-4 text-white" />
-                        </div>
-                      </div>
-                      <h3 className="text-white font-bold text-center text-lg">{character.name}</h3>
+                  <div key={char.id || index} className="relative group h-full border-r border-zinc-800 last:border-r-0">
+                    {/* Character Image */}
+                    <div className="relative w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500">
+                      <Image
+                        src={char.image_url || `/characters/${char.name}.webp`}
+                        alt={char.name}
+                        fill
+                        className="object-cover"
+                      />
+                      {/* Gradient Overlay */}
+                      <div className={`absolute inset-0 bg-gradient-to-t ${colorClass} opacity-20 group-hover:opacity-10 mix-blend-overlay transition-opacity`} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
                     </div>
-                  </motion.div>
+
+                    {/* Info Overlay */}
+                    <div className="absolute bottom-4 left-0 w-full text-center z-10">
+                       <div className={`w-8 h-8 mx-auto mb-2 rounded-full flex items-center justify-center bg-gradient-to-br ${colorClass} text-white shadow-lg`}>
+                          {/* Element Icon */}
+                          <Image
+                            src={`/images/elements/${elementKey}.webp`}
+                            alt={char.element}
+                            width={20}
+                            height={20}
+                            className="w-5 h-5 object-contain"
+                          />
+                       </div>
+                       <p className="text-white font-bold text-sm md:text-lg uppercase tracking-wider">{char.name}</p>
+                    </div>
+                  </div>
                 );
-              })}
-            </div>
+             })}
           </div>
 
-          <div className="px-6 mb-8">
-            <div className="w-full bg-zinc-900/50 border border-zinc-800 p-6 md:p-8 rounded-lg relative">
-              <div className="absolute top-4 right-4">
-                <span className="text-xs font-mono text-zinc-500 border border-zinc-700 px-2 py-1 rounded">
-                  [ TACTICAL_GUIDE_V1.0 ]
-                </span>
-              </div>
-              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                <span className="w-1 h-8 bg-[#FCEE21]"></span>
-                TACTICAL GUIDE
-              </h2>
-              <div className="space-y-4 text-zinc-300 leading-relaxed">
-                <p className="text-lg">{squad.description}</p>
-                <p>
-                  This squad composition is designed for maximum efficiency in combat scenarios. 
-                  The combination of elements provides excellent coverage against various enemy types, 
-                  while the character synergies allow for powerful combo chains.
-                </p>
-                <p>
-                  <strong className="text-white">Key Strategies:</strong> Focus on timing your abilities 
-                  to maximize elemental reactions. The primary damage dealer should be positioned 
-                  to take advantage of crowd control effects from support characters.
-                </p>
-                <p>
-                  <strong className="text-white">Recommended Gear:</strong> Prioritize equipment that 
-                  enhances elemental damage and cooldown reduction. This setup works best with 
-                  balanced defensive and offensive stats.
-                </p>
-                <p>
-                  <strong className="text-white">Team Synergy:</strong> The current configuration 
-                  allows for seamless rotation between characters. Each member fills a specific 
-                  role within the team composition, creating a well-rounded tactical unit.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="px-6 pb-6">
-            <div className="flex gap-4">
-              <Button
-                variant="outline"
-                className="bg-zinc-800 text-white border-zinc-600 hover:bg-zinc-700 hover:text-white"
-              >
-                <Heart className="w-4 h-4 mr-2" />
-                {squad.likes} Likes
-              </Button>
-              <Button
-                variant="outline"
-                className="bg-zinc-800 text-white border-zinc-600 hover:bg-zinc-700 hover:text-white"
-              >
-                <Eye className="w-4 h-4 mr-2" />
-                View Details
-              </Button>
+          {/* Description Section */}
+          <div className="bg-white p-8 border border-zinc-200">
+            <h2 className="text-2xl font-bold mb-4 uppercase">Strategy Guide</h2>
+            <div className="prose max-w-none text-zinc-600 whitespace-pre-line">
+              {squad.description || "No description provided."}
             </div>
           </div>
         </div>
-      </motion.div>
+
+        {/* Right Column: Meta Info (1/3 width) */}
+        <div className="space-y-6">
+           <div className="bg-zinc-50 p-6 border border-zinc-200">
+              <h1 className="text-3xl font-bold uppercase mb-2">{squad.title}</h1>
+              
+              <div className="flex items-center gap-3 mb-6 pb-6 border-b border-zinc-200">
+                 <div className="w-10 h-10 relative rounded-full overflow-hidden bg-zinc-200">
+                    <Image
+                       src={squad.profiles?.avatar_url || "/images/avatars/default.png"}
+                       alt="Author"
+                       fill
+                       className="object-cover"
+                    />
+                 </div>
+                 <div>
+                    <p className="text-sm text-zinc-500">Created by</p>
+                    <p className="font-bold">{squad.profiles?.username || "Unknown"}</p>
+                 </div>
+              </div>
+
+              <SquadActions squadId={squad.id} initialLikes={squad.likes || 0} />
+           </div>
+           
+           {/* Tags (Optional) */}
+           {squad.tags && squad.tags.length > 0 && (
+             <div className="bg-white p-6 border border-zinc-200">
+                <h3 className="font-bold mb-4 uppercase text-sm text-zinc-500">Tags</h3>
+                <div className="flex flex-wrap gap-2">
+                   {squad.tags.map((tag: string) => (
+                      <span key={tag} className="px-3 py-1 bg-zinc-100 text-zinc-600 text-sm font-medium border border-zinc-200">
+                         {tag}
+                      </span>
+                   ))}
+                </div>
+             </div>
+           )}
+        </div>
+
+      </div>
     </div>
   );
 }

@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   if (!user) return { title: "User Not Found" };
 
   return {
-    title: `${user.name} | Endfield Tools`,
+    title: user.name,
     description: user.bio,
   };
 }

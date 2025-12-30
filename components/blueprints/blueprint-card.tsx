@@ -27,31 +27,41 @@ export function BlueprintCard({ blueprint }: BlueprintCardProps) {
   };
 
   return (
-    <div className="border border-zinc-200 bg-white rounded-none shadow-sm overflow-hidden">
-      {/* Image Area */}
-      <div className="relative aspect-video">
-        <Image
-          src={blueprint.image}
-          alt={blueprint.title}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
+    <div className="flex flex-col h-full border border-zinc-200 bg-white rounded-none shadow-sm">
+      {/* Image Section */}
+      <Link href={`/blueprints/${blueprint.id}`} className="block relative aspect-video bg-zinc-800 overflow-hidden">
+        {blueprint.image ? (
+          <Image
+            src={blueprint.image}
+            alt={blueprint.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <span className="text-zinc-600 text-sm">No Preview</span>
+          </div>
+        )}
         {/* Version Tag */}
         <div className="absolute top-2 left-2 bg-[#FCEE21] text-black text-xs font-bold px-2 py-1">
           V1.0
         </div>
-      </div>
+      </Link>
 
-      {/* Content Area */}
-      <div className="p-4">
-        {/* Title and Author */}
-        <h3 className="text-lg font-bold mb-1">{blueprint.title}</h3>
-        <p className="text-sm text-zinc-500 mb-3">
-          by <Link href={`/users/${blueprint.author_id}`} className="text-zinc-700 hover:text-black hover:underline">
-            {blueprint.author}
-          </Link>
-        </p>
+      {/* Content Section */}
+      <div className="p-4 flex flex-col flex-1">
+        {/* Title */}
+        <Link href={`/blueprints/${blueprint.id}`} className="block mb-2">
+          <h3 className="text-lg font-bold group-hover:text-zinc-600 transition-colors">
+            {blueprint.title}
+          </h3>
+        </Link>
+
+        {/* Author (Independent Link) */}
+        <div className="text-sm text-zinc-500 mb-4">
+          by <Link href={`/users/${blueprint.author_id}`} className="hover:text-black hover:underline">{blueprint.author}</Link>
+        </div>
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
@@ -63,10 +73,9 @@ export function BlueprintCard({ blueprint }: BlueprintCardProps) {
         </div>
 
         {/* Action Bar */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-auto">
           <Button
             variant="outline"
-            size="sm"
             className="rounded-none"
             onClick={handleCopyCode}
           >
@@ -76,7 +85,6 @@ export function BlueprintCard({ blueprint }: BlueprintCardProps) {
 
           <Button
             variant="outline"
-            size="sm"
             className="rounded-none"
             onClick={handleLike}
           >

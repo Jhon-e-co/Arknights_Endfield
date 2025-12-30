@@ -1,5 +1,5 @@
 export const TERMINOLOGY = {
-  APP_NAME: "Endfield Tools",
+  APP_NAME: "ENDFIELD LAB",
   ORG_NAME: "Endfield Industries",
   PLAYER_ROLE: "Endministrator",
   SYSTEM_AIC: "Automated Industry Complex (AIC)",

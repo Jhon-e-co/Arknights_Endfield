@@ -1,14 +1,21 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Plus, ArrowLeft, Loader2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Dialog } from '@/components/ui/dialog';
-import { CharacterAvatar } from '@/components/teams/character-avatar';
-import { CHARACTERS, Character } from '@/lib/mock-data';
+import { createClient } from '@/lib/supabase/client';
 import { motion } from 'framer-motion';
+
+interface Character {
+  id: string;
+  name: string;
+  element: string;
+  rarity: number;
+  image_url: string;
+  avatar: string;
+}
 
 const AVAILABLE_TAGS = [
   "Freeze",
@@ -25,15 +32,51 @@ const AVAILABLE_TAGS = [
 
 export default function CreateSquadPage() {
   const router = useRouter();
+  const supabase = createClient();
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [selectedCharacters, setSelectedCharacters] = useState<(Character | null)[]>([null, null, null, null]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
   });
+
+  useEffect(() => {
+    fetchCharacters();
+  }, []);
+
+  const fetchCharacters = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('characters')
+        .select('*')
+        .order('rarity', { ascending: false });
+
+      if (error) throw error;
+
+      const mappedCharacters = data.map(char => ({
+        id: char.id,
+        name: char.name,
+        element: char.element,
+        rarity: char.rarity,
+        image_url: char.image_url,
+        avatar: char.image_url
+      }));
+
+      setCharacters(mappedCharacters);
+    } catch (err) {
+      console.error('Failed to fetch characters:', err);
+      setError('Failed to load characters. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSlotClick = (index: number) => {
     setSelectedSlot(index);
@@ -69,18 +112,59 @@ export default function CreateSquadPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const filledSlots = selectedCharacters.filter(c => c !== null);
-    if (filledSlots.length === 0) {
-      alert('Please select at least one character for your squad.');
+    setError(null);
+
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      setError('Please log in to create a squad.');
       return;
     }
+
+    const filledSlots = selectedCharacters.filter(c => c !== null);
+    if (filledSlots.length === 0) {
+      setError('Please select at least one character for your squad.');
+      return;
+    }
+
+    if (!formData.title.trim()) {
+      setError('Please enter a squad title.');
+      return;
+    }
+
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      alert('Squad created successfully!');
+
+    try {
+      const memberIds = filledSlots.map(c => c!.id);
+
+      const { error: insertError } = await supabase
+        .from('squads')
+        .insert({
+          title: formData.title.trim(),
+          description: formData.description.trim() || null,
+          author_id: user.id,
+          members: memberIds,
+        });
+
+      if (insertError) throw insertError;
+
       router.push('/teams');
-    }, 1500);
+    } catch (err) {
+      console.error('Failed to create squad:', err);
+      setError('Failed to create squad. Please try again.');
+      setIsSubmitting(false);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <Loader2 className="w-8 h-8 animate-spin text-zinc-400" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -103,6 +187,12 @@ export default function CreateSquadPage() {
           </h1>
         </div>
       </motion.div>
+
+      {error && (
+        <div className="mb-6 p-4 bg-red-50 border-2 border-red-200 text-red-700 rounded-none">
+          {error}
+        </div>
+      )}
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -247,7 +337,7 @@ export default function CreateSquadPage() {
         title="Select Character"
       >
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {CHARACTERS.map((character) => (
+          {characters.map((character) => (
             <motion.button
               key={character.id}
               type="button"
@@ -256,7 +346,12 @@ export default function CreateSquadPage() {
               onClick={() => handleCharacterSelect(character)}
               className="border-2 border-zinc-200 bg-white hover:border-zinc-400 transition-colors p-2"
             >
-              <CharacterAvatar character={character} size="lg" showName />
+              <img
+                src={character.avatar}
+                alt={character.name}
+                className="w-full aspect-square object-cover mb-2"
+              />
+              <div className="text-xs font-medium text-center">{character.name}</div>
             </motion.button>
           ))}
         </div>

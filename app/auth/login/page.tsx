@@ -1,7 +1,24 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
+import { useState } from "react";
 
 export default function LoginPage() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = async (provider: 'google' | 'discord') => {
+    setIsLoading(true);
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: provider,
+      options: {
+        redirectTo: `${location.origin}/auth/callback`,
+      },
+    });
+    if (error) console.error(error);
+  };
+
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-zinc-50">
       <div className="w-full max-w-md border border-zinc-200 bg-white p-8 shadow-sm">
@@ -19,12 +36,16 @@ export default function LoginPage() {
         <div className="space-y-4">
           <Button
             className="w-full bg-black text-white hover:bg-[#FCEE21] hover:text-black font-bold h-12 rounded-none transition-colors"
+            onClick={() => handleLogin('google')}
+            disabled={isLoading}
           >
             CONTINUE WITH GOOGLE
           </Button>
           <Button
             variant="outline"
             className="w-full border-2 border-black bg-transparent text-black hover:bg-zinc-100 font-bold h-12 rounded-none"
+            onClick={() => handleLogin('discord')}
+            disabled={isLoading}
           >
             CONTINUE WITH DISCORD
           </Button>

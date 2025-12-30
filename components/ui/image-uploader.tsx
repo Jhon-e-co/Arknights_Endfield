@@ -4,18 +4,20 @@ import React, { useState, useRef } from 'react';
 import { Upload, X } from 'lucide-react';
 
 interface ImageUploaderProps {
-  onImageSelect: (imageUrl: string) => void;
+  onImageSelect: (imageUrl: string, file?: File) => void;
   selectedImage?: string;
 }
 
 export function ImageUploader({ onImageSelect, selectedImage }: ImageUploaderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedFile, setSelectedFile] = useState<File | undefined>();
 
   const handleFileSelect = (file: File) => {
     if (file && file.type.startsWith('image/')) {
       const imageUrl = URL.createObjectURL(file);
-      onImageSelect(imageUrl);
+      setSelectedFile(file);
+      onImageSelect(imageUrl, file);
     }
   };
 
@@ -43,7 +45,8 @@ export function ImageUploader({ onImageSelect, selectedImage }: ImageUploaderPro
   };
 
   const handleRemove = () => {
-    onImageSelect('');
+    onImageSelect('', undefined);
+    setSelectedFile(undefined);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }

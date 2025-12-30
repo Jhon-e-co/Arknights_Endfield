@@ -1,106 +1,72 @@
-"use client";
+import { createClient } from "@/lib/supabase/server";
+import { TeamCard } from "@/components/teams/team-card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Plus } from "lucide-react";
 
-import React from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { TeamCard } from '@/components/teams/team-card';
-import { MOCK_SQUADS } from '@/lib/mock-data';
-import { FadeIn } from '@/components/ui/motion-wrapper';
-import { motion } from 'framer-motion';
+export const dynamic = "force-dynamic";
 
-export default function TeamsPage() {
+export default async function TeamsPage() {
+  const supabase = await createClient();
+
+  const [squadsResult, charactersResult] = await Promise.all([
+    supabase
+      .from("squads")
+      .select("*, profiles(username, avatar_url)")
+      .order("created_at", { ascending: false }),
+    supabase.from("characters").select("*"),
+  ]);
+
+  const squads = squadsResult.data || [];
+  const characters = charactersResult.data || [];
+
+  const characterMap = new Map(characters.map((c) => [c.id, c]));
+
+  const formattedSquads = squads.map((squad) => {
+    const squadMembers = (squad.members || [])
+      .map((id: string) => characterMap.get(id))
+      .filter(Boolean);
+
+    return {
+      id: squad.id,
+      title: squad.title,
+      description: squad.description || "",
+      members: squadMembers,
+      likes: squad.likes || 0,
+      profiles: squad.profiles,
+      tags: [],
+    };
+  });
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <FadeIn>
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-          <h1 className="text-3xl font-black uppercase">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+        <div>
+          <h1 className="text-3xl font-black uppercase tracking-wider mb-2">
             TACTICAL <span className="bg-[#FCEE21] px-1">SQUADS</span>
           </h1>
-          <Link href="/teams/create">
-            <Button
-              className="bg-[#FCEE21] text-black hover:bg-[#FCEE21]/90 rounded-none font-bold px-6 py-3"
-            >
-              Create Squad
-            </Button>
-          </Link>
+          <p className="text-zinc-500">
+            Discover and share the most efficient team compositions.
+          </p>
         </div>
-      </FadeIn>
+        <Link href="/teams/create">
+          <Button className="bg-[#FCEE21] text-black hover:bg-[#FCEE21]/90 rounded-none font-bold px-6 py-3 w-full md:w-auto">
+            Create Squad
+          </Button>
+        </Link>
+      </div>
 
-      <FadeIn delay={0.15}>
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-zinc-700 mb-1">
-              Sort by
-            </label>
-            <select
-              className="w-full border-2 border-zinc-200 bg-white rounded-none px-3 py-2"
-            >
-              <option>Most Popular</option>
-              <option>Newest First</option>
-              <option>Most Liked</option>
-            </select>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {formattedSquads.length > 0 ? (
+          formattedSquads.map((squad) => (
+            <TeamCard key={squad.id} squad={squad} />
+          ))
+        ) : (
+          <div className="col-span-full text-center py-20 bg-zinc-50 border border-dashed border-zinc-200">
+            <p className="text-zinc-500">No squads found. Be the first to create one!</p>
           </div>
-
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-zinc-700 mb-1">
-              Element
-            </label>
-            <select
-              className="w-full border-2 border-zinc-200 bg-white rounded-none px-3 py-2"
-            >
-              <option>All Elements</option>
-              <option>Fire</option>
-              <option>Ice</option>
-              <option>Electric</option>
-              <option>Physical</option>
-              <option>Ether</option>
-            </select>
-          </div>
-
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-zinc-700 mb-1">
-              Tag
-            </label>
-            <select
-              className="w-full border-2 border-zinc-200 bg-white rounded-none px-3 py-2"
-            >
-              <option>All Tags</option>
-              <option>Freeze</option>
-              <option>Burst</option>
-              <option>CC</option>
-              <option>Support</option>
-            </select>
-          </div>
-        </div>
-      </FadeIn>
-
-      <motion.div
-        className="grid grid-cols-1 gap-8"
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: {},
-          visible: {
-            transition: {
-              staggerChildren: 0.1
-            }
-          }
-        }}
-      >
-        {MOCK_SQUADS.map((squad) => (
-          <motion.div
-            key={squad.id}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-            }}
-          >
-            <TeamCard squad={squad} />
-          </motion.div>
-        ))}
-      </motion.div>
-
-      <div className="h-16"></div>
+        )}
+      </div>
     </div>
   );
 }

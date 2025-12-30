@@ -47,7 +47,6 @@ export function Dialog({ open, onClose, title, children }: DialogProps) {
                 <h2 className="text-xl font-bold">{title}</h2>
                 <Button
                   variant="outline"
-                  size="sm"
                   onClick={onClose}
                   className="border-2 border-zinc-200 rounded-none"
                 >

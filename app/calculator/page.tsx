@@ -159,7 +159,6 @@ export default function CalculatorPage() {
                     <div className="text-xl font-bold">{item.quantity}</div>
                     <Button
                       variant="outline"
-                      size="sm"
                       className="border-2 border-zinc-200 rounded-none"
                     >
                       +

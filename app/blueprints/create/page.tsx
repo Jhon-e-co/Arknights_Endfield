@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Upload, ArrowLeft, Loader2 } from 'lucide-react';
+import { Upload, ArrowLeft, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ImageUploader } from '@/components/ui/image-uploader';
 import { motion } from 'framer-motion';
+import { createClient } from '@/lib/supabase/client';
 
 const AVAILABLE_TAGS = [
   "Ferrium",
@@ -25,12 +26,26 @@ export default function CreateBlueprintPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedImage, setSelectedImage] = useState('');
+  const [imageFile, setImageFile] = useState<File | undefined>();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     blueprintCode: '',
     title: '',
     description: '',
   });
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      router.push('/auth/login');
+    }
+  };
 
   const handleTagToggle = (tag: string) => {
     setSelectedTags(prev =>
@@ -44,26 +59,77 @@ export default function CreateBlueprintPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    
+    if (!imageFile) {
+      setError('Please select an image');
+      return;
+    }
+
+    if (!formData.blueprintCode || !formData.title) {
+      setError('Please fill in all required fields');
+      return;
+    }
+
     setIsSubmitting(true);
     setUploadProgress(0);
 
-    const progressInterval = setInterval(() => {
-      setUploadProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(progressInterval);
-          return 100;
-        }
-        return prev + Math.random() * 15;
-      });
-    }, 100);
+    try {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
 
-    setTimeout(() => {
-      clearInterval(progressInterval);
+      if (!user) {
+        setError('Please login to upload blueprints');
+        setIsSubmitting(false);
+        return;
+      }
+
+      setUploadProgress(20);
+
+      const fileExt = imageFile.name.split('.').pop();
+      const fileName = `${Date.now()}-${user.id}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('blueprints')
+        .upload(fileName, imageFile);
+
+      if (uploadError) {
+        throw new Error(`Image upload failed: ${uploadError.message}`);
+      }
+
+      setUploadProgress(60);
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('blueprints')
+        .getPublicUrl(fileName);
+
+      setUploadProgress(80);
+
+      const { error: insertError } = await supabase
+        .from('blueprints')
+        .insert({
+          title: formData.title,
+          description: formData.description,
+          code: formData.blueprintCode,
+          tags: selectedTags,
+          image_url: publicUrl,
+          author_id: user.id,
+        });
+
+      if (insertError) {
+        throw new Error(`Database insert failed: ${insertError.message}`);
+      }
+
       setUploadProgress(100);
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 500);
+
+    } catch (err: any) {
+      console.error('Upload error:', err);
+      setError(err.message || 'Failed to upload blueprint');
       setIsSubmitting(false);
-      alert('Blueprint uploaded successfully!');
-      router.push('/dashboard');
-    }, 1500);
+    }
   };
 
   return (
@@ -167,10 +233,27 @@ export default function CreateBlueprintPage() {
           <div className="border border-zinc-200 bg-white rounded-none shadow-sm p-6">
             <h2 className="text-lg font-bold mb-4">Preview Image</h2>
             <ImageUploader
-              onImageSelect={setSelectedImage}
+              onImageSelect={(imageUrl, file) => {
+                setSelectedImage(imageUrl);
+                setImageFile(file);
+              }}
               selectedImage={selectedImage}
             />
           </div>
+
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="border-2 border-red-200 bg-red-50 rounded-none p-4 flex items-start gap-3"
+            >
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-medium text-red-900">Error</p>
+                <p className="text-sm text-red-700">{error}</p>
+              </div>
+            </motion.div>
+          )}
 
           {isSubmitting && (
             <motion.div

@@ -7,8 +7,20 @@ import Footer from "@/components/layout/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Endfield Tools | Unofficial Global Toolkit",
-  description: "Blueprints, Interactive Map, and Calculators for Arknights: Endfield.",
+  title: {
+    default: "ENDFIELD LAB | Unofficial Global Toolkit",
+    template: "%s | ENDFIELD LAB",
+  },
+  description: "The ultimate research lab for Arknights: Endfield. Featuring factory blueprints, interactive map, character builds, and efficiency tools.",
+  keywords: ["Arknights Endfield", "Endfield Lab", "Endfield Tools", "Blueprints", "Interactive Map", "Tier List"],
+  icons: {
+    icon: [
+      { url: '/Logo/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/Logo/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    shortcut: '/Logo/favicon.ico',
+    apple: '/Logo/logo-192x192.png',
+  },
 };
 
 export default function RootLayout({

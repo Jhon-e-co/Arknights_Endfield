@@ -33,6 +33,12 @@ export default function Home() {
       
       {/* Main Content */}
       <div className="container mx-auto px-4 relative z-10 text-center">
+        {/* Construction Notice Badge */}
+        <div className="inline-flex items-center gap-2 bg-[#FCEE21] text-black px-4 py-2 font-bold uppercase tracking-widest text-xs md:text-sm mb-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+          <span className="animate-pulse">●</span>
+          <span>System Notice: Early Preview / Features Under Construction</span>
+        </div>
+
         {/* Hero Headline */}
         <FadeIn>
           <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-4">
