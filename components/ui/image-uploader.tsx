@@ -1,24 +1,44 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
-import { Upload, X } from 'lucide-react';
+import { Upload, X, AlertCircle } from 'lucide-react';
+
+const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
 interface ImageUploaderProps {
   onImageSelect: (imageUrl: string, file?: File) => void;
   selectedImage?: string;
+  onError?: (error: string) => void;
 }
 
-export function ImageUploader({ onImageSelect, selectedImage }: ImageUploaderProps) {
+export function ImageUploader({ onImageSelect, selectedImage, onError }: ImageUploaderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | undefined>();
+  const [error, setError] = useState('');
 
   const handleFileSelect = (file: File) => {
-    if (file && file.type.startsWith('image/')) {
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedFile(file);
-      onImageSelect(imageUrl, file);
+    setError('');
+    
+    if (!file || !file.type.startsWith('image/')) {
+      setError('Please select a valid image file');
+      onError?.('Please select a valid image file');
+      return;
     }
+
+    if (file.size > MAX_FILE_SIZE) {
+      setError('Image must be smaller than 2MB');
+      onError?.('Image must be smaller than 2MB');
+      setSelectedFile(undefined);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      return;
+    }
+
+    const imageUrl = URL.createObjectURL(file);
+    setSelectedFile(file);
+    onImageSelect(imageUrl, file);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -47,6 +67,7 @@ export function ImageUploader({ onImageSelect, selectedImage }: ImageUploaderPro
   const handleRemove = () => {
     onImageSelect('', undefined);
     setSelectedFile(undefined);
+    setError('');
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -57,10 +78,17 @@ export function ImageUploader({ onImageSelect, selectedImage }: ImageUploaderPro
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/png,image/webp"
         onChange={handleInputChange}
         className="hidden"
       />
+      
+      {error && (
+        <div className="mb-3 flex items-center gap-2 text-red-600 text-sm">
+          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          <span>{error}</span>
+        </div>
+      )}
       
       {selectedImage ? (
         <div className="relative w-full aspect-video border-2 border-[#FCEE21] bg-zinc-900">
@@ -92,8 +120,8 @@ export function ImageUploader({ onImageSelect, selectedImage }: ImageUploaderPro
           <p className="text-sm font-medium text-zinc-600">
             Drop image here or click to upload
           </p>
-          <p className="text-xs text-zinc-400 mt-1">
-            PNG, JPG, GIF up to 5MB
+          <p className="text-xs text-muted-foreground mt-1">
+            Supports: JPG, PNG, WebP (Max 2MB)
           </p>
         </div>
       )}
