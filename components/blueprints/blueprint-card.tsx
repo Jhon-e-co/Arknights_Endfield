@@ -7,13 +7,18 @@ import { Copy } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { BlueprintActions } from '@/components/blueprints/blueprint-actions';
+import { DeleteButton } from '@/components/common/delete-button';
 import { Blueprint } from '@/lib/mock-data';
 
 interface BlueprintCardProps {
   blueprint: Blueprint;
+  currentUserId?: string;
+  currentUserRole?: string;
 }
 
-export function BlueprintCard({ blueprint }: BlueprintCardProps) {
+export function BlueprintCard({ blueprint, currentUserId, currentUserRole = 'user' }: BlueprintCardProps) {
+  const canDelete = blueprint.author_id === currentUserId || currentUserRole === 'admin';
+
   const handleCopyCode = async () => {
     try {
       await navigator.clipboard.writeText(blueprint.code);
@@ -24,7 +29,12 @@ export function BlueprintCard({ blueprint }: BlueprintCardProps) {
   };
 
   return (
-    <div className="flex flex-col h-full border border-zinc-200 bg-white rounded-none shadow-sm">
+    <div className="relative flex flex-col h-full border border-zinc-200 bg-white rounded-none shadow-sm">
+      {canDelete && (
+        <div className="absolute top-2 right-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+          <DeleteButton id={blueprint.id} type="blueprint" />
+        </div>
+      )}
       {/* Image Section */}
       <Link href={`/blueprints/${blueprint.id}`} className="block relative aspect-video bg-zinc-800 overflow-hidden">
         {blueprint.image ? (

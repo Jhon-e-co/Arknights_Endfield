@@ -91,7 +91,12 @@ export default function CreateBlueprintPage() {
 
       const { error: uploadError } = await supabase.storage
         .from('blueprints')
-        .upload(fileName, imageFile);
+        .upload(fileName, imageFile, {
+          upsert: false,
+          metadata: {
+            owner: user.id
+          }
+        });
 
       if (uploadError) {
         throw new Error(`Image upload failed: ${uploadError.message}`);

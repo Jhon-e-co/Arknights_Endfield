@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Book, LayoutGrid, Users, Star, Plus, Heart } from "lucide-react";
-import { BlueprintCard } from "@/components/blueprints/blueprint-card";
-import { TeamCard } from "@/components/teams/team-card";
+import { BlueprintItem } from "@/components/dashboard/blueprint-item";
+import { SquadItem } from "@/components/dashboard/squad-item";
 import { ProfileEditor } from "@/components/dashboard/profile-editor";
 
 export const dynamic = "force-dynamic";
@@ -28,9 +28,11 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   // 2. 获取用户详情 (Profile)
   const { data: profile } = await supabase
     .from("profiles")
-    .select("*")
+    .select("role")
     .eq("id", user.id)
     .single();
+
+  const currentUserRole = profile?.role || 'user';
 
   // 获取所有用户的 blueprints 和 squads 用于统计
   const { data: allBlueprints } = await supabase
@@ -225,9 +227,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             {!dbError && myBlueprints && myBlueprints.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {myBlueprints.map((blueprint) => (
-                  <div key={blueprint.id}>
-                    <BlueprintCard blueprint={blueprint} />
-                  </div>
+                  <BlueprintItem key={blueprint.id} blueprint={blueprint} currentUserRole={currentUserRole} currentUserId={user.id} />
                 ))}
               </div>
             ) : (
@@ -244,9 +244,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             {mySquads && mySquads.length > 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {mySquads.map((squad) => (
-                  <div key={squad.id}>
-                    <TeamCard squad={squad} />
-                  </div>
+                  <SquadItem key={squad.id} squad={squad} currentUserRole={currentUserRole} currentUserId={user.id} />
                 ))}
               </div>
             ) : (
@@ -269,7 +267,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {mySavedSquads.map((squad: any) => (
                     <div key={squad.id}>
-                      <TeamCard squad={squad} />
+                      <TeamCard squad={squad} currentUserRole={currentUserRole} currentUserId={user.id} />
                     </div>
                   ))}
                 </div>
@@ -287,7 +285,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {mySavedBlueprints.map((bp: any) => (
                     <div key={bp.id}>
-                      <BlueprintCard blueprint={bp} />
+                      <BlueprintCard blueprint={bp} currentUserRole={currentUserRole} currentUserId={user.id} />
                     </div>
                   ))}
                 </div>

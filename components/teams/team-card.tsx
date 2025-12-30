@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { SquadActions } from '@/components/teams/squad-actions';
+import { DeleteButton } from '@/components/common/delete-button';
 
 interface DBCharacter {
   id: string;
@@ -30,6 +31,8 @@ interface TeamCardProps {
     author_id?: string;
     tags?: string[];
   };
+  currentUserId?: string;
+  currentUserRole?: string;
 }
 
 const elementColors = {
@@ -40,9 +43,10 @@ const elementColors = {
   nature: 'from-green-500 to-emerald-600'
 };
 
-export function TeamCard({ squad }: TeamCardProps) {
+export function TeamCard({ squad, currentUserId, currentUserRole = 'user' }: TeamCardProps) {
   const members = squad.members || [];
   const authorName = squad.profiles?.username || squad.author || 'Unknown';
+  const canDelete = squad.author_id === currentUserId || currentUserRole === 'admin';
 
   const getCharacterImage = (character: any) => {
     if (!character || typeof character !== 'object' || !character.name) {
@@ -133,6 +137,11 @@ export function TeamCard({ squad }: TeamCardProps) {
           </div>
 
           <div className="flex items-center gap-3 relative z-20 pointer-events-auto">
+            {canDelete && (
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                <DeleteButton id={squad.id} type="squad" />
+              </div>
+            )}
             <div className="bg-black/60 backdrop-blur-sm rounded-none border border-white/10 flex">
               <SquadActions
                 squadId={squad.id}

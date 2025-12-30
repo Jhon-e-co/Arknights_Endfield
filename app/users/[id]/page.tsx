@@ -29,6 +29,16 @@ export default async function UserProfile({
   const { id } = await params;
   const supabase = await createClient();
 
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const { data: currentUserProfile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user?.id)
+    .single();
+
+  const currentUserRole = currentUserProfile?.role || 'user';
+
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
     .select("*")
@@ -121,7 +131,7 @@ export default async function UserProfile({
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {blueprints.map((blueprint) => (
                   <div key={blueprint.id}>
-                    <BlueprintCard blueprint={blueprint} />
+                    <BlueprintCard blueprint={blueprint} currentUserRole={currentUserRole} currentUserId={user?.id} />
                   </div>
                 ))}
               </div>
@@ -142,7 +152,7 @@ export default async function UserProfile({
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {squads.map((squad) => (
                   <div key={squad.id}>
-                    <TeamCard squad={squad} />
+                    <TeamCard squad={squad} currentUserRole={currentUserRole} currentUserId={user?.id} />
                   </div>
                 ))}
               </div>
