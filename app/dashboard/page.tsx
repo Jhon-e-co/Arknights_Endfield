@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Book, LayoutGrid, Users, Star, Plus } from "lucide-react";
+import { Book, LayoutGrid, Users, Star, Plus, Heart } from "lucide-react";
 import { BlueprintCard } from "@/components/blueprints/blueprint-card";
 import { TeamCard } from "@/components/teams/team-card";
 import { ProfileEditor } from "@/components/dashboard/profile-editor";
@@ -32,9 +32,28 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     .eq("id", user.id)
     .single();
 
+  // 获取所有用户的 blueprints 和 squads 用于统计
+  const { data: allBlueprints } = await supabase
+    .from("blueprints")
+    .select("likes")
+    .eq("author_id", user.id);
+
+  const { data: allSquadsRaw } = await supabase
+    .from("squads")
+    .select("likes")
+    .eq("author_id", user.id);
+
+  const totalBlueprints = allBlueprints?.length || 0;
+  const totalSquads = allSquadsRaw?.length || 0;
+  const blueprintLikes = allBlueprints?.reduce((sum, item) => sum + (item.likes || 0), 0) || 0;
+  const squadLikes = allSquadsRaw?.reduce((sum, item) => sum + (item.likes || 0), 0) || 0;
+  const totalLikes = blueprintLikes + squadLikes;
+
   // 3. 按需获取数据
   let myBlueprints: any[] = [];
   let mySquads: any[] = [];
+  let mySavedBlueprints: any[] = [];
+  let mySavedSquads: any[] = [];
   let dbError: any = null;
 
   if (activeTab === 'blueprints') {
@@ -61,6 +80,31 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         .map((id: string) => charMap.get(id))
         .filter((c: any) => c !== undefined)
     }));
+  } else if (activeTab === 'favorites') {
+    const { data: savedBlueprintsRaw } = await supabase
+      .from("saved_blueprints")
+      .select("*, blueprints!inner(*, profiles(username, avatar_url))")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+
+    mySavedBlueprints = savedBlueprintsRaw?.map(item => item.blueprints) || [];
+
+    const { data: savedSquadsRaw } = await supabase
+      .from("saved_squads")
+      .select("*, squads!inner(*, profiles(username, avatar_url))")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+
+    const rawSavedSquads = savedSquadsRaw?.map(item => item.squads) || [];
+    const { data: allChars } = await supabase.from("characters").select("*");
+    const charMap = new Map((allChars || []).map((c) => [c.id, c]));
+
+    mySavedSquads = rawSavedSquads.map(squad => ({
+      ...squad,
+      members: (squad.members || [])
+        .map((id: string) => charMap.get(id))
+        .filter((item: any) => item !== undefined)
+    }));
   }
 
   return (
@@ -76,39 +120,60 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       </div>
 
       {/* 2. 个人信息卡片 (Profile Card) */}
-      <div className="bg-white border border-zinc-200 p-6 shadow-sm mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* 左侧：头像与信息 */}
-        <div className="flex items-center gap-4 w-full md:w-auto">
-          <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-zinc-100">
-             {/* 优先显示 profile avatar, 否则显示默认 */}
-            <Image
-              src={profile?.avatar_url || "/images/avatars/default.png"}
-              alt="Avatar"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-zinc-900">
-              {profile?.username || "Endministrator"}
-            </h2>
-            <div className="flex items-center gap-2 text-sm text-zinc-500">
-              <span className="w-2 h-2 rounded-full bg-green-500"></span>
-              <span>Endministrator</span>
-              <span className="uppercase">ID: {user.id.slice(0, 8)}</span>
+      <div className="bg-white border border-zinc-200 p-6 shadow-sm mb-8 flex flex-col">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+          {/* 左侧：头像与信息 */}
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-zinc-100">
+               {/* 优先显示 profile avatar, 否则显示默认 */}
+              <Image
+                src={profile?.avatar_url || "/images/avatars/default.png"}
+                alt="Avatar"
+                fill
+                className="object-cover"
+              />
             </div>
+            <div>
+              <h2 className="text-xl font-bold text-zinc-900">
+                {profile?.username || "Endministrator"}
+              </h2>
+              <div className="flex items-center gap-2 text-sm text-zinc-500">
+                <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                <span>Endministrator</span>
+                <span className="uppercase">ID: {user.id.slice(0, 8)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 右侧：操作按钮 */}
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            <ProfileEditor user={user} profile={profile} />
+            <Link href="/blueprints/create">
+              <Button className="bg-[#FCEE21] text-black hover:bg-[#FCEE21]/90 rounded-none font-bold border-0">
+                <Plus className="w-4 h-4 mr-2" />
+                Upload Blueprint
+              </Button>
+            </Link>
           </div>
         </div>
 
-        {/* 右侧：操作按钮 */}
-        <div className="flex items-center gap-3 w-full md:w-auto">
-          <ProfileEditor user={user} profile={profile} />
-          <Link href="/blueprints/create">
-            <Button className="bg-[#FCEE21] text-black hover:bg-[#FCEE21]/90 rounded-none font-bold border-0">
-              <Plus className="w-4 h-4 mr-2" />
-              Upload Blueprint
-            </Button>
-          </Link>
+        {/* 统计栏 */}
+        <div className="grid grid-cols-3 gap-4 pt-6 border-t border-zinc-100">
+          <div>
+            <p className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Blueprints</p>
+            <p className="text-2xl font-black text-zinc-900">{totalBlueprints}</p>
+          </div>
+          <div>
+            <p className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Squads</p>
+            <p className="text-2xl font-black text-zinc-900">{totalSquads}</p>
+          </div>
+          <div>
+            <p className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Total Likes</p>
+            <div className="flex items-center gap-2">
+              <Heart className="w-5 h-5 text-red-500 fill-red-500" />
+              <p className="text-2xl font-black text-zinc-900">{totalLikes}</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -194,9 +259,42 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         )}
 
         {activeTab === 'favorites' && (
-          <div className="border border-dashed border-zinc-300 bg-zinc-50 p-12 text-center rounded-none">
-            <Star className="w-12 h-12 mx-auto mb-4 text-zinc-300" />
-            <p className="text-zinc-500">Favorites feature coming soon.</p>
+          <div className="space-y-12">
+            <section>
+              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <Users className="w-5 h-5" />
+                Saved Squads
+              </h2>
+              {mySavedSquads.length > 0 ? (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {mySavedSquads.map((squad: any) => (
+                    <div key={squad.id}>
+                      <TeamCard squad={squad} />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-zinc-500 italic">No saved squads yet.</p>
+              )}
+            </section>
+
+            <section>
+              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <Book className="w-5 h-5" />
+                Saved Blueprints
+              </h2>
+              {mySavedBlueprints.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {mySavedBlueprints.map((bp: any) => (
+                    <div key={bp.id}>
+                      <BlueprintCard blueprint={bp} />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-zinc-500 italic">No saved blueprints yet.</p>
+              )}
+            </section>
           </div>
         )}
       </div>

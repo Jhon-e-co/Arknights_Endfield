@@ -1,3 +1,5 @@
+import { FeedbackButton } from "./feedback-button";
+
 export default function Footer() {
   return (
     <footer className="border-t border-zinc-200 bg-zinc-900 py-8 text-zinc-400">
@@ -6,7 +8,8 @@ export default function Footer() {
           <p>© 2026 ENDFIELD LAB. Unofficial Fan Project.</p>
           <p className="text-xs text-zinc-600 mt-1">Not affiliated with Gryphline or Hypergryph.</p>
         </div>
-        <div className="flex gap-4 text-sm font-mono">
+        <div className="flex flex-col md:flex-row items-center gap-4 text-sm font-mono">
+          <FeedbackButton />
           <span>[ STATUS: ONLINE ]</span>
           <span>[ VER: 1.0.0 ]</span>
         </div>

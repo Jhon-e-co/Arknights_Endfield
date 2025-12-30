@@ -2,12 +2,13 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { User, Calendar, ThumbsUp, ArrowLeft } from 'lucide-react';
+import { User, Calendar, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Metadata } from "next";
 import { CopyButton } from '@/components/blueprints/copy-button';
 import { AdUnit } from '@/components/ui/ad-unit';
+import { BlueprintActions } from '@/components/blueprints/blueprint-actions';
 import { createClient } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
@@ -51,12 +52,25 @@ export default async function BlueprintDetail({
     notFound();
   }
 
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let isLiked = false;
+  let isCollected = false;
+
+  if (user) {
+    const [likeRes, collectRes] = await Promise.all([
+      supabase.from("blueprint_likes").select("id").eq("user_id", user.id).eq("blueprint_id", id).single(),
+      supabase.from("saved_blueprints").select("id").eq("user_id", user.id).eq("blueprint_id", id).single()
+    ]);
+    isLiked = !!likeRes.data;
+    isCollected = !!collectRes.data;
+  }
+
   const author = blueprint.profiles?.username || 'Unknown';
   const authorAvatar = blueprint.profiles?.avatar_url;
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm mb-8">
         <Link href="/" className="text-zinc-500 hover:text-black">
           Home
@@ -69,11 +83,8 @@ export default async function BlueprintDetail({
         <span className="font-bold">{blueprint.title}</span>
       </div>
 
-      {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Section (2/3) */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Image */}
           <div className="relative aspect-video border border-zinc-200 bg-zinc-100">
             <Image
               src={blueprint.image_url}
@@ -83,13 +94,11 @@ export default async function BlueprintDetail({
               className="w-full h-full object-cover"
               priority
             />
-            {/* Version Tag */}
             <div className="absolute top-2 left-2 bg-[#FCEE21] text-black text-xs font-bold px-2 py-1">
               V1.0
             </div>
           </div>
 
-          {/* Title and Tags */}
           <div>
             <h1 className="text-3xl font-bold mb-3">{blueprint.title}</h1>
             <div className="flex flex-wrap gap-2">
@@ -101,7 +110,6 @@ export default async function BlueprintDetail({
             </div>
           </div>
 
-          {/* Description */}
           <div className="prose prose-zinc max-w-none">
             <h2 className="text-xl font-bold mb-2">Description</h2>
             <p className="text-zinc-700 leading-relaxed">
@@ -110,14 +118,11 @@ export default async function BlueprintDetail({
           </div>
         </div>
 
-        {/* Right Section (1/3) */}
         <div className="lg:col-span-1">
           <div className="lg:sticky lg:top-20 space-y-6">
-            {/* Info Card */}
             <div className="border border-zinc-200 bg-white p-6 rounded-none">
               <h3 className="text-lg font-bold mb-4">Blueprint Info</h3>
 
-              {/* Author */}
               <div className="flex items-center gap-3 mb-4">
                 <User className="w-5 h-5 text-zinc-500" />
                 <div>
@@ -128,7 +133,6 @@ export default async function BlueprintDetail({
                 </div>
               </div>
 
-              {/* Created At */}
               <div className="flex items-center gap-3 mb-4">
                 <Calendar className="w-5 h-5 text-zinc-500" />
                 <div>
@@ -137,37 +141,33 @@ export default async function BlueprintDetail({
                 </div>
               </div>
 
-              {/* Likes */}
-              <div className="flex items-center gap-3">
-                <ThumbsUp className="w-5 h-5 text-zinc-500" />
-                <div>
-                  <p className="text-sm font-medium">Likes</p>
-                  <p className="font-bold">{blueprint.likes || 0}</p>
-                </div>
+              <div className="py-4 border-t border-zinc-100 mt-4">
+                <p className="text-sm font-medium text-zinc-500 mb-3">Actions</p>
+                <BlueprintActions
+                  blueprintId={blueprint.id}
+                  initialLikes={blueprint.likes || 0}
+                  initialIsLiked={isLiked}
+                  initialIsCollected={isCollected}
+                />
               </div>
             </div>
 
-            {/* Code Section */}
             <div className="border border-zinc-200 bg-white rounded-none">
               <div className="p-4 border-b border-zinc-200 bg-zinc-50">
                 <h3 className="text-lg font-bold">Blueprint Code</h3>
               </div>
               
-              {/* Code Display */}
               <pre className="bg-black text-white p-4 overflow-x-auto max-h-[300px] font-mono text-sm">
                 <code>{blueprint.code}</code>
               </pre>
 
-              {/* Copy Button */}
               <div className="p-4 flex justify-end">
                 <CopyButton code={blueprint.code} />
               </div>
             </div>
 
-            {/* Sidebar Ad */}
             <AdUnit type="sidebar" className="hidden lg:block" />
 
-            {/* Action Button */}
             <div className="flex gap-3">
               <Link href="/blueprints" className="flex-1">
                 <Button

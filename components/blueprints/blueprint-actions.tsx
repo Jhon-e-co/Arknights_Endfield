@@ -1,19 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { ThumbsUp, Star } from "lucide-react";
+import { Heart, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface SquadActionsProps {
-  squadId: string;
+interface BlueprintActionsProps {
+  blueprintId: string;
   initialLikes: number;
+  initialIsLiked?: boolean;
   initialIsCollected?: boolean;
-  variant?: 'default' | 'card';
 }
 
-export function SquadActions({ squadId, initialLikes, initialIsCollected = false, variant = 'default' }: SquadActionsProps) {
+export function BlueprintActions({ blueprintId, initialLikes, initialIsLiked = false, initialIsCollected = false }: BlueprintActionsProps) {
   const [likes, setLikes] = useState(initialLikes);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [isCollected, setIsCollected] = useState(initialIsCollected);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,12 +24,12 @@ export function SquadActions({ squadId, initialLikes, initialIsCollected = false
     setLikes(prev => isLiked ? prev - 1 : prev + 1);
 
     try {
-      const response = await fetch('/api/likes/squads', {
+      const response = await fetch('/api/likes/blueprints', {
         method: previousState ? 'DELETE' : 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ squad_id: squadId }),
+        body: JSON.stringify({ blueprint_id: blueprintId }),
       });
 
       if (!response.ok) {
@@ -54,12 +54,12 @@ export function SquadActions({ squadId, initialLikes, initialIsCollected = false
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/favorites/squads', {
+      const response = await fetch('/api/favorites/blueprints', {
         method: previousState ? 'DELETE' : 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ squad_id: squadId }),
+        body: JSON.stringify({ blueprint_id: blueprintId }),
       });
 
       if (!response.ok) {
@@ -79,49 +79,33 @@ export function SquadActions({ squadId, initialLikes, initialIsCollected = false
     }
   };
 
-  const isCard = variant === 'card';
-
   return (
     <div className="flex items-center gap-2">
       <button
         onClick={handleLike}
         className={cn(
-            "w-10 h-10 flex items-center justify-center font-bold transition-all active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed",
-            isCard
-                ? "text-white hover:text-[#FCEE21] border-0"
-                : "border-2",
-            isLiked && isCard && "text-[#FCEE21]",
-            !isCard && (
-                isLiked
-                    ? "bg-[#FCEE21] text-black border-[#FCEE21]"
-                    : "border-zinc-700 text-zinc-400 hover:text-black hover:bg-[#FCEE21] hover:border-[#FCEE21]"
-            )
+            "w-10 h-10 flex items-center justify-center border-2 font-bold transition-all active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed",
+            isLiked
+                ? "bg-[#FCEE21] text-black border-[#FCEE21]"
+                : "border-zinc-700 text-zinc-400 hover:text-black hover:bg-[#FCEE21] hover:border-[#FCEE21]"
         )}
-        title="Endorse"
+        title="Like"
       >
-        <ThumbsUp className={cn("w-5 h-5", isLiked && "fill-black")} />
+        <Heart className={cn("w-5 h-5", isLiked && "fill-black")} />
       </button>
 
-      {isCard ? null : (
-        <span className="font-bold text-sm tabular-nums text-zinc-500">
-          {likes}
-        </span>
-      )}
+      <span className="font-bold text-sm tabular-nums text-zinc-500">
+        {likes}
+      </span>
 
       <button
         onClick={handleCollect}
         disabled={isLoading}
         className={cn(
-            "w-10 h-10 flex items-center justify-center font-bold transition-all active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed",
-            isCard
-                ? "text-white hover:text-[#FCEE21] border-0"
-                : "border-2",
-            isCollected && isCard && "text-[#FCEE21]",
-            !isCard && (
-                isCollected
-                    ? "bg-[#FCEE21] text-black border-[#FCEE21]"
-                    : "border-zinc-700 text-zinc-400 hover:text-black hover:bg-[#FCEE21] hover:border-[#FCEE21]"
-            )
+            "w-10 h-10 flex items-center justify-center border-2 font-bold transition-all active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed",
+            isCollected
+                ? "bg-[#FCEE21] text-black border-[#FCEE21]"
+                : "border-zinc-700 text-zinc-400 hover:text-black hover:bg-[#FCEE21] hover:border-[#FCEE21]"
         )}
         title="Add to Favorites"
       >

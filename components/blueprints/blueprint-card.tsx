@@ -3,9 +3,10 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Copy, Heart } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { BlueprintActions } from '@/components/blueprints/blueprint-actions';
 import { Blueprint } from '@/lib/mock-data';
 
 interface BlueprintCardProps {
@@ -20,10 +21,6 @@ export function BlueprintCard({ blueprint }: BlueprintCardProps) {
     } catch (err) {
       console.error('Failed to copy:', err);
     }
-  };
-
-  const handleLike = () => {
-    console.log('Liking blueprint:', blueprint.id);
   };
 
   return (
@@ -72,25 +69,22 @@ export function BlueprintCard({ blueprint }: BlueprintCardProps) {
           ))}
         </div>
 
-        {/* Action Bar */}
-        <div className="flex items-center justify-between mt-auto">
-          <Button
-            variant="outline"
-            className="rounded-none"
-            onClick={handleCopyCode}
-          >
-            <Copy className="w-4 h-4 mr-2" />
-            Copy Code
-          </Button>
+        {/* Copy Button */}
+        <Button
+          variant="outline"
+          className="rounded-none mb-4"
+          onClick={handleCopyCode}
+        >
+          <Copy className="w-4 h-4 mr-2" />
+          Copy Code
+        </Button>
 
-          <Button
-            variant="outline"
-            className="rounded-none"
-            onClick={handleLike}
-          >
-            <Heart className="w-4 h-4 mr-2" fill="none" strokeWidth={2} />
-            {blueprint.likes}
-          </Button>
+        {/* Blueprint Actions */}
+        <div className="mt-auto">
+          <BlueprintActions
+            blueprintId={blueprint.id}
+            initialLikes={blueprint.likes}
+          />
         </div>
       </div>
     </div>
