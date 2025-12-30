@@ -7,6 +7,8 @@ import { Book, LayoutGrid, Users, Star, Plus, Heart } from "lucide-react";
 import { BlueprintItem } from "@/components/dashboard/blueprint-item";
 import { SquadItem } from "@/components/dashboard/squad-item";
 import { ProfileEditor } from "@/components/dashboard/profile-editor";
+import { TeamCard } from "@/components/teams/team-card";
+import { BlueprintCard } from "@/components/blueprints/blueprint-card";
 
 export const dynamic = "force-dynamic";
 

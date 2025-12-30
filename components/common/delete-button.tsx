@@ -52,7 +52,6 @@ export function DeleteButton({ id, type, onDeleted }: DeleteButtonProps) {
   return (
     <Button
       variant="destructive"
-      size="sm"
       onClick={handleDelete}
       disabled={isDeleting}
       className="flex items-center gap-2"
