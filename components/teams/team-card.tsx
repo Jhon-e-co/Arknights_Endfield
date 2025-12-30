@@ -27,6 +27,7 @@ interface TeamCardProps {
       avatar_url: string;
     };
     author?: string;
+    author_id?: string;
     tags?: string[];
   };
 }
@@ -91,9 +92,17 @@ export function TeamCard({ squad }: TeamCardProps) {
           <h3 className="text-2xl font-bold text-white mb-1 drop-shadow-md">{squad.title}</h3>
           <div className="flex items-center gap-2 text-zinc-300 text-sm relative z-20 pointer-events-auto">
             <span>by</span>
-            <Link href={`/users/${squad.author}`} className="hover:text-[#FCEE21] hover:underline transition-colors">
-              {authorName}
-            </Link>
+            {squad.author_id ? (
+              <Link 
+                href={`/users/${squad.author_id}`} 
+                className="hover:text-[#FCEE21] hover:underline transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {authorName}
+              </Link>
+            ) : (
+              <span>{authorName}</span>
+            )}
           </div>
         </div>
 

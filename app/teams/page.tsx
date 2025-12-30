@@ -34,6 +34,7 @@ export default async function TeamsPage() {
       members: squadMembers,
       likes: squad.likes || 0,
       profiles: squad.profiles,
+      author_id: squad.author_id,
       tags: [],
     };
   });
