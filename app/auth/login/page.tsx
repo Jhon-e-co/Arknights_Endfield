@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async (provider: 'google' | 'discord') => {
+  const handleLogin = async (provider: 'google') => {
     setIsLoading(true);
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithOAuth({
@@ -40,14 +40,6 @@ export default function LoginPage() {
             disabled={isLoading}
           >
             CONTINUE WITH GOOGLE
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full border-2 border-black bg-transparent text-black hover:bg-zinc-100 font-bold h-12 rounded-none"
-            onClick={() => handleLogin('discord')}
-            disabled={isLoading}
-          >
-            CONTINUE WITH DISCORD
           </Button>
         </div>
 
