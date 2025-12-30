@@ -2,13 +2,14 @@ import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export default async function GuideDetailPage({ params }: { params: { id: string } }) {
+export default async function GuideDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient();
-  
+  const { id } = await params;
+
   const { data: character } = await supabase
     .from('characters')
     .select('*, character_guides(*)')
-    .eq('slug', params.id)
+    .eq('slug', id)
     .single();
 
   if (!character || !character.character_guides) {
