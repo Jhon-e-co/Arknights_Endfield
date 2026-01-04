@@ -7,6 +7,7 @@ import Footer from "@/components/layout/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://endfieldlab.info'),
   title: {
     default: "ENDFIELD LAB | Unofficial Global Toolkit",
     template: "%s | ENDFIELD LAB",

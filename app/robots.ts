@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/dashboard/',
+      disallow: ['/api/', '/dashboard/', '/private/'],
     },
-    sitemap: 'https://endfield-tools.vercel.app/sitemap.xml',
+    sitemap: 'https://endfieldlab.info/sitemap.xml',
   };
 }
