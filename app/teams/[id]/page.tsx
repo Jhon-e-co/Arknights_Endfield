@@ -13,6 +13,14 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+interface DBCharacter {
+  id: string;
+  name: string;
+  element: string;
+  rarity: number;
+  image_url: string;
+}
+
 export default async function SquadDetailPage({ params }: PageProps) {
   // Await params mainly for Next.js 15+ compatibility
   const { id } = await params;
@@ -33,7 +41,7 @@ export default async function SquadDetailPage({ params }: PageProps) {
   // 2. 获取该队伍的成员角色信息
   // squad.members 是一个 UUID 数组
   const memberIds = squad.members || [];
-  let characters: any[] = [];
+  let characters: DBCharacter[] = [];
 
   if (memberIds.length > 0) {
     const { data: chars } = await supabase
@@ -42,8 +50,24 @@ export default async function SquadDetailPage({ params }: PageProps) {
       .in("id", memberIds);
     
     // 按 squad.members 的顺序重新排序角色 (保持 1,2,3,4 号位顺序)
-    const charMap = new Map(chars?.map(c => [c.id, c]));
-    characters = memberIds.map((mid: string) => charMap.get(mid)).filter(Boolean);
+  const charMap = new Map(chars?.map(c => [c.id, c]));
+  characters = memberIds.map((mid: string) => charMap.get(mid)).filter(Boolean);
+  }
+
+  // 获取当前用户
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // 获取用户的点赞和收藏状态
+  let isLiked = false;
+  let isCollected = false;
+
+  if (user) {
+    const [likeRes, collectRes] = await Promise.all([
+      supabase.from("squad_likes").select("id").eq("user_id", user.id).eq("squad_id", id).single(),
+      supabase.from("saved_squads").select("id").eq("user_id", user.id).eq("squad_id", id).single()
+    ]);
+    isLiked = !!likeRes.data;
+    isCollected = !!collectRes.data;
   }
 
   // 元素颜色映射 (复制自 team-card 的逻辑，确保一致)
@@ -144,7 +168,7 @@ export default async function SquadDetailPage({ params }: PageProps) {
                  </div>
               </div>
 
-              <SquadActions squadId={squad.id} initialLikes={squad.likes || 0} />
+              <SquadActions squadId={squad.id} initialLikes={squad.likes || 0} initialIsLiked={isLiked} initialIsCollected={isCollected} />
            </div>
            
            {/* Tags (Optional) */}

@@ -13,15 +13,33 @@ export const dynamic = 'force-dynamic';
 export default async function BlueprintsPage() {
   const supabase = await createClient();
 
-  const { data: blueprints } = await supabase
-    .from('blueprints')
-    .select(`
-      *,
-      profiles (username, avatar_url)
-    `)
-    .order('created_at', { ascending: false });
+  const [blueprintsResult, { data: { user } }] = await Promise.all([
+    supabase
+      .from('blueprints')
+      .select(`
+        *,
+        profiles (username, avatar_url)
+      `)
+      .order('created_at', { ascending: false }),
+    supabase.auth.getUser(),
+  ]);
 
-  const mappedBlueprints: Blueprint[] = (blueprints || []).map(bp => ({
+  const blueprints = blueprintsResult.data || [];
+
+  let userLikes: Set<string> = new Set();
+  let userFavorites: Set<string> = new Set();
+
+  if (user) {
+    const [likesResult, favoritesResult] = await Promise.all([
+      supabase.from("blueprint_likes").select("blueprint_id").eq("user_id", user.id),
+      supabase.from("saved_blueprints").select("blueprint_id").eq("user_id", user.id),
+    ]);
+
+    userLikes = new Set(likesResult.data?.map(l => l.blueprint_id) || []);
+    userFavorites = new Set(favoritesResult.data?.map(f => f.blueprint_id) || []);
+  }
+
+  const mappedBlueprints: Blueprint[] = blueprints.map(bp => ({
     id: bp.id,
     title: bp.title,
     author: bp.profiles?.username || 'Unknown',
@@ -31,7 +49,9 @@ export default async function BlueprintsPage() {
     likes: bp.likes || 0,
     code: bp.code,
     description: bp.description || '',
-    createdAt: bp.created_at
+    createdAt: bp.created_at,
+    initialIsLiked: userLikes.has(bp.id),
+    initialIsCollected: userFavorites.has(bp.id),
   }));
 
   return (

@@ -30,6 +30,8 @@ interface TeamCardProps {
     author?: string;
     author_id?: string;
     tags?: string[];
+    initialIsLiked?: boolean;
+    initialIsCollected?: boolean;
   };
   currentUserId?: string;
   currentUserRole?: string;
@@ -47,8 +49,10 @@ export function TeamCard({ squad, currentUserId, currentUserRole = 'user' }: Tea
   const members = squad.members || [];
   const authorName = squad.profiles?.username || squad.author || 'Unknown';
   const canDelete = squad.author_id === currentUserId || currentUserRole === 'admin';
+  const initialIsLiked = squad.initialIsLiked || false;
+  const initialIsCollected = squad.initialIsCollected || false;
 
-  const getCharacterImage = (character: any) => {
+  const getCharacterImage = (character: DBCharacter) => {
     if (!character || typeof character !== 'object' || !character.name) {
       return '/images/avatars/default.png';
     }
@@ -63,7 +67,7 @@ export function TeamCard({ squad, currentUserId, currentUserRole = 'user' }: Tea
 
       <div className="absolute inset-0">
         <div className="absolute inset-0 grid grid-cols-4">
-          {members.slice(0, 4).map((character, index) => {
+          {members.slice(0, 4).map((character) => {
             if (!character || typeof character !== 'object' || !character.name) {
               return null;
             }
@@ -87,8 +91,8 @@ export function TeamCard({ squad, currentUserId, currentUserRole = 'user' }: Tea
       <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
         <div className="relative z-20 pointer-events-auto">
           <div className="flex flex-wrap gap-2 mb-2">
-            {(squad.tags || []).slice(0, 3).map((tag, index) => (
-              <Badge key={index} className="rounded-none bg-black/70 text-white border-zinc-600 backdrop-blur-sm">
+            {(squad.tags || []).slice(0, 3).map((tag) => (
+              <Badge key={tag} className="rounded-none bg-black/70 text-white border-zinc-600 backdrop-blur-sm">
                 {tag}
               </Badge>
             ))}
@@ -112,7 +116,7 @@ export function TeamCard({ squad, currentUserId, currentUserRole = 'user' }: Tea
 
         <div className="flex items-end justify-between">
           <div className="flex gap-1">
-            {members.slice(0, 4).map((character, index) => {
+            {members.slice(0, 4).map((character) => {
               if (!character || typeof character !== 'object' || !character.name || !character.element) {
                 return null;
               }
@@ -146,7 +150,8 @@ export function TeamCard({ squad, currentUserId, currentUserRole = 'user' }: Tea
               <SquadActions
                 squadId={squad.id}
                 initialLikes={squad.likes || 0}
-                initialIsCollected={false}
+                initialIsLiked={initialIsLiked}
+                initialIsCollected={initialIsCollected}
                 variant="card"
               />
             </div>

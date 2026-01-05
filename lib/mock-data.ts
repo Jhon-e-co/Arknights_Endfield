@@ -63,6 +63,8 @@ export interface Blueprint {
   code: string;
   description: string;
   createdAt: string;
+  initialIsLiked?: boolean;
+  initialIsCollected?: boolean;
 }
 
 export const MOCK_USERS: User[] = [

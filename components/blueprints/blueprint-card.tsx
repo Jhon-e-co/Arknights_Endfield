@@ -11,13 +11,18 @@ import { DeleteButton } from '@/components/common/delete-button';
 import { Blueprint } from '@/lib/mock-data';
 
 interface BlueprintCardProps {
-  blueprint: Blueprint;
+  blueprint: Blueprint & {
+    initialIsLiked?: boolean;
+    initialIsCollected?: boolean;
+  };
   currentUserId?: string;
   currentUserRole?: string;
 }
 
 export function BlueprintCard({ blueprint, currentUserId, currentUserRole = 'user' }: BlueprintCardProps) {
   const canDelete = blueprint.author_id === currentUserId || currentUserRole === 'admin';
+  const initialIsLiked = blueprint.initialIsLiked || false;
+  const initialIsCollected = blueprint.initialIsCollected || false;
 
   const handleCopyCode = async () => {
     try {
@@ -94,6 +99,8 @@ export function BlueprintCard({ blueprint, currentUserId, currentUserRole = 'use
           <BlueprintActions
             blueprintId={blueprint.id}
             initialLikes={blueprint.likes}
+            initialIsLiked={initialIsLiked}
+            initialIsCollected={initialIsCollected}
           />
         </div>
       </div>

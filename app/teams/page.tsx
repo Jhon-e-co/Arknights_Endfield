@@ -9,18 +9,32 @@ export const dynamic = "force-dynamic";
 export default async function TeamsPage() {
   const supabase = await createClient();
 
-  const [squadsResult, charactersResult] = await Promise.all([
+  const [squadsResult, charactersResult, { data: { user } }] = await Promise.all([
     supabase
       .from("squads")
       .select("*, profiles(username, avatar_url)")
       .order("created_at", { ascending: false }),
     supabase.from("characters").select("*"),
+    supabase.auth.getUser(),
   ]);
 
   const squads = squadsResult.data || [];
   const characters = charactersResult.data || [];
 
   const characterMap = new Map(characters.map((c) => [c.id, c]));
+
+  let userLikes: Set<string> = new Set();
+  let userFavorites: Set<string> = new Set();
+
+  if (user) {
+    const [likesResult, favoritesResult] = await Promise.all([
+      supabase.from("squad_likes").select("squad_id").eq("user_id", user.id),
+      supabase.from("saved_squads").select("squad_id").eq("user_id", user.id),
+    ]);
+
+    userLikes = new Set(likesResult.data?.map(l => l.squad_id) || []);
+    userFavorites = new Set(favoritesResult.data?.map(f => f.squad_id) || []);
+  }
 
   const formattedSquads = squads.map((squad) => {
     const squadMembers = (squad.members || [])
@@ -36,6 +50,8 @@ export default async function TeamsPage() {
       profiles: squad.profiles,
       author_id: squad.author_id,
       tags: [],
+      initialIsLiked: userLikes.has(squad.id),
+      initialIsCollected: userFavorites.has(squad.id),
     };
   });
 
@@ -60,7 +76,10 @@ export default async function TeamsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {formattedSquads.length > 0 ? (
           formattedSquads.map((squad) => (
-            <TeamCard key={squad.id} squad={squad} />
+            <TeamCard 
+              key={squad.id} 
+              squad={squad} 
+            />
           ))
         ) : (
           <div className="col-span-full text-center py-20 bg-zinc-50 border border-dashed border-zinc-200">

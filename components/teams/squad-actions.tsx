@@ -7,13 +7,14 @@ import { cn } from "@/lib/utils";
 interface SquadActionsProps {
   squadId: string;
   initialLikes: number;
+  initialIsLiked?: boolean;
   initialIsCollected?: boolean;
   variant?: 'default' | 'card';
 }
 
-export function SquadActions({ squadId, initialLikes, initialIsCollected = false, variant = 'default' }: SquadActionsProps) {
+export function SquadActions({ squadId, initialLikes, initialIsLiked = false, initialIsCollected = false, variant = 'default' }: SquadActionsProps) {
   const [likes, setLikes] = useState(initialLikes);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [isCollected, setIsCollected] = useState(initialIsCollected);
   const [isLoading, setIsLoading] = useState(false);
 
