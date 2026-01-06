@@ -8,18 +8,28 @@ import { createClient } from '@/lib/supabase/server';
 import { Blueprint } from '@/lib/mock-data';
 import { BlueprintsGrid } from '@/components/blueprints/blueprints-grid';
 import { FilterBar } from '@/components/blueprints/filter-bar';
+import { Metadata } from "next";
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: "Blueprints - Factory Automation & Efficiency | Endfield Lab",
+  description: "Discover and share automation blueprints for Arknights: Endfield. Browse efficient factory layouts, production chains, and industrial designs from the community.",
+  openGraph: {
+    title: "Blueprints - Factory Automation & Efficiency | Endfield Lab",
+    description: "Discover and share automation blueprints for Arknights: Endfield. Browse efficient factory layouts, production chains, and industrial designs from the community.",
+  },
+};
 
 export default async function BlueprintsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ sort?: string; material?: string; stage?: string }>;
+  searchParams: Promise<{ sort?: string; material?: string; function?: string }>;
 }) {
   const params = await searchParams;
   const sort = params.sort || 'newest';
   const material = params.material || '';
-  const stage = params.stage || '';
+  const functionParam = params.function || '';
 
   const supabase = await createClient();
 
@@ -34,8 +44,8 @@ export default async function BlueprintsPage({
     query = query.contains('tags', [material]);
   }
 
-  if (stage) {
-    query = query.contains('tags', [stage]);
+  if (functionParam) {
+    query = query.contains('tags', [functionParam]);
   }
 
   switch (sort) {

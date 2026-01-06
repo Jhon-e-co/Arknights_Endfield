@@ -3,8 +3,18 @@ import { TeamCard } from "@/components/teams/team-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Squads - Best Team Builds & Compositions | Endfield Lab",
+  description: "Discover and share the most efficient team compositions for Arknights: Endfield. Browse tactical squad builds, operator synergies, and optimal team setups.",
+  openGraph: {
+    title: "Squads - Best Team Builds & Compositions | Endfield Lab",
+    description: "Discover and share the most efficient team compositions for Arknights: Endfield. Browse tactical squad builds, operator synergies, and optimal team setups.",
+  },
+};
 
 export default async function TeamsPage() {
   const supabase = await createClient();

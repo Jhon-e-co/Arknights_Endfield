@@ -1,14 +1,61 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import Image from "next/image"; // 确保导入 Image
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { SquadActions } from "@/components/teams/squad-actions";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
-// 定义 params 类型
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const supabase = await createClient();
+  
+  const { data: squad } = await supabase
+    .from("squads")
+    .select(`
+      title,
+      description,
+      likes,
+      tags,
+      profiles (username)
+    `)
+    .eq("id", id)
+    .single();
+  
+  if (!squad) return { title: "Squad Not Found" };
+
+  const author = squad.profiles?.username || 'Unknown';
+  const descriptionSnippet = squad.description?.slice(0, 100) || '';
+  const fullDescription = `Best team build: ${squad.title}. Likes: ${squad.likes || 0}. ${descriptionSnippet}${descriptionSnippet.length >= 100 ? '...' : ''}`;
+  const primaryTag = squad.tags?.[0] || 'Squad';
+
+  return {
+    title: `${squad.title} - Best Team Build | Endfield Lab`,
+    description: fullDescription,
+    openGraph: {
+      title: `${squad.title} - Best Team Build | Endfield Lab`,
+      description: fullDescription,
+      images: [
+        {
+          url: "/Logo/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: squad.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${squad.title} - Best Team Build | Endfield Lab`,
+      description: fullDescription,
+      images: ["/Logo/og-image.png"],
+    },
+  };
+}
+
 interface PageProps {
   params: Promise<{ id: string }>;
 }

@@ -19,15 +19,45 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   
   const { data: blueprint } = await supabase
     .from('blueprints')
-    .select('title, description')
+    .select(`
+      title,
+      description,
+      image_url,
+      likes,
+      tags,
+      profiles (username)
+    `)
     .eq('id', id)
     .single();
   
   if (!blueprint) return { title: "Blueprint Not Found" };
 
+  const author = blueprint.profiles?.username || 'Unknown';
+  const primaryTag = blueprint.tags?.[0] || 'Blueprint';
+  const descriptionSnippet = blueprint.description?.slice(0, 100) || '';
+  const fullDescription = `Check out this ${primaryTag} blueprint. Likes: ${blueprint.likes || 0}. Usage: ${descriptionSnippet}${descriptionSnippet.length >= 100 ? '...' : ''}`;
+
   return {
-    title: blueprint.title,
-    description: blueprint.description,
+    title: `${blueprint.title} by ${author} | Endfield Lab`,
+    description: fullDescription,
+    openGraph: {
+      title: `${blueprint.title} by ${author} | Endfield Lab`,
+      description: fullDescription,
+      images: [
+        {
+          url: blueprint.image_url,
+          width: 1280,
+          height: 720,
+          alt: blueprint.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${blueprint.title} by ${author} | Endfield Lab`,
+      description: fullDescription,
+      images: [blueprint.image_url],
+    },
   };
 }
 

@@ -8,13 +8,36 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://endfieldlab.info'),
+  metadataBase: new URL('https://www.endfieldlab.info'),
   title: {
-    default: "ENDFIELD LAB | Unofficial Global Toolkit",
-    template: "%s | ENDFIELD LAB",
+    default: "Endfield Lab - The Best Arknights: Endfield Tools & Wiki",
+    template: "%s | Endfield Lab - Community Blueprints & Tools",
   },
-  description: "The ultimate research lab for Arknights: Endfield. Featuring factory blueprints, interactive map, character builds, and efficiency tools.",
-  keywords: ["Arknights Endfield", "Endfield Lab", "Endfield Tools", "Blueprints", "Interactive Map", "Tier List"],
+  description: "Share and discover automation blueprints, squad builds, and guides for Arknights: Endfield, enhancing your industrial empire.",
+  keywords: ["Arknights Endfield", "Endfield Lab", "Endfield Tools", "Blueprints", "Squads", "Team Builds", "Guides", "Wiki"],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://www.endfieldlab.info",
+    siteName: "Endfield Lab",
+    title: "Endfield Lab - The Best Arknights: Endfield Tools & Wiki",
+    description: "Share and discover automation blueprints, squad builds, and guides for Arknights: Endfield, enhancing your industrial empire.",
+    images: [
+      {
+        url: "/Logo/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Endfield Lab - Arknights: Endfield Tools & Wiki",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Endfield Lab - The Best Arknights: Endfield Tools & Wiki",
+    description: "Share and discover automation blueprints, squad builds, and guides for Arknights: Endfield, enhancing your industrial empire.",
+    images: ["/Logo/og-image.png"],
+    creator: "@endfieldlab",
+  },
   icons: {
     icon: [
       { url: '/Logo/favicon-16x16.png', sizes: '16x16', type: 'image/png' },

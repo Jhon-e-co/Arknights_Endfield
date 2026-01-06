@@ -1,6 +1,16 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Guides - Operator Strategies & Tactics | Endfield Lab",
+  description: "Tactical analysis, loadout recommendations, and team compositions for Arknights: Endfield operators. Master your favorite characters with detailed guides.",
+  openGraph: {
+    title: "Guides - Operator Strategies & Tactics | Endfield Lab",
+    description: "Tactical analysis, loadout recommendations, and team compositions for Arknights: Endfield operators. Master your favorite characters with detailed guides.",
+  },
+};
 
 export default async function GuidesPage() {
   const supabase = await createClient();
