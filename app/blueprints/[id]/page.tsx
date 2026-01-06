@@ -37,7 +37,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     };
   }
 
-  const author = blueprint.profiles?.username || 'Unknown';
+  const profile = Array.isArray(blueprint.profiles) ? blueprint.profiles[0] : blueprint.profiles;
+  const author = profile?.username || 'Unknown';
   const primaryTag = blueprint.tags?.[0] || 'Blueprint';
   const descriptionSnippet = blueprint.description?.slice(0, 100) || '';
   const fullDescription = `Check out this ${primaryTag} blueprint. Likes: ${blueprint.likes || 0}. Usage: ${descriptionSnippet}${descriptionSnippet.length >= 100 ? '...' : ''}`;

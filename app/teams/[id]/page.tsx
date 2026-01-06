@@ -32,7 +32,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     };
   }
 
-  const author = squad.profiles?.username || 'Unknown';
+  const profile = Array.isArray(squad.profiles) ? squad.profiles[0] : squad.profiles;
+  const author = profile?.username || 'Unknown';
   const descriptionSnippet = squad.description?.slice(0, 100) || '';
   const fullDescription = `Best team build: ${squad.title}. Likes: ${squad.likes || 0}. ${descriptionSnippet}${descriptionSnippet.length >= 100 ? '...' : ''}`;
   const primaryTag = squad.tags?.[0] || 'Squad';
