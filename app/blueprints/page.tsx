@@ -7,20 +7,52 @@ import { AdUnit } from '@/components/ui/ad-unit';
 import { createClient } from '@/lib/supabase/server';
 import { Blueprint } from '@/lib/mock-data';
 import { BlueprintsGrid } from '@/components/blueprints/blueprints-grid';
+import { FilterBar } from '@/components/blueprints/filter-bar';
 
 export const dynamic = 'force-dynamic';
 
-export default async function BlueprintsPage() {
+export default async function BlueprintsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ sort?: string; material?: string; stage?: string }>;
+}) {
+  const params = await searchParams;
+  const sort = params.sort || 'newest';
+  const material = params.material || '';
+  const stage = params.stage || '';
+
   const supabase = await createClient();
 
+  let query = supabase
+    .from('blueprints')
+    .select(`
+      *,
+      profiles (username, avatar_url)
+    `);
+
+  if (material) {
+    query = query.contains('tags', [material]);
+  }
+
+  if (stage) {
+    query = query.contains('tags', [stage]);
+  }
+
+  switch (sort) {
+    case 'oldest':
+      query = query.order('created_at', { ascending: true });
+      break;
+    case 'popular':
+      query = query.order('likes', { ascending: false });
+      break;
+    case 'newest':
+    default:
+      query = query.order('created_at', { ascending: false });
+      break;
+  }
+
   const [blueprintsResult, { data: { user } }] = await Promise.all([
-    supabase
-      .from('blueprints')
-      .select(`
-        *,
-        profiles (username, avatar_url)
-      `)
-      .order('created_at', { ascending: false }),
+    query,
     supabase.auth.getUser(),
   ]);
 
@@ -79,53 +111,7 @@ export default async function BlueprintsPage() {
 
       {/* Filter Section */}
       <FadeIn delay={0.2}>
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
-          {/* Sort By */}
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-zinc-700 mb-1">
-              Sort by
-            </label>
-            <select
-              className="w-full border-2 border-zinc-200 bg-white rounded-none px-3 py-2"
-            >
-              <option>Most Popular</option>
-              <option>Newest First</option>
-              <option>Oldest First</option>
-              <option>Most Liked</option>
-            </select>
-          </div>
-
-          {/* Material Type */}
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-zinc-700 mb-1">
-              Material Type
-            </label>
-            <select
-              className="w-full border-2 border-zinc-200 bg-white rounded-none px-3 py-2"
-            >
-              <option>All Materials</option>
-              <option>Iron</option>
-              <option>Copper</option>
-              <option>Silicon</option>
-              <option>Water</option>
-            </select>
-          </div>
-
-          {/* Additional Filter Placeholder */}
-          <div className="flex-1 hidden md:block">
-            <label className="block text-sm font-medium text-zinc-700 mb-1">
-              Stage
-            </label>
-            <select
-              className="w-full border-2 border-zinc-200 bg-white rounded-none px-3 py-2"
-            >
-              <option>All Stages</option>
-              <option>Early Game</option>
-              <option>Mid Game</option>
-              <option>End Game</option>
-            </select>
-          </div>
-        </div>
+        <FilterBar />
       </FadeIn>
 
       {/* Blueprints Grid with Stagger Animation */}
