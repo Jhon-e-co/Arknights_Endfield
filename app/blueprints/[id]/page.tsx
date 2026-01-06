@@ -30,12 +30,20 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     .eq('id', id)
     .single();
   
-  if (!blueprint) return { title: "Blueprint Not Found" };
+  if (!blueprint) {
+    return { 
+      title: "Blueprint Not Found | Endfield Lab",
+      description: "The requested blueprint could not be found."
+    };
+  }
 
   const author = blueprint.profiles?.username || 'Unknown';
   const primaryTag = blueprint.tags?.[0] || 'Blueprint';
   const descriptionSnippet = blueprint.description?.slice(0, 100) || '';
   const fullDescription = `Check out this ${primaryTag} blueprint. Likes: ${blueprint.likes || 0}. Usage: ${descriptionSnippet}${descriptionSnippet.length >= 100 ? '...' : ''}`;
+  
+  const ogImage = blueprint.image_url || '/Logo/og-image.png';
+  const imagesArray = ogImage ? [ogImage] : [];
 
   return {
     title: `${blueprint.title} by ${author} | Endfield Lab`,
@@ -43,20 +51,20 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     openGraph: {
       title: `${blueprint.title} by ${author} | Endfield Lab`,
       description: fullDescription,
-      images: [
+      images: ogImage ? [
         {
-          url: blueprint.image_url,
+          url: ogImage,
           width: 1280,
           height: 720,
           alt: blueprint.title,
         },
-      ],
+      ] : [],
     },
     twitter: {
       card: "summary_large_image",
       title: `${blueprint.title} by ${author} | Endfield Lab`,
       description: fullDescription,
-      images: [blueprint.image_url],
+      images: imagesArray,
     },
   };
 }

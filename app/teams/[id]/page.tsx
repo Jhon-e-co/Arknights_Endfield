@@ -25,12 +25,20 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     .eq("id", id)
     .single();
   
-  if (!squad) return { title: "Squad Not Found" };
+  if (!squad) {
+    return { 
+      title: "Squad Not Found | Endfield Lab",
+      description: "The requested squad could not be found."
+    };
+  }
 
   const author = squad.profiles?.username || 'Unknown';
   const descriptionSnippet = squad.description?.slice(0, 100) || '';
   const fullDescription = `Best team build: ${squad.title}. Likes: ${squad.likes || 0}. ${descriptionSnippet}${descriptionSnippet.length >= 100 ? '...' : ''}`;
   const primaryTag = squad.tags?.[0] || 'Squad';
+  
+  const ogImage = '/Logo/og-image.png';
+  const imagesArray = ogImage ? [ogImage] : [];
 
   return {
     title: `${squad.title} - Best Team Build | Endfield Lab`,
@@ -38,20 +46,20 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     openGraph: {
       title: `${squad.title} - Best Team Build | Endfield Lab`,
       description: fullDescription,
-      images: [
+      images: ogImage ? [
         {
-          url: "/Logo/og-image.png",
+          url: ogImage,
           width: 1200,
           height: 630,
           alt: squad.title,
         },
-      ],
+      ] : [],
     },
     twitter: {
       card: "summary_large_image",
       title: `${squad.title} - Best Team Build | Endfield Lab`,
       description: fullDescription,
-      images: ["/Logo/og-image.png"],
+      images: imagesArray,
     },
   };
 }
