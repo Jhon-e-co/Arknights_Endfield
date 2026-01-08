@@ -4,7 +4,8 @@ import { FadeIn } from '@/components/ui/motion-wrapper';
 
 export default function Home() {
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+    <>
+      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background Decorations */}
       <div className="absolute inset-0 bg-white"></div>
       
@@ -221,5 +222,6 @@ export default function Home() {
         </FadeIn>
       </div>
     </section>
+    </>
   );
 }
