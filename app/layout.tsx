@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.endfieldlab.info'),
+  alternates: {
+    canonical: './',
+  },
   title: {
     default: "Endfield Lab - The Best Arknights: Endfield Tools & Wiki",
     template: "%s | Endfield Lab - Community Blueprints & Tools",
