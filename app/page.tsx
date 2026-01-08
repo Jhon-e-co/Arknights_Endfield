@@ -76,5 +76,150 @@ export default function Home() {
         </FadeIn>
       </div>
     </section>
+
+    {/* Features Section */}
+    <section className="py-20 bg-zinc-950">
+      <div className="container mx-auto px-4">
+        <FadeIn>
+          <h2 className="text-4xl md:text-5xl font-black text-center mb-4">
+            Explore Endfield Lab
+          </h2>
+          <p className="text-zinc-400 text-center text-lg mb-12 max-w-2xl mx-auto">
+            Powerful tools designed to enhance your Arknights: Endfield experience
+          </p>
+        </FadeIn>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Blueprint Card */}
+          <FadeIn delay={0.1}>
+            <Link href="/blueprints" className="block group">
+              <div className="bg-zinc-900 border-2 border-zinc-800 rounded-lg p-6 hover:border-brand transition-all hover:shadow-[4px_4px_0px_0px_rgba(252,238,33,1)]">
+                <div className="text-brand mb-4">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-2 group-hover:text-brand transition-colors">
+                  Automated Blueprints
+                </h3>
+                <p className="text-zinc-400">
+                  Share and replicate efficient factory layouts
+                </p>
+              </div>
+            </Link>
+          </FadeIn>
+
+          {/* Teams Card */}
+          <FadeIn delay={0.2}>
+            <Link href="/teams" className="block group">
+              <div className="bg-zinc-900 border-2 border-zinc-800 rounded-lg p-6 hover:border-brand transition-all hover:shadow-[4px_4px_0px_0px_rgba(252,238,33,1)]">
+                <div className="text-brand mb-4">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-2 group-hover:text-brand transition-colors">
+                  Tactical Squads
+                </h3>
+                <p className="text-zinc-400">
+                  Optimize operator teams for high-difficulty stages
+                </p>
+              </div>
+            </Link>
+          </FadeIn>
+
+          {/* Guides Card */}
+          <FadeIn delay={0.3}>
+            <Link href="/guides" className="block group">
+              <div className="bg-zinc-900 border-2 border-zinc-800 rounded-lg p-6 hover:border-brand transition-all hover:shadow-[4px_4px_0px_0px_rgba(252,238,33,1)]">
+                <div className="text-brand mb-4">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-2 group-hover:text-brand transition-colors">
+                  Strategy Guides
+                </h3>
+                <p className="text-zinc-400">
+                  In-depth mechanics analysis and walkthroughs
+                </p>
+              </div>
+            </Link>
+          </FadeIn>
+
+          {/* Map Card */}
+          <FadeIn delay={0.4}>
+            <Link href="/map" className="block group">
+              <div className="bg-zinc-900 border-2 border-zinc-800 rounded-lg p-6 hover:border-brand transition-all hover:shadow-[4px_4px_0px_0px_rgba(252,238,33,1)]">
+                <div className="text-brand mb-4">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-2 group-hover:text-brand transition-colors">
+                  Interactive Map
+                </h3>
+                <p className="text-zinc-400">
+                  Resource nodes and landmark locations
+                </p>
+              </div>
+            </Link>
+          </FadeIn>
+
+          {/* Calculator Card */}
+          <FadeIn delay={0.5}>
+            <Link href="/calculator" className="block group">
+              <div className="bg-zinc-900 border-2 border-zinc-800 rounded-lg p-6 hover:border-brand transition-all hover:shadow-[4px_4px_0px_0px_rgba(252,238,33,1)]">
+                <div className="text-brand mb-4">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-2 group-hover:text-brand transition-colors">
+                  Tools & Calculator
+                </h3>
+                <p className="text-zinc-400">
+                  Production efficiency and material planning
+                </p>
+              </div>
+            </Link>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+
+    {/* Status & Feedback Section */}
+    <section className="py-20 bg-zinc-900/50">
+      <div className="container mx-auto px-4 text-center">
+        <FadeIn>
+          <h2 className="text-4xl md:text-5xl font-black mb-6">
+            Work in Progress
+          </h2>
+          <p className="text-zinc-400 text-lg mb-8 max-w-2xl mx-auto">
+            Endfield Lab is currently in active development. Features may change as we improve the platform.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={0.2}>
+          <div className="bg-zinc-900 border-2 border-zinc-800 rounded-lg p-8 max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold mb-4 text-brand">
+              We Need Your Feedback
+            </h3>
+            <p className="text-zinc-400 mb-6">
+              Have a suggestion or found a bug? Help us build the ultimate toolkit for Arknights: Endfield players.
+            </p>
+            <a 
+              href="mailto:endfieldlabs@gmail.com"
+              className="inline-flex items-center gap-3 bg-brand text-black px-6 py-3 rounded-md font-bold hover:bg-brand-hover transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              endfieldlabs@gmail.com
+            </a>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
   );
 }
