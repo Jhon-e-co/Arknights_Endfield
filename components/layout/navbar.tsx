@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import { UserDropdown } from "./user-dropdown";
+import { MusicWidget } from "@/components/music/music-widget";
 
 export default async function Navbar() {
   const supabase = await createClient();
@@ -37,6 +38,7 @@ export default async function Navbar() {
 
         {/* Auth Button */}
         <div className="flex items-center gap-4">
+          <MusicWidget />
           {user ? (
             <UserDropdown user={user} />
           ) : (
