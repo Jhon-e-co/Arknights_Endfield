@@ -7,7 +7,6 @@ interface Track {
   title: string;
   artist: string;
   url: string;
-  cover?: string;
 }
 
 type LoopMode = 'sequential' | 'single' | 'shuffle';
@@ -36,7 +35,6 @@ const DEFAULT_PLAYLIST: Track[] = [
     title: "Give Me Something",
     artist: "OneRepublic",
     url: "/music/Give Me Something.mp3",
-    cover: "/music/Give Me Something.jpg",
   },
 ];
 
@@ -51,6 +49,31 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio();
+    }
+  }, []);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.4;
+
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          console.log("Autoplay success, lowering volume to 0.2");
+          setVolume(0.2);
+          audio.volume = 0.2;
+          setIsPlaying(true);
+        })
+        .catch((error) => {
+          console.log("Autoplay prevented, keeping volume at 0.4");
+          setIsPlaying(false);
+          setVolume(0.4);
+          audio.volume = 0.4;
+        });
     }
   }, []);
 
