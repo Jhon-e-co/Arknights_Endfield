@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Play, Pause, Music, Volume2, VolumeX, ChevronUp, ChevronDown } from "lucide-react";
+import { Play, Pause, Music, Volume2, VolumeX, ChevronUp, ChevronDown, Repeat, Repeat1, Shuffle } from "lucide-react";
 import { useMusic } from "@/context/music-context";
 import { Slider } from "@/components/ui/slider";
 
 export function MusicWidget() {
-  const { isPlaying, currentTrack, volume, isExpanded, playlist, togglePlay, playTrack, nextTrack, prevTrack, setVolume, toggleExpanded } = useMusic();
+  const { isPlaying, currentTrack, volume, isExpanded, loopMode, playlist, togglePlay, playTrack, nextTrack, prevTrack, setVolume, toggleExpanded, toggleLoopMode } = useMusic();
   const [isMuted, setIsMuted] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
 
@@ -17,11 +17,33 @@ export function MusicWidget() {
 
   const toggleMute = () => {
     if (isMuted) {
-      setVolume(0.7);
+      setVolume(0.4);
       setIsMuted(false);
     } else {
       setVolume(0);
       setIsMuted(true);
+    }
+  };
+
+  const getLoopModeIcon = () => {
+    switch (loopMode) {
+      case 'sequential':
+        return <Repeat className="w-4 h-4" />;
+      case 'single':
+        return <Repeat1 className="w-4 h-4" />;
+      case 'shuffle':
+        return <Shuffle className="w-4 h-4" />;
+    }
+  };
+
+  const getLoopModeLabel = () => {
+    switch (loopMode) {
+      case 'sequential':
+        return 'Loop All';
+      case 'single':
+        return 'Loop One';
+      case 'shuffle':
+        return 'Shuffle';
     }
   };
 
@@ -60,6 +82,16 @@ export function MusicWidget() {
               <div className="flex items-center justify-between">
                 <h3 className="font-bold text-sm">Playlist</h3>
                 <div className="flex items-center gap-2">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleLoopMode();
+                    }}
+                    className="p-1 hover:bg-zinc-200 rounded transition-colors"
+                    title={getLoopModeLabel()}
+                  >
+                    {getLoopModeIcon()}
+                  </button>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
