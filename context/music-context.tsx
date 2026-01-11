@@ -7,6 +7,7 @@ interface Track {
   title: string;
   artist: string;
   url: string;
+  cover?: string;
 }
 
 interface MusicContextType {
@@ -28,21 +29,10 @@ const MusicContext = createContext<MusicContextType | undefined>(undefined);
 const DEFAULT_PLAYLIST: Track[] = [
   {
     id: "1",
-    title: "Industrial Dreams",
-    artist: "Endfield Lab",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-  },
-  {
-    id: "2",
-    title: "Factory Rhythms",
-    artist: "Endfield Lab",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-  },
-  {
-    id: "3",
-    title: "Mechanical Heart",
-    artist: "Endfield Lab",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    title: "Give Me Something",
+    artist: "OneRepublic",
+    url: "/music/Give Me Something.mp3",
+    cover: "/music/Give Me Something.jpg",
   },
 ];
 
