@@ -49,12 +49,12 @@ export function MusicWidget() {
 
   return (
     <div className="relative">
-      <button
+      <div
         onClick={(e) => {
           e.stopPropagation();
           toggleExpanded();
         }}
-        className="flex items-center gap-2 px-3 py-1.5 bg-black text-[#FCEE21] rounded-full hover:bg-zinc-900 transition-colors"
+        className="flex items-center gap-2 px-3 py-1.5 bg-black text-[#FCEE21] rounded-full hover:bg-zinc-900 transition-colors cursor-pointer"
       >
         <Music className={`w-4 h-4 ${isPlaying ? "animate-pulse" : ""}`} />
         <span className="text-xs font-medium max-w-[120px] truncate hidden sm:block">
@@ -69,7 +69,7 @@ export function MusicWidget() {
         >
           {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3 ml-0.5" />}
         </button>
-      </button>
+      </div>
 
       {isExpanded && (
         <>
