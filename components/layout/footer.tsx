@@ -9,6 +9,14 @@ export default function Footer() {
           <p className="text-xs text-zinc-600 mt-1">Not affiliated with Gryphline or Hypergryph.</p>
         </div>
         <div className="flex flex-col md:flex-row items-center gap-4 text-sm font-mono">
+          <a
+            href="https://discord.gg/dgdMsSYYxs"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#5865F2] transition-colors"
+          >
+            Discord Community
+          </a>
           <FeedbackButton />
           <span>[ STATUS: ONLINE ]</span>
           <span>[ VER: 1.0.0 ]</span>
