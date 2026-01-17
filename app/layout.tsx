@@ -14,11 +14,11 @@ export const metadata: Metadata = {
     canonical: './',
   },
   title: {
-    default: "Endfield Lab - The Best Arknights: Endfield Tools & Wiki",
-    template: "%s | Endfield Lab - Community Blueprints & Tools",
+    default: "Endfield Lab | All-in-One Arknights: Endfield Tool & Wiki",
+    template: "%s | Endfield Lab Tool"
   },
-  description: "Share and discover automation blueprints, squad builds, and guides for Arknights: Endfield, enhancing your industrial empire.",
-  keywords: ["Arknights Endfield", "Endfield Lab", "Endfield Tools", "Blueprints", "Squads", "Team Builds", "Guides", "Wiki"],
+  description: "The comprehensive toolkit for Arknights: Endfield. Features include Automated Blueprints, Interactive Map, Squad Builder, and Material Calculator. Optimization tools for Global Server players.",
+  keywords: ["Arknights Endfield", "Endfield Tool", "Endfield Wiki", "Endfield Blueprints", "Endfield Calculator", "Endfield Map", "Talos-II", "Hypergryph", "Strategy Guide"],
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Endfield Lab - The Best Arknights: Endfield Tools & Wiki",
-    description: "Share and discover automation blueprints, squad builds, and guides for Arknights: Endfield, enhancing your industrial empire.",
+    title: "Endfield Lab | All-in-One Arknights: Endfield Tool & Wiki",
+    description: "The comprehensive toolkit for Arknights: Endfield. Features include Automated Blueprints, Interactive Map, Squad Builder, and Material Calculator. Optimization tools for Global Server players.",
     images: ["/Logo/og-image.png"],
     creator: "@endfieldlab",
   },

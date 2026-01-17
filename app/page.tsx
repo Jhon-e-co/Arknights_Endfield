@@ -2,9 +2,28 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { FadeIn } from '@/components/ui/motion-wrapper';
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Endfield Lab",
+  "applicationCategory": "GameTool",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "A powerful suite of tools for Arknights: Endfield, including factory planners, interactive maps, and team builders.",
+  "featureList": "Blueprint Calculator, Interactive Map, Squad Builder"
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background Decorations */}
       <div className="absolute inset-0 bg-white"></div>
