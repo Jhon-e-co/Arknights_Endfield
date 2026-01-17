@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Play, Pause, Music, Volume2, VolumeX, ChevronUp, ChevronDown, Repeat, Repeat1, Shuffle } from "lucide-react";
 import { useMusic } from "@/context/music-context";
 import { Slider } from "@/components/ui/slider";
 
-export function MusicWidget() {
+function MusicWidgetComponent() {
   const { isPlaying, currentTrack, volume, isExpanded, loopMode, playlist, togglePlay, playTrack, nextTrack, prevTrack, setVolume, toggleExpanded, toggleLoopMode } = useMusic();
   const [isMuted, setIsMuted] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
@@ -185,3 +185,5 @@ export function MusicWidget() {
     </div>
   );
 }
+
+export const MusicWidget = memo(MusicWidgetComponent);

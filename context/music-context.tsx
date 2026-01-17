@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useRef, useEffect } from "react";
+import React, { createContext, useContext, useState, useRef, useEffect, useMemo, useCallback } from "react";
 
 interface Track {
   id: string;
@@ -53,31 +53,6 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.volume = 0.4;
-
-    const playPromise = audio.play();
-
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          console.log("Autoplay success, lowering volume to 0.2");
-          setVolume(0.2);
-          audio.volume = 0.2;
-          setIsPlaying(true);
-        })
-        .catch((error) => {
-          console.log("Autoplay prevented, keeping volume at 0.4");
-          setIsPlaying(false);
-          setVolume(0.4);
-          audio.volume = 0.4;
-        });
-    }
-  }, []);
-
-  useEffect(() => {
     if (audioRef.current && currentTrack) {
       audioRef.current.src = currentTrack.url;
       audioRef.current.volume = volume;
@@ -115,16 +90,16 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
     return () => audio.removeEventListener('ended', handleEnded);
   }, [loopMode]);
 
-  const togglePlay = () => {
+  const togglePlay = useCallback(() => {
     setIsPlaying((prev) => !prev);
-  };
+  }, []);
 
-  const playTrack = (track: Track) => {
+  const playTrack = useCallback((track: Track) => {
     setCurrentTrack(track);
     setIsPlaying(true);
-  };
+  }, []);
 
-  const nextTrack = () => {
+  const nextTrack = useCallback(() => {
     if (!currentTrack || DEFAULT_PLAYLIST.length === 0) return;
 
     if (loopMode === 'shuffle') {
@@ -138,45 +113,49 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
       const nextIndex = (currentIndex + 1) % DEFAULT_PLAYLIST.length;
       playTrack(DEFAULT_PLAYLIST[nextIndex]);
     }
-  };
+  }, [currentTrack, loopMode, playTrack]);
 
-  const prevTrack = () => {
+  const prevTrack = useCallback(() => {
     if (!currentTrack) return;
     const currentIndex = DEFAULT_PLAYLIST.findIndex((t) => t.id === currentTrack.id);
     const prevIndex = (currentIndex - 1 + DEFAULT_PLAYLIST.length) % DEFAULT_PLAYLIST.length;
     playTrack(DEFAULT_PLAYLIST[prevIndex]);
-  };
+  }, [currentTrack, playTrack]);
 
-  const toggleExpanded = () => {
+  const toggleExpanded = useCallback(() => {
     setIsExpanded((prev) => !prev);
-  };
+  }, []);
 
-  const toggleLoopMode = () => {
+  const toggleLoopMode = useCallback(() => {
     setLoopMode((prev) => {
       if (prev === 'sequential') return 'single';
       if (prev === 'single') return 'shuffle';
       return 'sequential';
     });
-  };
+  }, []);
+
+  const setVolumeCallback = useCallback((volume: number) => {
+    setVolume(volume);
+  }, []);
+
+  const contextValue = useMemo(() => ({
+    isPlaying,
+    currentTrack,
+    volume,
+    isExpanded,
+    loopMode,
+    playlist: DEFAULT_PLAYLIST,
+    togglePlay,
+    playTrack,
+    nextTrack,
+    prevTrack,
+    setVolume: setVolumeCallback,
+    toggleExpanded,
+    toggleLoopMode,
+  }), [isPlaying, currentTrack, volume, isExpanded, loopMode, togglePlay, playTrack, nextTrack, prevTrack, setVolumeCallback, toggleExpanded, toggleLoopMode]);
 
   return (
-    <MusicContext.Provider
-      value={{
-        isPlaying,
-        currentTrack,
-        volume,
-        isExpanded,
-        loopMode,
-        playlist: DEFAULT_PLAYLIST,
-        togglePlay,
-        playTrack,
-        nextTrack,
-        prevTrack,
-        setVolume,
-        toggleExpanded,
-        toggleLoopMode,
-      }}
-    >
+    <MusicContext.Provider value={contextValue}>
       {children}
     </MusicContext.Provider>
   );
