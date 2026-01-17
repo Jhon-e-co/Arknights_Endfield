@@ -1,12 +1,25 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/client";
 import { UserDropdown } from "./user-dropdown";
 import { MusicWidget } from "@/components/music/music-widget";
 
-export default async function Navbar() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+export default function Navbar() {
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+      setLoading(false);
+    }).catch(() => {
+      setLoading(false);
+    });
+  }, []);
 
   return (
     <nav className="sticky top-0 z-[2000] w-full border-b border-zinc-200 bg-white/80 backdrop-blur-md">
@@ -50,7 +63,9 @@ export default async function Navbar() {
             </svg>
           </a>
           <MusicWidget />
-          {user ? (
+          {loading ? (
+            <div className="w-24 h-9 bg-zinc-200 animate-pulse rounded-none" />
+          ) : user ? (
             <UserDropdown user={user} />
           ) : (
             <Link href="/auth/login">
