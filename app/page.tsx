@@ -78,19 +78,19 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             {/* Primary Button */}
             <Link 
-              href="/blueprints" 
+              href="/map" 
               className="bg-brand text-black px-8 py-4 rounded-md font-bold text-lg flex items-center gap-2 hover:bg-brand-hover transition-colors"
             >
-              Browse Blueprints
+              Interactive Map
               <ArrowRight className="w-5 h-5" />
             </Link>
             
             {/* Secondary Button */}
             <Link 
-              href="/map" 
+              href="/calculator" 
               className="bg-white text-black border-2 border-black px-8 py-4 rounded-md font-bold text-lg hover:bg-zinc-100 transition-colors"
             >
-              Interactive Map
+              Tools & Calculator
             </Link>
           </div>
         </FadeIn>
@@ -113,54 +113,6 @@ export default function Home() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Link href="/blueprints" className="block group">
-            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#FCEE21] transition-all rounded-2xl p-8">
-              <div className="w-12 h-12 flex items-center justify-center bg-[#FCEE21] border border-black mb-4 rounded-xl">
-                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-black">
-                Automated Blueprints
-              </h3>
-              <p className="text-zinc-600">
-                Share and replicate efficient factory layouts
-              </p>
-            </div>
-          </Link>
-
-          <Link href="/teams" className="block group">
-            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#FCEE21] transition-all rounded-2xl p-8">
-              <div className="w-12 h-12 flex items-center justify-center bg-[#FCEE21] border border-black mb-4 rounded-xl">
-                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-black">
-                Tactical Squads
-              </h3>
-              <p className="text-zinc-600">
-                Optimize operator teams for high-difficulty stages
-              </p>
-            </div>
-          </Link>
-
-          <Link href="/guides" className="block group">
-            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#FCEE21] transition-all rounded-2xl p-8">
-              <div className="w-12 h-12 flex items-center justify-center bg-[#FCEE21] border border-black mb-4 rounded-xl">
-                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-black">
-                Strategy Guides
-              </h3>
-              <p className="text-zinc-600">
-                In-depth mechanics analysis and walkthroughs
-              </p>
-            </div>
-          </Link>
-
           <Link href="/map" className="block group">
             <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#FCEE21] transition-all rounded-2xl p-8">
               <div className="w-12 h-12 flex items-center justify-center bg-[#FCEE21] border border-black mb-4 rounded-xl">
@@ -189,6 +141,54 @@ export default function Home() {
               </h3>
               <p className="text-zinc-600">
                 Production efficiency and material planning
+              </p>
+            </div>
+          </Link>
+
+          <Link href="/guides" className="block group">
+            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#FCEE21] transition-all rounded-2xl p-8">
+              <div className="w-12 h-12 flex items-center justify-center bg-[#FCEE21] border border-black mb-4 rounded-xl">
+                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-black">
+                Strategy Guides
+              </h3>
+              <p className="text-zinc-600">
+                In-depth mechanics analysis and walkthroughs
+              </p>
+            </div>
+          </Link>
+
+          <Link href="/blueprints" className="block group">
+            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#FCEE21] transition-all rounded-2xl p-8">
+              <div className="w-12 h-12 flex items-center justify-center bg-[#FCEE21] border border-black mb-4 rounded-xl">
+                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-black">
+                Automated Blueprints
+              </h3>
+              <p className="text-zinc-600">
+                Share and replicate efficient factory layouts
+              </p>
+            </div>
+          </Link>
+
+          <Link href="/teams" className="block group">
+            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#FCEE21] transition-all rounded-2xl p-8">
+              <div className="w-12 h-12 flex items-center justify-center bg-[#FCEE21] border border-black mb-4 rounded-xl">
+                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-black">
+                Tactical Squads
+              </h3>
+              <p className="text-zinc-600">
+                Optimize operator teams for high-difficulty stages
               </p>
             </div>
           </Link>

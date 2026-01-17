@@ -19,20 +19,20 @@ export default async function Navbar() {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-600">
-          <Link href="/blueprints" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
-            Blueprints
-          </Link>
-          <Link href="/teams" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
-            Squads
-          </Link>
-          <Link href="/guides" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
-            Guides
-          </Link>
           <Link href="/map" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
             Map
           </Link>
           <Link href="/calculator" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
             Calculator
+          </Link>
+          <Link href="/guides" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
+            Guides
+          </Link>
+          <Link href="/blueprints" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
+            Blueprints
+          </Link>
+          <Link href="/teams" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
+            Squads
           </Link>
         </div>
 
