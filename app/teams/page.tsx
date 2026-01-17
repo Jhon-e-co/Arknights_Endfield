@@ -1,9 +1,9 @@
+import { Suspense } from 'react';
 import { createClient } from "@/lib/supabase/server";
-import { TeamCard } from "@/components/teams/team-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Plus } from "lucide-react";
 import { Metadata } from "next";
+import { TeamsList, TeamsSkeleton } from './components/teams-list';
 
 export const dynamic = "force-dynamic";
 
@@ -18,55 +18,11 @@ export const metadata: Metadata = {
 
 export default async function TeamsPage() {
   const supabase = await createClient();
-
-  const [squadsResult, charactersResult, { data: { user } }] = await Promise.all([
-    supabase
-      .from("squads")
-      .select("*, profiles(username, avatar_url)")
-      .order("created_at", { ascending: false }),
-    supabase.from("characters").select("*"),
-    supabase.auth.getUser(),
-  ]);
-
-  const squads = squadsResult.data || [];
-  const characters = charactersResult.data || [];
-
-  const characterMap = new Map(characters.map((c) => [c.id, c]));
-
-  let userLikes: Set<string> = new Set();
-  let userFavorites: Set<string> = new Set();
-
-  if (user) {
-    const [likesResult, favoritesResult] = await Promise.all([
-      supabase.from("squad_likes").select("squad_id").eq("user_id", user.id),
-      supabase.from("saved_squads").select("squad_id").eq("user_id", user.id),
-    ]);
-
-    userLikes = new Set(likesResult.data?.map(l => l.squad_id) || []);
-    userFavorites = new Set(favoritesResult.data?.map(f => f.squad_id) || []);
-  }
-
-  const formattedSquads = squads.map((squad) => {
-    const squadMembers = (squad.members || [])
-      .map((id: string) => characterMap.get(id))
-      .filter(Boolean);
-
-    return {
-      id: squad.id,
-      title: squad.title,
-      description: squad.description || "",
-      members: squadMembers,
-      likes: squad.likes || 0,
-      profiles: squad.profiles,
-      author_id: squad.author_id,
-      tags: [],
-      initialIsLiked: userLikes.has(squad.id),
-      initialIsCollected: userFavorites.has(squad.id),
-    };
-  });
+  const { data: { user } } = await supabase.auth.getUser();
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Header */}
       <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
         <div>
           <h1 className="text-3xl font-black uppercase tracking-wider mb-2">
@@ -83,20 +39,10 @@ export default async function TeamsPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {formattedSquads.length > 0 ? (
-          formattedSquads.map((squad) => (
-            <TeamCard 
-              key={squad.id} 
-              squad={squad} 
-            />
-          ))
-        ) : (
-          <div className="col-span-full text-center py-20 bg-zinc-50 border border-dashed border-zinc-200">
-            <p className="text-zinc-500">No squads found. Be the first to create one!</p>
-          </div>
-        )}
-      </div>
+      {/* Teams List with Suspense */}
+      <Suspense fallback={<TeamsSkeleton />}>
+        <TeamsList userId={user?.id} />
+      </Suspense>
     </div>
   );
 }
