@@ -1,28 +1,26 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { FadeIn } from '@/components/ui/motion-wrapper';
-import Script from 'next/script';
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Endfield Lab",
-  "applicationCategory": "GameTool",
-  "operatingSystem": "Web",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "description": "A powerful suite of tools for Arknights: Endfield, including factory planners, interactive maps, and team builders.",
-  "featureList": "Blueprint Calculator, Interactive Map, Squad Builder"
-};
 
 export default function Home() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    'name': 'Endfield Lab',
+    'applicationCategory': 'GameTool',
+    'operatingSystem': 'Web',
+    'description': 'The ultimate toolkit for Arknights: Endfield. Share and discover automation blueprints, interactive map, production calculator, squad builds, and guides for Global Server players.',
+    'url': 'https://www.endfieldlab.info',
+    'offers': {
+      '@type': 'Offer',
+      'price': '0',
+      'priceCurrency': 'USD'
+    }
+  };
+
   return (
     <>
-      <Script
-        id="json-ld"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />

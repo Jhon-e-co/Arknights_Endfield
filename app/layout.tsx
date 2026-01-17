@@ -15,17 +15,17 @@ export const metadata: Metadata = {
   },
   title: {
     default: "Endfield Lab | All-in-One Arknights: Endfield Tool & Wiki",
-    template: "%s | Endfield Lab Tool"
+    template: "%s | Endfield Lab - Community Blueprints & Tools",
   },
-  description: "The comprehensive toolkit for Arknights: Endfield. Features include Automated Blueprints, Interactive Map, Squad Builder, and Material Calculator. Optimization tools for Global Server players.",
-  keywords: ["Arknights Endfield", "Endfield Tool", "Endfield Wiki", "Endfield Blueprints", "Endfield Calculator", "Endfield Map", "Talos-II", "Hypergryph", "Strategy Guide"],
+  description: "The ultimate toolkit for Arknights: Endfield. Share and discover automation blueprints, interactive map, production calculator, squad builds, and guides for Global Server players.",
+  keywords: ["Arknights Endfield", "Endfield Lab", "Endfield Tools", "Blueprints", "Map", "Calculator", "Squads", "Team Builds", "Guides", "Wiki"],
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://www.endfieldlab.info",
     siteName: "Endfield Lab",
-    title: "Endfield Lab - The Best Arknights: Endfield Tools & Wiki",
-    description: "Share and discover automation blueprints, squad builds, and guides for Arknights: Endfield, enhancing your industrial empire.",
+    title: "Endfield Lab | All-in-One Arknights: Endfield Tool & Wiki",
+    description: "The ultimate toolkit for Arknights: Endfield. Share and discover automation blueprints, interactive map, production calculator, squad builds, and guides for Global Server players.",
     images: [
       {
         url: "/Logo/og-image.png",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Endfield Lab | All-in-One Arknights: Endfield Tool & Wiki",
-    description: "The comprehensive toolkit for Arknights: Endfield. Features include Automated Blueprints, Interactive Map, Squad Builder, and Material Calculator. Optimization tools for Global Server players.",
+    description: "The ultimate toolkit for Arknights: Endfield. Share and discover automation blueprints, interactive map, production calculator, squad builds, and guides for Global Server players.",
     images: ["/Logo/og-image.png"],
     creator: "@endfieldlab",
   },
