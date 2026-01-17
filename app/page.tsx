@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { FadeIn } from '@/components/ui/motion-wrapper';
+import Script from 'next/script';
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -20,7 +21,8 @@ const jsonLd = {
 export default function Home() {
   return (
     <>
-      <script
+      <Script
+        id="json-ld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
