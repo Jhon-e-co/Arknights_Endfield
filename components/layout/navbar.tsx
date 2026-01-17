@@ -22,8 +22,8 @@ export default async function Navbar() {
           <Link href="/map" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
             Map
           </Link>
-          <Link href="/calculator" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
-            Calculator
+          <Link href="/tools/recruitment" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
+            Tools
           </Link>
           <Link href="/guides" className="hover:text-black hover:underline decoration-[#FCEE21] decoration-2 underline-offset-4 transition-colors">
             Guides

@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Calculator, Sparkles, History, RotateCcw, Trash2 } from 'lucide-react';
+import { Calculator, Sparkles, History, Trash2 } from 'lucide-react';
 import BannerDisplay from '@/components/gacha/banner-display';
 import GachaResults from '@/components/gacha/gacha-results';
-import { useGachaStore } from '@/app/calculator/use-gacha-store';
+import { useGachaStore } from '@/app/tools/recruitment/use-gacha-store';
 import { RARITY_COLORS } from '@/lib/gacha/data';
 
-export default function CalculatorPage() {
+export default function RecruitmentPage() {
   const { history, totalPulls, inventory, resetHistory } = useGachaStore();
   const [activeTab, setActiveTab] = useState<'simulator' | 'history'>('simulator');
   const [mounted, setMounted] = useState(false);
@@ -18,7 +18,7 @@ export default function CalculatorPage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-zinc-900 text-white flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-zinc-400">Loading...</div>
       </div>
     );
@@ -39,9 +39,8 @@ export default function CalculatorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-white">
+    <div className="min-h-screen bg-white text-zinc-900">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
         <div className="flex items-center gap-2 mb-8">
           <Calculator className="w-8 h-8 text-[#FCEE21]" />
           <h1 className="text-3xl font-bold uppercase">
@@ -49,14 +48,13 @@ export default function CalculatorPage() {
           </h1>
         </div>
 
-        {/* Tool Tabs */}
-        <div className="flex gap-4 mb-8 border-b border-zinc-800 pb-4">
+        <div className="flex gap-4 mb-8 border-b-2 border-zinc-200 pb-4">
           <button
             onClick={() => setActiveTab('simulator')}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'simulator'
                 ? 'bg-[#FCEE21] text-black font-bold'
-                : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+                : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
             }`}
           >
             <Sparkles className="w-5 h-5" />
@@ -67,7 +65,7 @@ export default function CalculatorPage() {
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
               activeTab === 'history'
                 ? 'bg-[#FCEE21] text-black font-bold'
-                : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+                : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
             }`}
           >
             <History className="w-5 h-5" />
@@ -75,7 +73,6 @@ export default function CalculatorPage() {
           </button>
         </div>
 
-        {/* Simulator Tab */}
         {activeTab === 'simulator' && (
           <div className="space-y-8">
             <BannerDisplay />
@@ -83,53 +80,49 @@ export default function CalculatorPage() {
           </div>
         )}
 
-        {/* History Tab */}
         {activeTab === 'history' && (
           <div className="space-y-6">
-            {/* Stats Overview */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-4">
-                <div className="text-zinc-400 text-sm mb-1">Total Pulls</div>
-                <div className="text-3xl font-bold">{totalPulls}</div>
+              <div className="bg-zinc-50 border-2 border-zinc-200 rounded-lg p-4">
+                <div className="text-zinc-500 text-sm mb-1">Total Pulls</div>
+                <div className="text-3xl font-bold text-zinc-900">{totalPulls}</div>
               </div>
-              <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-4">
+              <div className="bg-zinc-50 border-2 border-zinc-200 rounded-lg p-4">
                 <div className="text-[#FF4400] text-sm mb-1">6★ Count</div>
-                <div className="text-3xl font-bold">{sixStarCount}</div>
+                <div className="text-3xl font-bold text-[#FF4400]">{sixStarCount}</div>
               </div>
-              <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-4">
+              <div className="bg-zinc-50 border-2 border-zinc-200 rounded-lg p-4">
                 <div className="text-[#FCEE21] text-sm mb-1">5★ Count</div>
-                <div className="text-3xl font-bold">{fiveStarCount}</div>
+                <div className="text-3xl font-bold text-[#FCEE21]">{fiveStarCount}</div>
               </div>
-              <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-4">
+              <div className="bg-zinc-50 border-2 border-zinc-200 rounded-lg p-4">
                 <div className="text-[#A855F7] text-sm mb-1">4★ Count</div>
-                <div className="text-3xl font-bold">{fourStarCount}</div>
+                <div className="text-3xl font-bold text-[#A855F7]">{fourStarCount}</div>
               </div>
             </div>
 
-            {/* Luck Analysis */}
-            <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-6">
+            <div className="bg-zinc-50 border-2 border-zinc-200 rounded-lg p-6">
               <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-[#FCEE21]" />
                 Luck Analysis
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <div className="text-zinc-400 text-sm mb-1">Average 6★ Pity</div>
+                  <div className="text-zinc-500 text-sm mb-1">Average 6★ Pity</div>
                   <div className="text-2xl font-bold text-[#FF4400]">{averagePity6}</div>
-                  <div className="text-xs text-zinc-500 mt-1">Lower is better</div>
+                  <div className="text-xs text-zinc-400 mt-1">Lower is better</div>
                 </div>
                 <div>
-                  <div className="text-zinc-400 text-sm mb-1">6★ Rate</div>
+                  <div className="text-zinc-500 text-sm mb-1">6★ Rate</div>
                   <div className="text-2xl font-bold text-[#FF4400]">
                     {totalPulls > 0 ? ((sixStarCount / totalPulls) * 100).toFixed(2) : '0.00'}%
                   </div>
-                  <div className="text-xs text-zinc-500 mt-1">Expected: 0.8%</div>
+                  <div className="text-xs text-zinc-400 mt-1">Expected: 0.8%</div>
                 </div>
               </div>
             </div>
 
-            {/* Inventory */}
-            <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-6">
+            <div className="bg-zinc-50 border-2 border-zinc-200 rounded-lg p-6">
               <h2 className="text-xl font-bold mb-4">Inventory</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {Object.entries(inventory)
@@ -141,10 +134,10 @@ export default function CalculatorPage() {
                     return (
                       <div
                         key={charId}
-                        className="bg-zinc-900 border-2 rounded-lg p-3 text-center"
+                        className="bg-white border-2 rounded-lg p-3 text-center"
                         style={{ borderColor: color }}
                       >
-                        <div className="text-lg font-bold mb-1">{char.name}</div>
+                        <div className="text-lg font-bold mb-1 text-zinc-900">{char.name}</div>
                         <div className="text-xs text-zinc-400">x{count}</div>
                         <div className="text-xs mt-1" style={{ color }}>
                           {'★'.repeat(char.rarity)}
@@ -153,14 +146,12 @@ export default function CalculatorPage() {
                     );
                   })}
                 {Object.keys(inventory).length === 0 && (
-                  <div className="col-span-full text-center py-8 text-zinc-500">
+                  <div className="col-span-full text-center py-8 text-zinc-400">
                     <p>No characters recruited yet</p>
                   </div>
                 )}
               </div>
-            </div>
 
-            {/* Action Buttons */}
             <div className="flex justify-end gap-4">
               <button
                 onClick={handleReset}

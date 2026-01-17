@@ -6,6 +6,7 @@ export interface Character {
   rarity: Rarity;
   element: string;
   type: string;
+  image: string;
 }
 
 export const RARITY_COLORS: Record<Rarity, string> = {
@@ -21,6 +22,7 @@ export const CHARACTERS: Character[] = [
     rarity: 6,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Ember.webp',
   },
   {
     id: 'gilberta',
@@ -28,6 +30,7 @@ export const CHARACTERS: Character[] = [
     rarity: 6,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Gilberta.webp',
   },
   {
     id: 'lifeng',
@@ -35,6 +38,7 @@ export const CHARACTERS: Character[] = [
     rarity: 6,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Lifeng.webp',
   },
   {
     id: 'laevatain',
@@ -42,6 +46,7 @@ export const CHARACTERS: Character[] = [
     rarity: 6,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Laevatain.webp',
   },
   {
     id: 'yvonne',
@@ -49,6 +54,7 @@ export const CHARACTERS: Character[] = [
     rarity: 6,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Yvonne.webp',
   },
   {
     id: 'ardelia',
@@ -56,6 +62,7 @@ export const CHARACTERS: Character[] = [
     rarity: 6,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Ardelia.webp',
   },
   {
     id: 'last-rite',
@@ -63,6 +70,7 @@ export const CHARACTERS: Character[] = [
     rarity: 6,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Last_Rite.webp',
   },
   {
     id: 'pogranichnik',
@@ -70,6 +78,7 @@ export const CHARACTERS: Character[] = [
     rarity: 6,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Pogranichnik.webp',
   },
   {
     id: 'perlica',
@@ -77,6 +86,7 @@ export const CHARACTERS: Character[] = [
     rarity: 5,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Perlica.webp',
   },
   {
     id: 'chen-qianyu',
@@ -84,6 +94,7 @@ export const CHARACTERS: Character[] = [
     rarity: 5,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Chen_Qianyu.webp',
   },
   {
     id: 'wulfgard',
@@ -91,6 +102,7 @@ export const CHARACTERS: Character[] = [
     rarity: 5,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Wulfgard.webp',
   },
   {
     id: 'arclight',
@@ -98,6 +110,7 @@ export const CHARACTERS: Character[] = [
     rarity: 5,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Arclight.webp',
   },
   {
     id: 'xaihi',
@@ -105,6 +118,7 @@ export const CHARACTERS: Character[] = [
     rarity: 5,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Xaihi.webp',
   },
   {
     id: 'avywenna',
@@ -112,6 +126,7 @@ export const CHARACTERS: Character[] = [
     rarity: 5,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Avywenna.webp',
   },
   {
     id: 'snowshine',
@@ -119,6 +134,7 @@ export const CHARACTERS: Character[] = [
     rarity: 5,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Snowshine.webp',
   },
   {
     id: 'da-pan',
@@ -126,6 +142,7 @@ export const CHARACTERS: Character[] = [
     rarity: 5,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Da_Pan.webp',
   },
   {
     id: 'alesh',
@@ -133,6 +150,7 @@ export const CHARACTERS: Character[] = [
     rarity: 5,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Alesh.webp',
   },
   {
     id: 'akekuri',
@@ -140,6 +158,7 @@ export const CHARACTERS: Character[] = [
     rarity: 4,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Akekuri.webp',
   },
   {
     id: 'catcher',
@@ -147,6 +166,7 @@ export const CHARACTERS: Character[] = [
     rarity: 4,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Catcher.webp',
   },
   {
     id: 'estella',
@@ -154,6 +174,7 @@ export const CHARACTERS: Character[] = [
     rarity: 4,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Estella.webp',
   },
   {
     id: 'fluorite',
@@ -161,6 +182,7 @@ export const CHARACTERS: Character[] = [
     rarity: 4,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Fluorite.webp',
   },
   {
     id: 'antal',
@@ -168,6 +190,7 @@ export const CHARACTERS: Character[] = [
     rarity: 4,
     element: 'Unknown',
     type: 'Unknown',
+    image: '/characters/Antal.webp',
   },
 ];
 
