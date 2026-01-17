@@ -14,16 +14,23 @@ export default function BannerDisplay() {
   return (
     <div className="bg-white border-2 border-zinc-200 rounded-lg overflow-hidden shadow-lg">
       <div className="grid md:grid-cols-2">
-        <div className="relative h-64 md:h-auto bg-gradient-to-br from-zinc-100 to-zinc-50 flex items-center justify-center">
-          <img
-            src="/characters/Ember.webp"
-            alt="Recruitment Banner"
-            className="w-full h-full object-cover opacity-90"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/80" />
-          <div className="absolute bottom-4 left-4 right-4">
-            <h2 className="text-2xl font-black font-bold mb-1">Standard Recruitment</h2>
-            <p className="text-zinc-600 text-sm">Recruit operators for your squad</p>
+        <div className="relative h-64 md:h-auto bg-gradient-to-br from-zinc-100 via-zinc-50 to-white flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute top-0 left-0 w-full h-full" style={{
+              backgroundImage: `
+                radial-gradient(circle at 20% 30%, #FCEE21 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, #FF4400 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, #A855F7 0%, transparent 50%)
+              `
+            }} />
+          </div>
+          <div className="relative z-10 text-center px-8">
+            <div className="text-6xl font-black text-zinc-200 mb-4 tracking-tighter">
+              EF
+            </div>
+            <div className="w-16 h-1 bg-[#FCEE21] mx-auto mb-4" />
+            <h2 className="text-2xl font-black font-bold text-zinc-800 mb-1">Standard Recruitment</h2>
+            <p className="text-zinc-500 text-sm">Recruit operators for your squad</p>
           </div>
         </div>
 

@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useGachaStore } from '@/app/tools/recruitment/use-gacha-store';
 import { RARITY_COLORS, Character } from '@/lib/gacha/data';
-import { X, Share2 } from 'lucide-react';
+import { X, Share2, Eye, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 
 interface CharacterCardProps {
@@ -54,11 +54,89 @@ function CharacterCard({ character, index }: CharacterCardProps) {
   );
 }
 
+interface MysteryCardProps {
+  rarity: number;
+  index: number;
+  isRevealed: boolean;
+  onReveal: () => void;
+}
+
+function MysteryCard({ rarity, index, isRevealed, onReveal }: MysteryCardProps) {
+  const color = RARITY_COLORS[rarity];
+  const isSixStar = rarity === 6;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ 
+        duration: 0.3, 
+        delay: index * 0.05,
+        ease: 'easeOut'
+      }}
+      onClick={onReveal}
+      className={`relative aspect-[3/4] rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 ${
+        isSixStar ? 'shadow-[0_0_30px_rgba(255,68,0,0.6)]' : 'shadow-md'
+      }`}
+      style={{ 
+        backgroundColor: color,
+        boxShadow: isSixStar ? `0 0 40px ${color}80, 0 0 80px ${color}40` : undefined
+      }}
+    >
+      {isSixStar && (
+        <motion.div
+          animate={{
+            opacity: [0.3, 0.6, 0.3],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent"
+        />
+      )}
+      
+      <div className="absolute inset-0 flex items-center justify-center">
+        <motion.div
+          animate={isSixStar ? {
+            scale: [1, 1.2, 1],
+            rotate: [0, 5, -5, 0],
+          } : {}}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="text-center"
+        >
+          <Sparkles className={`w-16 h-16 mx-auto mb-2 ${isSixStar ? 'text-white' : 'text-white/80'}`} />
+          <div className="text-white/90 font-bold text-lg">?</div>
+        </motion.div>
+      </div>
+
+      <div className="absolute bottom-0 left-0 right-0 p-3 bg-black/20 backdrop-blur-sm">
+        <div className="flex justify-between items-center">
+          <div className="text-white/90 font-bold text-sm">
+            {'★'.repeat(rarity)}
+          </div>
+          <Eye className="w-4 h-4 text-white/70" />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function GachaResults() {
   const { lastResults, clearLastResults, setAnimating } = useGachaStore();
+  const [isRevealed, setIsRevealed] = useState(false);
+  const [revealedIndices, setRevealedIndices] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     if (lastResults && lastResults.length > 0) {
+      setIsRevealed(false);
+      setRevealedIndices(new Set());
       const duration = lastResults.length * 80 + 500;
       const timer = setTimeout(() => {
         setAnimating(false);
@@ -75,8 +153,25 @@ export default function GachaResults() {
   const hasSixStar = lastResults.some((r) => r.character.rarity === 6);
   const hasFiveStar = lastResults.some((r) => r.character.rarity === 5);
 
+  const handleRevealAll = () => {
+    setIsRevealed(true);
+    setRevealedIndices(new Set(lastResults.map((_, i) => i)));
+  };
+
+  const handleRevealSingle = (index: number) => {
+    const newRevealed = new Set(revealedIndices);
+    newRevealed.add(index);
+    setRevealedIndices(newRevealed);
+    
+    if (newRevealed.size === lastResults.length) {
+      setIsRevealed(true);
+    }
+  };
+
   const handleClose = () => {
     clearLastResults();
+    setIsRevealed(false);
+    setRevealedIndices(new Set());
   };
 
   return (
@@ -102,11 +197,21 @@ export default function GachaResults() {
 
         <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
           {lastResults.map((result, index) => (
-            <CharacterCard
-              key={`${result.character.id}-${index}`}
-              character={result.character}
-              index={index}
-            />
+            <AnimatePresence key={`${result.character.id}-${index}`} mode="wait">
+              {!isRevealed && !revealedIndices.has(index) ? (
+                <MysteryCard
+                  rarity={result.character.rarity}
+                  index={index}
+                  isRevealed={isRevealed}
+                  onReveal={() => handleRevealSingle(index)}
+                />
+              ) : (
+                <CharacterCard
+                  character={result.character}
+                  index={index}
+                />
+              )}
+            </AnimatePresence>
           ))}
         </div>
 
@@ -117,15 +222,26 @@ export default function GachaResults() {
           >
             Continue
           </button>
-          <button
-            onClick={() => {
-              alert('Share feature coming soon!');
-            }}
-            className="flex items-center gap-2 px-8 py-3 bg-[#FCEE21] text-black rounded-lg hover:bg-[#E5D81C] transition-colors font-bold shadow-md"
-          >
-            <Share2 className="w-5 h-5" />
-            Share Results
-          </button>
+          {!isRevealed && (
+            <button
+              onClick={handleRevealAll}
+              className="flex items-center gap-2 px-8 py-3 bg-[#FCEE21] text-black rounded-lg hover:bg-[#E5D81C] transition-colors font-bold shadow-md"
+            >
+              <Eye className="w-5 h-5" />
+              Reveal Results
+            </button>
+          )}
+          {isRevealed && (
+            <button
+              onClick={() => {
+                alert('Share feature coming soon!');
+              }}
+              className="flex items-center gap-2 px-8 py-3 bg-[#FCEE21] text-black rounded-lg hover:bg-[#E5D81C] transition-colors font-bold shadow-md"
+            >
+              <Share2 className="w-5 h-5" />
+              Share Results
+            </button>
+          )}
         </div>
       </motion.div>
     </div>
