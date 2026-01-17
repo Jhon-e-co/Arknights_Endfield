@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { FadeIn } from '@/components/ui/motion-wrapper';
 
 export default function Home() {
@@ -87,10 +87,10 @@ export default function Home() {
             
             {/* Secondary Button */}
             <Link 
-              href="/calculator" 
+              href="/headhunt" 
               className="bg-white text-black border-2 border-black px-8 py-4 rounded-md font-bold text-lg hover:bg-zinc-100 transition-colors"
             >
-              Tools & Calculator
+              Headhunt Simulator
             </Link>
           </div>
         </FadeIn>
@@ -129,18 +129,16 @@ export default function Home() {
             </div>
           </Link>
 
-          <Link href="/calculator" className="block group">
+          <Link href="/headhunt" className="block group">
             <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#FCEE21] transition-all rounded-2xl p-8">
               <div className="w-12 h-12 flex items-center justify-center bg-[#FCEE21] border border-black mb-4 rounded-xl">
-                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
+                <Sparkles className="w-6 h-6 text-black" />
               </div>
               <h3 className="text-xl font-bold mb-2 text-black">
-                Tools & Calculator
+                Headhunt Simulator
               </h3>
               <p className="text-zinc-600">
-                Production efficiency and material planning
+                Test your luck and analyze your gacha statistics
               </p>
             </div>
           </Link>
