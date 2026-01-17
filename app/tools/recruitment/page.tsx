@@ -88,7 +88,7 @@ export default function RecruitmentPage() {
 
         {activeTab === 'simulator' && (
           <div className="space-y-8">
-            <div className="h-[600px] w-full">
+            <div className="aspect-[21/9] w-full bg-white">
               {viewState === 'banner' ? (
                 <BannerDisplay />
               ) : (

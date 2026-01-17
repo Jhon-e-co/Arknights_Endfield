@@ -12,9 +12,9 @@ export default function BannerDisplay() {
   };
 
   return (
-    <div className="bg-white border-2 border-zinc-200 rounded-lg overflow-hidden shadow-lg">
-      <div className="grid md:grid-cols-2">
-        <div className="relative h-64 md:h-auto bg-gradient-to-br from-zinc-100 via-zinc-50 to-white flex items-center justify-center overflow-hidden">
+    <div className="h-full w-full bg-white">
+      <div className="grid md:grid-cols-2 h-full">
+        <div className="relative bg-gradient-to-br from-zinc-100 via-zinc-50 to-white flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 opacity-5">
             <div className="absolute top-0 left-0 w-full h-full" style={{
               backgroundImage: `
