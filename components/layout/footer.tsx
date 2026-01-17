@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { FeedbackButton } from "./feedback-button";
 
 export default function Footer() {
@@ -18,6 +19,9 @@ export default function Footer() {
             Discord Community
           </a>
           <FeedbackButton />
+          <Link href="/privacy" className="hover:text-zinc-200 transition-colors">
+            Privacy Policy
+          </Link>
           <span>[ STATUS: ONLINE ]</span>
           <span>[ VER: 1.0.0 ]</span>
         </div>

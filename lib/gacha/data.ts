@@ -198,8 +198,14 @@ export function getCharactersByRarity(rarity: Rarity): Character[] {
   return CHARACTERS.filter((char) => char.rarity === rarity);
 }
 
+const CHARACTERS_BY_RARITY_CACHE: Record<Rarity, Character[]> = {
+  6: getCharactersByRarity(6),
+  5: getCharactersByRarity(5),
+  4: getCharactersByRarity(4),
+};
+
 export function getRandomCharacter(rarity: Rarity): Character {
-  const characters = getCharactersByRarity(rarity);
+  const characters = CHARACTERS_BY_RARITY_CACHE[rarity];
   const randomIndex = Math.floor(Math.random() * characters.length);
   return characters[randomIndex];
 }

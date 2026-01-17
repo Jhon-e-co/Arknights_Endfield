@@ -2,21 +2,24 @@
 
 import { useState, useEffect } from 'react';
 import { Calculator, Sparkles, History, Trash2 } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 import BannerDisplay from '@/components/gacha/banner-display';
 import GachaResults from '@/components/gacha/gacha-results';
-import { useGachaStore } from '@/app/tools/recruitment/use-gacha-store';
+import { useGachaStore } from '@/app/headhunt/use-gacha-store';
 import { RARITY_COLORS } from '@/lib/gacha/data';
 
 type ViewState = 'banner' | 'results';
 
 export default function RecruitmentPage() {
-  const { history, totalPulls, inventory, resetHistory, lastResults } = useGachaStore();
+  const { history, totalPulls, inventory, resetHistory, lastResults, fetchStats, setHistory } = useGachaStore();
   const [activeTab, setActiveTab] = useState<'simulator' | 'history'>('simulator');
   const [viewState, setViewState] = useState<ViewState>('banner');
   const [mounted, setMounted] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     setMounted(true);
+    checkUser();
   }, []);
 
   useEffect(() => {
@@ -24,6 +27,35 @@ export default function RecruitmentPage() {
       setViewState('results');
     }
   }, [lastResults]);
+
+  const checkUser = async () => {
+    try {
+      const supabase = createClient();
+      const { data: { user }, error } = await supabase.auth.getUser();
+      
+      if (!error && user) {
+        setUser(user);
+        await fetchHistoryFromServer();
+        await fetchStats();
+      }
+    } catch (error) {
+      console.error('Failed to check user:', error);
+    }
+  };
+
+  const fetchHistoryFromServer = async () => {
+    try {
+      const response = await fetch('/api/gacha/history');
+      if (response.ok) {
+        const { data } = await response.json();
+        if (data.history && data.history.length > 0) {
+          setHistory(data.history, data.inventory);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch history:', error);
+    }
+  };
 
   if (!mounted) {
     return (
@@ -57,7 +89,7 @@ export default function RecruitmentPage() {
         <div className="flex items-center gap-2 mb-8">
           <Calculator className="w-8 h-8 text-[#FCEE21]" />
           <h1 className="text-3xl font-bold uppercase">
-            <span className="bg-[#FCEE21] px-1 text-black">TOOLS</span> HUB
+            <span className="bg-[#FCEE21] px-1 text-black">HEADHUNT</span> SIMULATOR
           </h1>
         </div>
 
@@ -71,7 +103,7 @@ export default function RecruitmentPage() {
             }`}
           >
             <Sparkles className="w-5 h-5" />
-            Recruitment Simulator
+            Headhunt Simulator
           </button>
           <button
             onClick={() => setActiveTab('history')}

@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { useGachaStore } from '@/app/tools/recruitment/use-gacha-store';
+import { useGachaStore } from '@/app/headhunt/use-gacha-store';
 import LuckyTicker from './lucky-ticker';
 import LeaderboardModal from './leaderboard-modal';
+import { AlertCircle } from 'lucide-react';
 
 export default function BannerDisplay() {
-  const { pity6, pity5, performPull, isAnimating } = useGachaStore();
+  const { pity6, pity5, performPull, isAnimating, isGuestMode, error } = useGachaStore();
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
 
   const handlePull = (count: 1 | 10) => {
@@ -45,6 +46,30 @@ export default function BannerDisplay() {
                 <span className="text-zinc-500 text-sm font-medium">CURRENCY</span>
                 <span className="text-[#FCEE21] font-bold text-lg">∞</span>
               </div>
+
+              {isGuestMode && (
+                <div className="mb-4 bg-amber-50 border border-amber-200 rounded-lg p-3">
+                  <div className="flex items-start gap-2">
+                    <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="text-amber-800 font-semibold text-sm mb-1">
+                        Guest Mode
+                      </div>
+                      <div className="text-amber-700 text-xs">
+                        Results are not saved. Sign in to record your pulls and join the leaderboard!
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {error && (
+                <div className="mb-4 bg-red-50 border border-red-200 rounded-lg p-3">
+                  <div className="text-red-800 text-sm">
+                    {error}
+                  </div>
+                </div>
+              )}
 
               <LuckyTicker onViewLeaderboard={() => setIsLeaderboardOpen(true)} />
 
