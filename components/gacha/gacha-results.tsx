@@ -17,8 +17,29 @@ interface MysteryCardProps {
 }
 
 function MysteryCard({ rarity, index }: MysteryCardProps) {
-  const color = RARITY_COLORS[rarity];
+  const isFourStar = rarity === 4;
+  const isFiveStar = rarity === 5;
   const isSixStar = rarity === 6;
+
+  const getGradientClass = () => {
+    if (isFourStar) {
+      return 'bg-gradient-to-b from-purple-900 via-purple-700 to-purple-900';
+    }
+    if (isFiveStar) {
+      return 'bg-gradient-to-b from-yellow-600 via-[#FCEE21] to-yellow-700';
+    }
+    return 'bg-gradient-to-b from-red-900 via-[#FF4400] to-red-950';
+  };
+
+  const getShadowClass = () => {
+    if (isFourStar) {
+      return 'shadow-[inset_0_0_20px_rgba(168,85,247,0.5)]';
+    }
+    if (isFiveStar) {
+      return 'shadow-[inset_0_0_30px_rgba(252,238,33,0.6)]';
+    }
+    return 'shadow-[0_0_40px_rgba(255,68,0,0.8)] animate-pulse z-10';
+  };
 
   return (
     <motion.div
@@ -29,46 +50,85 @@ function MysteryCard({ rarity, index }: MysteryCardProps) {
         delay: index * 0.02,
         ease: 'easeOut'
       }}
-      className={`relative h-full rounded-sm overflow-hidden ${
-        isSixStar ? 'shadow-[0_0_30px_rgba(255,68,0,0.6)] animate-pulse' : 'shadow-sm'
-      }`}
-      style={{ 
-        backgroundColor: color,
-        boxShadow: isSixStar ? `0 0 40px ${color}80, 0 0 80px ${color}40` : undefined
-      }}
+      className={`relative h-full rounded-md overflow-hidden ${getGradientClass()} ${getShadowClass()}`}
     >
       {isSixStar && (
+        <>
+          <motion.div
+            animate={{
+              opacity: [0.3, 0.7, 0.3],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+            className="absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-white/20"
+          />
+          <motion.div
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.5, 0.8, 0.5],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+            className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,68,0,0.3)_0%,transparent_70%)]"
+          />
+        </>
+      )}
+      
+      {isFiveStar && (
         <motion.div
           animate={{
-            opacity: [0.3, 0.6, 0.3],
+            opacity: [0.2, 0.4, 0.2],
           }}
           transition={{
-            duration: 1.5,
+            duration: 2,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent"
+          className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10"
+        />
+      )}
+
+      {isFourStar && (
+        <motion.div
+          animate={{
+            opacity: [0.1, 0.25, 0.1],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-white/5"
         />
       )}
       
       <div className="absolute inset-0 flex items-center justify-center">
         <motion.div
           animate={isSixStar ? {
-            scale: [1, 1.2, 1],
+            scale: [1, 1.3, 1],
+            rotate: [0, 5, -5, 0],
+          } : isFiveStar ? {
+            scale: [1, 1.15, 1],
           } : {}}
           transition={{
-            duration: 1.5,
+            duration: isSixStar ? 1.5 : 2,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
           className="text-center"
         >
-          <Sparkles className={`w-6 h-6 mx-auto mb-1 ${isSixStar ? 'text-white' : 'text-white/70'}`} />
+          <Sparkles className={`w-6 h-6 mx-auto mb-1 ${isSixStar ? 'text-white' : isFiveStar ? 'text-white/90' : 'text-white/70'}`} />
           <div className="text-white/90 font-bold text-xs">?</div>
         </motion.div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 p-1 bg-black/20 backdrop-blur-sm">
+      <div className="absolute bottom-0 left-0 right-0 p-1 bg-black/30 backdrop-blur-sm">
         <div className="text-white/90 font-bold text-[10px] text-center">
           {'★'.repeat(rarity)}
         </div>
@@ -83,8 +143,32 @@ interface RevealedCardProps {
 }
 
 function RevealedCard({ character, index }: RevealedCardProps) {
-  const color = RARITY_COLORS[character.rarity];
+  const isFourStar = character.rarity === 4;
+  const isFiveStar = character.rarity === 5;
   const isSixStar = character.rarity === 6;
+
+  const getBackgroundGradient = () => {
+    if (isFourStar) {
+      return 'bg-gradient-to-t from-purple-900/80 via-zinc-900/50 to-zinc-900/20';
+    }
+    if (isFiveStar) {
+      return 'bg-gradient-to-t from-yellow-900/80 via-zinc-900/50 to-zinc-900/20';
+    }
+    return 'bg-gradient-to-t from-red-950/90 via-red-900/40 to-zinc-900/10';
+  };
+
+  const getShadowClass = () => {
+    if (isSixStar) {
+      return 'shadow-[0_0_20px_rgba(255,68,0,0.5)]';
+    }
+    return 'shadow-sm';
+  };
+
+  const getAccentColor = () => {
+    if (isFourStar) return 'bg-purple-500';
+    if (isFiveStar) return 'bg-[#FCEE21]';
+    return 'bg-[#FF4400]';
+  };
 
   return (
     <motion.div
@@ -95,11 +179,9 @@ function RevealedCard({ character, index }: RevealedCardProps) {
         delay: index * 0.04,
         ease: 'easeOut'
       }}
-      className={`relative h-full rounded-sm overflow-hidden ${
-        isSixStar ? 'shadow-[0_0_20px_rgba(255,68,0,0.5)]' : 'shadow-sm'
-      }`}
+      className={`relative h-full rounded-md overflow-hidden ${getShadowClass()}`}
     >
-      <div className="relative h-full">
+      <div className={`relative h-full ${getBackgroundGradient()}`}>
         <Image
           src={character.image}
           alt={character.name}
@@ -107,12 +189,15 @@ function RevealedCard({ character, index }: RevealedCardProps) {
           className="object-cover"
           sizes="(max-width: 300px) 100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 p-1 bg-black/50 backdrop-blur-sm">
-        <div className="text-white/90 font-bold text-[10px] text-center truncate">
-          {character.name}
+      <div className="absolute bottom-0 left-0 right-0">
+        <div className={`h-0.5 ${getAccentColor()}`} />
+        <div className="p-1 bg-black/60 backdrop-blur-sm">
+          <div className="text-white/90 font-bold text-[10px] text-center truncate">
+            {character.name}
+          </div>
         </div>
       </div>
     </motion.div>
