@@ -7,14 +7,23 @@ import GachaResults from '@/components/gacha/gacha-results';
 import { useGachaStore } from '@/app/tools/recruitment/use-gacha-store';
 import { RARITY_COLORS } from '@/lib/gacha/data';
 
+type ViewState = 'banner' | 'results';
+
 export default function RecruitmentPage() {
-  const { history, totalPulls, inventory, resetHistory } = useGachaStore();
+  const { history, totalPulls, inventory, resetHistory, lastResults } = useGachaStore();
   const [activeTab, setActiveTab] = useState<'simulator' | 'history'>('simulator');
+  const [viewState, setViewState] = useState<ViewState>('banner');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (lastResults && lastResults.length > 0) {
+      setViewState('results');
+    }
+  }, [lastResults]);
 
   if (!mounted) {
     return (
@@ -36,6 +45,10 @@ export default function RecruitmentPage() {
     if (confirm('Are you sure you want to reset all recruitment history? This cannot be undone.')) {
       resetHistory();
     }
+  };
+
+  const handleReturnToBanner = () => {
+    setViewState('banner');
   };
 
   return (
@@ -75,8 +88,13 @@ export default function RecruitmentPage() {
 
         {activeTab === 'simulator' && (
           <div className="space-y-8">
-            <BannerDisplay />
-            <GachaResults />
+            <div className="h-[600px] w-full">
+              {viewState === 'banner' ? (
+                <BannerDisplay />
+              ) : (
+                <GachaResults onReturnToBanner={handleReturnToBanner} />
+              )}
+            </div>
           </div>
         )}
 

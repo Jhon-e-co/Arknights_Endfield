@@ -78,13 +78,6 @@ export default function BannerDisplay() {
             >
               RECRUIT x10
             </button>
-            <button
-              onClick={() => handlePull(1)}
-              disabled={isAnimating}
-              className="w-full bg-zinc-900 text-white font-bold py-3 px-6 rounded-lg hover:bg-zinc-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed border border-zinc-800"
-            >
-              RECRUIT x1
-            </button>
           </div>
         </div>
       </div>
