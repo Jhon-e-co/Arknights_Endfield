@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { Metadata } from "next";
@@ -81,10 +82,12 @@ export default async function GuidesPage() {
                     className="group relative bg-white border-2 border-zinc-200 hover:border-[#FCEE21] transition-all duration-300 overflow-hidden"
                   >
                     <div className="aspect-square relative">
-                      <img
+                      <Image
                         src={char.image_url || ''}
                         alt={char.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       />
                       <div className="absolute top-2 right-2 bg-[#FCEE21] text-black text-xs font-bold px-2 py-1">
                         GUIDE READY
@@ -111,10 +114,12 @@ export default async function GuidesPage() {
                   className="relative bg-zinc-100 border-2 border-zinc-200 opacity-60 overflow-hidden"
                 >
                   <div className="aspect-square relative">
-                    <img
+                    <Image
                       src={char.image_url || ''}
                       alt={char.name}
-                      className="w-full h-full object-cover grayscale"
+                      fill
+                      className="object-cover grayscale"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                     />
                     <div className="absolute top-2 right-2 bg-zinc-400 text-white text-xs font-bold px-2 py-1">
                       COMING SOON
