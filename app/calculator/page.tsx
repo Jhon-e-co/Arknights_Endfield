@@ -1,201 +1,164 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Calculator, Coins, BookOpen, User, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Slider } from '@/components/ui/slider';
-import { MOCK_CHARACTERS, calculateCost, Character, CalculationResult } from '@/lib/mock-calculator';
-import { AdUnit } from '@/components/ui/ad-unit';
+import { useState } from 'react';
+import { Calculator, Sparkles, History, RotateCcw, Trash2 } from 'lucide-react';
+import BannerDisplay from '@/components/gacha/banner-display';
+import GachaResults from '@/components/gacha/gacha-results';
+import { useGachaStore } from '@/app/calculator/use-gacha-store';
+import { RARITY_COLORS } from '@/lib/gacha/data';
 
 export default function CalculatorPage() {
-  // State
-  const [selectedCharacter, setSelectedCharacter] = useState<Character>(MOCK_CHARACTERS[0]);
-  const [currentLevel, setCurrentLevel] = useState(1);
-  const [targetLevel, setTargetLevel] = useState(10);
-  const [cost, setCost] = useState<CalculationResult>(calculateCost(1, 10));
+  const { history, totalPulls, inventory, resetHistory } = useGachaStore();
+  const [activeTab, setActiveTab] = useState<'simulator' | 'history'>('simulator');
 
-  // Update cost whenever levels change
-  useEffect(() => {
-    const newCost = calculateCost(currentLevel, targetLevel);
-    setCost(newCost);
-  }, [currentLevel, targetLevel]);
+  const sixStarCount = history.filter((r) => r.character.rarity === 6).length;
+  const fiveStarCount = history.filter((r) => r.character.rarity === 5).length;
+  const fourStarCount = history.filter((r) => r.character.rarity === 4).length;
 
-  // Handle current level change
-  const handleCurrentLevelChange = (value: number) => {
-    setCurrentLevel(value);
-    // Ensure target level is not less than current level
-    if (targetLevel < value) {
-      setTargetLevel(value);
+  const averagePity6 = sixStarCount > 0 
+    ? (totalPulls / sixStarCount).toFixed(1) 
+    : 'N/A';
+
+  const handleReset = () => {
+    if (confirm('Are you sure you want to reset all recruitment history? This cannot be undone.')) {
+      resetHistory();
     }
   };
 
-  // Handle target level change
-  const handleTargetLevelChange = (value: number) => {
-    setTargetLevel(value);
-  };
-
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-8">
-        <Calculator className="w-8 h-8 text-[#FCEE21]" />
-        <h1 className="text-3xl font-bold uppercase">
-          <span className="bg-[#FCEE21] px-1">RESOURCE</span> PLANNER
-        </h1>
-      </div>
-
-      {/* Main Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column - Control Panel */}
-        <div className="lg:col-span-1">
-          {/* Character Selection */}
-          <div className="border border-zinc-200 bg-white rounded-none shadow-sm p-6 mb-6">
-            <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-              <User className="w-5 h-5 text-[#FCEE21]" />
-              Select Character
-            </h2>
-            
-            {/* Avatar List */}
-            <div className="flex gap-4 overflow-x-auto pb-2">
-              {MOCK_CHARACTERS.map((character) => (
-                <div
-                  key={character.id}
-                  className={`flex flex-col items-center cursor-pointer transition-all ${selectedCharacter.id === character.id ? 'scale-105' : 'opacity-70 hover:opacity-100'}`}
-                  onClick={() => setSelectedCharacter(character)}
-                >
-                  <div className={`w-16 h-16 rounded-full border-2 ${selectedCharacter.id === character.id ? 'border-[#FCEE21]' : 'border-zinc-200'} overflow-hidden mb-2`}>
-                    <img
-                      src={character.avatar}
-                      alt={character.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <p className="text-sm font-medium">{character.name}</p>
-                  <p className="text-xs text-zinc-500">{character.element}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Level Sliders */}
-          <div className="border border-zinc-200 bg-white rounded-none shadow-sm p-6">
-            <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
-              <ArrowRight className="w-5 h-5 text-[#FCEE21]" />
-              Level Progression
-            </h2>
-
-            {/* Current Level */}
-            <div className="mb-6">
-              <Slider
-                label="Current Level"
-                value={currentLevel}
-                min={1}
-                max={80}
-                onChange={handleCurrentLevelChange}
-              />
-            </div>
-
-            {/* Target Level */}
-            <div>
-              <Slider
-                label="Target Level"
-                value={targetLevel}
-                min={currentLevel}
-                max={80}
-                onChange={handleTargetLevelChange}
-              />
-            </div>
-          </div>
+    <div className="min-h-screen bg-zinc-900 text-white">
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="flex items-center gap-2 mb-8">
+          <Calculator className="w-8 h-8 text-[#FCEE21]" />
+          <h1 className="text-3xl font-bold uppercase">
+            <span className="bg-[#FCEE21] px-1 text-black">TOOLS</span> HUB
+          </h1>
         </div>
 
-        {/* Right Column - Bill of Materials */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Header */}
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold">Resource Requirements</h2>
-            <Button
-              variant="outline"
-              className="border-2 border-zinc-200 rounded-none font-bold"
-            >
-              Save Plan
-            </Button>
-          </div>
-
-          {/* Cost Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Digi-Cash */}
-            <div className="border border-zinc-200 bg-white rounded-none shadow-sm p-6">
-              <div className="flex items-center gap-2 mb-2">
-                <Coins className="w-6 h-6 text-[#FCEE21]" />
-                <h3 className="text-sm font-medium">Digi-Cash</h3>
-              </div>
-              <div className="text-4xl font-bold">{cost.digiCash.toLocaleString()}</div>
-            </div>
-
-            {/* Exp Records */}
-            <div className="border border-zinc-200 bg-white rounded-none shadow-sm p-6">
-              <div className="flex items-center gap-2 mb-2">
-                <BookOpen className="w-6 h-6 text-[#FCEE21]" />
-                <h3 className="text-sm font-medium">Exp Records</h3>
-              </div>
-              <div className="text-4xl font-bold">{cost.expRecords.toLocaleString()}</div>
-            </div>
-          </div>
-
-          {/* Material List */}
-          <div className="border border-zinc-200 bg-white rounded-none shadow-sm p-6">
-            <h3 className="text-lg font-bold mb-4">Breakthrough Materials</h3>
-            <div className="space-y-4">
-              {cost.materials.map((item, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="text-2xl">{item.material.icon}</div>
-                    <div>
-                      <p className="font-medium">{item.material.name}</p>
-                      <p className="text-xs text-zinc-500">Rarity: {'⭐'.repeat(item.material.rarity)}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="text-xl font-bold">{item.quantity}</div>
-                    <Button
-                      variant="outline"
-                      className="border-2 border-zinc-200 rounded-none"
-                    >
-                      +
-                    </Button>
-                  </div>
-                </div>
-              ))}
-
-              {/* Empty State */}
-              {cost.materials.length === 0 && (
-                <div className="text-center py-8 text-zinc-500">
-                  <p>No materials required for this upgrade</p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Summary */}
-          <div className="border border-zinc-200 bg-zinc-50 rounded-none p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-lg font-bold">Summary</h3>
-                <p className="text-sm text-zinc-600">Upgrading {selectedCharacter.name}</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm text-zinc-600">From Level {currentLevel}</p>
-                <p className="text-sm font-medium">To Level {targetLevel}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Sidebar Ad - Desktop only */}
-          <AdUnit type="sidebar" className="hidden lg:block" />
-
-          {/* Banner Ad - Mobile only */}
-          <AdUnit type="banner" className="lg:hidden" />
+        {/* Tool Tabs */}
+        <div className="flex gap-4 mb-8 border-b border-zinc-800 pb-4">
+          <button
+            onClick={() => setActiveTab('simulator')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+              activeTab === 'simulator'
+                ? 'bg-[#FCEE21] text-black font-bold'
+                : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+            }`}
+          >
+            <Sparkles className="w-5 h-5" />
+            Recruitment Simulator
+          </button>
+          <button
+            onClick={() => setActiveTab('history')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+              activeTab === 'history'
+                ? 'bg-[#FCEE21] text-black font-bold'
+                : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+            }`}
+          >
+            <History className="w-5 h-5" />
+            History & Stats
+          </button>
         </div>
+
+        {/* Simulator Tab */}
+        {activeTab === 'simulator' && (
+          <div className="space-y-8">
+            <BannerDisplay />
+            <GachaResults />
+          </div>
+        )}
+
+        {/* History Tab */}
+        {activeTab === 'history' && (
+          <div className="space-y-6">
+            {/* Stats Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-4">
+                <div className="text-zinc-400 text-sm mb-1">Total Pulls</div>
+                <div className="text-3xl font-bold">{totalPulls}</div>
+              </div>
+              <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-4">
+                <div className="text-[#FF4400] text-sm mb-1">6★ Count</div>
+                <div className="text-3xl font-bold">{sixStarCount}</div>
+              </div>
+              <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-4">
+                <div className="text-[#FCEE21] text-sm mb-1">5★ Count</div>
+                <div className="text-3xl font-bold">{fiveStarCount}</div>
+              </div>
+              <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-4">
+                <div className="text-[#A855F7] text-sm mb-1">4★ Count</div>
+                <div className="text-3xl font-bold">{fourStarCount}</div>
+              </div>
+            </div>
+
+            {/* Luck Analysis */}
+            <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-6">
+              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-[#FCEE21]" />
+                Luck Analysis
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <div className="text-zinc-400 text-sm mb-1">Average 6★ Pity</div>
+                  <div className="text-2xl font-bold text-[#FF4400]">{averagePity6}</div>
+                  <div className="text-xs text-zinc-500 mt-1">Lower is better</div>
+                </div>
+                <div>
+                  <div className="text-zinc-400 text-sm mb-1">6★ Rate</div>
+                  <div className="text-2xl font-bold text-[#FF4400]">
+                    {totalPulls > 0 ? ((sixStarCount / totalPulls) * 100).toFixed(2) : '0.00'}%
+                  </div>
+                  <div className="text-xs text-zinc-500 mt-1">Expected: 0.8%</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Inventory */}
+            <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-6">
+              <h2 className="text-xl font-bold mb-4">Inventory</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                {Object.entries(inventory)
+                  .sort(([, a], [, b]) => b - a)
+                  .map(([charId, count]) => {
+                    const char = history.find((r) => r.character.id === charId)?.character;
+                    if (!char) return null;
+                    const color = RARITY_COLORS[char.rarity];
+                    return (
+                      <div
+                        key={charId}
+                        className="bg-zinc-900 border-2 rounded-lg p-3 text-center"
+                        style={{ borderColor: color }}
+                      >
+                        <div className="text-lg font-bold mb-1">{char.name}</div>
+                        <div className="text-xs text-zinc-400">x{count}</div>
+                        <div className="text-xs mt-1" style={{ color }}>
+                          {'★'.repeat(char.rarity)}
+                        </div>
+                      </div>
+                    );
+                  })}
+                {Object.keys(inventory).length === 0 && (
+                  <div className="col-span-full text-center py-8 text-zinc-500">
+                    <p>No characters recruited yet</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={handleReset}
+                className="flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              >
+                <Trash2 className="w-5 h-5" />
+                Reset All Data
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
