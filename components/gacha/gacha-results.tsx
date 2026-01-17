@@ -3,16 +3,15 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGachaStore } from '@/app/calculator/use-gacha-store';
-import { RARITY_COLORS } from '@/lib/gacha/data';
+import { RARITY_COLORS, Character } from '@/lib/gacha/data';
 import { X, Share2, SkipForward } from 'lucide-react';
 
 interface CharacterCardProps {
-  character: any;
+  character: Character;
   index: number;
-  total: number;
 }
 
-function CharacterCard({ character, index, total }: CharacterCardProps) {
+function CharacterCard({ character, index }: CharacterCardProps) {
   const color = RARITY_COLORS[character.rarity];
   const stars = '★'.repeat(character.rarity);
 
@@ -140,7 +139,6 @@ export default function GachaResults() {
                   key={`${result.character.id}-${index}`}
                   character={result.character}
                   index={index}
-                  total={lastResults.length}
                 />
               ))}
             </div>
