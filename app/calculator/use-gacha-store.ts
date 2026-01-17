@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { GachaSystem, GachaResult } from '@/lib/gacha/engine';
 import { Character } from '@/lib/gacha/data';
 
@@ -11,6 +11,7 @@ interface GachaState {
   totalPulls: number;
   lastResults: GachaResult[] | null;
   isAnimating: boolean;
+  _hasHydrated: boolean;
 }
 
 interface GachaActions {
@@ -18,6 +19,7 @@ interface GachaActions {
   resetHistory: () => void;
   clearLastResults: () => void;
   setAnimating: (isAnimating: boolean) => void;
+  setHasHydrated: (hasHydrated: boolean) => void;
 }
 
 type GachaStore = GachaState & GachaActions;
@@ -32,6 +34,7 @@ export const useGachaStore = create<GachaStore>()(
       totalPulls: 0,
       lastResults: null,
       isAnimating: false,
+      _hasHydrated: false,
 
       performPull: (count: 1 | 10) => {
         const { pity6, pity5, history, inventory, totalPulls } = get();
@@ -83,12 +86,25 @@ export const useGachaStore = create<GachaStore>()(
       setAnimating: (isAnimating: boolean) => {
         set({ isAnimating });
       },
+
+      setHasHydrated: (hasHydrated: boolean) => {
+        set({ _hasHydrated: hasHydrated });
+      },
     }),
     {
       name: 'gacha-storage',
+      storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     }
   )
 );
+
+export function useGachaStoreHydrated() {
+  const hasHydrated = useGachaStore((state) => state._hasHydrated);
+  return hasHydrated;
+}
 
 export function getCharacterById(id: string): Character | undefined {
   const { inventory } = useGachaStore.getState();

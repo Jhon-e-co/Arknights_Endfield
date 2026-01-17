@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calculator, Sparkles, History, RotateCcw, Trash2 } from 'lucide-react';
 import BannerDisplay from '@/components/gacha/banner-display';
 import GachaResults from '@/components/gacha/gacha-results';
@@ -10,6 +10,19 @@ import { RARITY_COLORS } from '@/lib/gacha/data';
 export default function CalculatorPage() {
   const { history, totalPulls, inventory, resetHistory } = useGachaStore();
   const [activeTab, setActiveTab] = useState<'simulator' | 'history'>('simulator');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-zinc-900 text-white flex items-center justify-center">
+        <div className="text-zinc-400">Loading...</div>
+      </div>
+    );
+  }
 
   const sixStarCount = history.filter((r) => r.character.rarity === 6).length;
   const fiveStarCount = history.filter((r) => r.character.rarity === 5).length;
