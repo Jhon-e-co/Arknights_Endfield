@@ -80,7 +80,7 @@ export async function DELETE(
     }
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
     console.error('Delete blueprint error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

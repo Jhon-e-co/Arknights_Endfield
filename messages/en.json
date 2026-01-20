@@ -1,0 +1,274 @@
+{
+  "common": {
+    "app_name": "ENDFIELD LAB",
+    "org_name": "Endfield Industries",
+    "player_role": "Endministrator",
+    "system_aic": "Automated Industry Complex (AIC)",
+    "currency": "Digi-Cash",
+    "resource_core": "Oroberyl",
+    "planet": "Talos-II",
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "share": "Share",
+    "copy": "Copy",
+    "download": "Download",
+    "upload": "Upload",
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "register": "Register",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "navigation": {
+    "home": "Home",
+    "map": "Map",
+    "headhunt": "Headhunt",
+    "guides": "Guides",
+    "blueprints": "Blueprints",
+    "squads": "Squads",
+    "dashboard": "Dashboard"
+  },
+  "home": {
+    "hero": {
+      "title": "Build. Optimize. Conquer.",
+      "subtitle": "The ultimate toolkit for Arknights: Endfield Global Server.",
+      "construction_notice": "System Notice: Early Preview / Features Under Construction"
+    },
+    "features": {
+      "title": "Explore Endfield Lab",
+      "subtitle": "Powerful tools designed to enhance your Arknights: Endfield experience",
+      "interactive_map": {
+        "title": "Interactive Map",
+        "description": "Resource nodes and landmark locations"
+      },
+      "headhunt_simulator": {
+        "title": "Headhunt Simulator",
+        "description": "Test your luck and analyze your gacha statistics"
+      },
+      "strategy_guides": {
+        "title": "Strategy Guides",
+        "description": "In-depth mechanics analysis and walkthroughs"
+      },
+      "automated_blueprints": {
+        "title": "Automated Blueprints",
+        "description": "Share and replicate efficient factory layouts"
+      },
+      "tactical_squads": {
+        "title": "Tactical Squads",
+        "description": "Optimize operator teams for high-difficulty stages"
+      }
+    },
+    "feedback": {
+      "title": "Work in Progress",
+      "subtitle": "Endfield Lab is currently in active development. Features may change as we improve platform.",
+      "need_feedback": "We Need Your Feedback",
+      "feedback_description": "Have a suggestion or found a bug? Help us build the ultimate toolkit for Arknights: Endfield players.",
+      "contact_email": "endfieldlabs@gmail.com",
+      "join_discord": "Join Discord"
+    }
+  },
+  "auth": {
+    "sign_in": "Sign In",
+    "sign_out": "Sign Out",
+    "welcome_back": "Welcome back",
+    "no_account": "Don't have an account?",
+    "have_account": "Already have an account?",
+    "email": "Email",
+    "password": "Password",
+    "remember_me": "Remember me",
+    "forgot_password": "Forgot password?",
+    "sign_in_with_google": "Sign in with Google",
+    "sign_in_with_discord": "Sign in with Discord"
+  },
+  "blueprints": {
+    "title": "Blueprints",
+    "create_new": "Create New Blueprint",
+    "no_blueprints": "No blueprints found",
+    "sort_by": "Sort by",
+    "filter_by": "Filter by",
+    "newest": "Newest",
+    "oldest": "Oldest",
+    "popular": "Popular",
+    "likes": "Likes",
+    "downloads": "Downloads",
+    "description": "Description",
+    "code": "Code",
+    "tags": "Tags",
+    "author": "Author",
+    "created_at": "Created at"
+  },
+  "squads": {
+    "title": "Squads",
+    "create_new": "Create New Squad",
+    "no_squads": "No squads found",
+    "sort_by": "Sort by",
+    "filter_by": "Filter by",
+    "newest": "Newest",
+    "oldest": "Oldest",
+    "popular": "Popular",
+    "likes": "Likes",
+    "description": "Description",
+    "members": "Members",
+    "author": "Author",
+    "created_at": "Created at"
+  },
+  "characters": {
+    "title": "Characters",
+    "name": "Name",
+    "rarity": "Rarity",
+    "element": "Element",
+    "role": "Role",
+    "overview": "Overview",
+    "skill_priority": "Skill Priority",
+    "equipment": "Equipment",
+    "teams": "Teams"
+  },
+  "gacha": {
+    "title": "Headhunt Simulator",
+    "pull": "Pull",
+    "pull_10": "Pull 10",
+    "history": "History",
+    "statistics": "Statistics",
+    "pity": "Pity",
+    "guaranteed": "Guaranteed",
+    "total_pulls": "Total Pulls",
+    "rarity_6": "6-Star",
+    "rarity_5": "5-Star",
+    "rarity_4": "4-Star"
+  },
+  "map": {
+    "title": "Interactive Map",
+    "search_location": "Search location",
+    "filter_resources": "Filter resources",
+    "show_all": "Show all",
+    "hide_all": "Hide all",
+    "resource_nodes": "Resource Nodes",
+    "landmarks": "Landmarks",
+    "zoom_in": "Zoom in",
+    "zoom_out": "Zoom out",
+    "reset_view": "Reset view"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "last_updated": "Last Updated: January 17, 2026",
+    "disclaimer": "Disclaimer",
+    "disclaimer_content": "ENDFIELD LAB is an unofficial fan project and is not affiliated with, endorsed by, sponsored by, or specifically approved by GRYPHLINE or Hypergryph. All game-related content, including characters, images, and game mechanics, are the property of their respective owners.",
+    "information_we_collect": "Information We Collect",
+    "authentication_data": "Authentication Data",
+    "gacha_records": "Gacha Records",
+    "cookies_and_local_storage": "Cookies and Local Storage",
+    "how_we_use_your_information": "How We Use Your Information",
+    "data_storage_and_security": "Data Storage and Security",
+    "your_rights": "Your Rights",
+    "third_party_services": "Third-Party Services",
+    "changes_to_this_policy": "Changes to This Policy",
+    "contact": "Contact"
+  },
+  "app": {
+    "dashboard": {
+      "page": {
+        "avatar": "Avatar"
+      }
+    },
+    "users": {
+      "page": {
+        "avatar": "Avatar"
+      }
+    },
+    "teams": {
+      "create": {
+        "page": {
+          "enter_squad_title": "Enter squad title...",
+          "describe_your_squad_strategy": "Describe your squad strategy...",
+          "select__character": "Select Character"
+        }
+      },
+      "page": {
+        "author": "Author"
+      }
+    },
+    "blueprints": {
+      "create": {
+        "page": {
+          "paste_your__a_i_c_code_string_here": "Paste your AIC code string here...",
+          "enter_blueprint_title": "Enter blueprint title...",
+          "describe_your_blueprint": "Describe your blueprint..."
+        }
+      }
+    },
+    "headhunt": {
+      "page": {
+        "loading": "Loading...",
+        "h_e_a_d_h_u_n_t": "HEADHUNT",
+        "s_i_m_u_l_a_t_o_r": "SIMULATOR\n          ",
+        "headhunt__simulator": "Headhunt Simulator\n          ",
+        "history__stats": "History & Stats\n          ",
+        "total__pulls": "Total Pulls",
+        "6__count": "6★ Count",
+        "5__count": "5★ Count",
+        "4__count": "4★ Count",
+        "luck__analysis": "Luck Analysis\n              ",
+        "average_6__pity": "Average 6★ Pity",
+        "lower_is_better": "Lower is better",
+        "6__rate": "6★ Rate",
+        "expected_0_8": "Expected: 0.8%",
+        "inventory": "Inventory",
+        "no_characters_recruited_yet": "No characters recruited yet",
+        "reset__all__data": "Reset All Data\n                "
+      }
+    }
+  },
+  "components": {
+    "ui": {
+      "image-uploader": {
+        "preview": "Preview"
+      }
+    },
+    "teams": {
+      "squad-actions": {
+        "endorse": "Endorse",
+        "add_to__favorites": "Add to Favorites"
+      }
+    },
+    "gacha": {
+      "leaderboard-modal": {
+        "empty": "empty",
+        "refresh": "Refresh",
+        "empty_1": "empty"
+      }
+    },
+    "layout": {
+      "navbar": {
+        "discord__community": "Discord Community"
+      },
+      "feedback-button": {
+        "click_to_copy_email": "Click to copy email"
+      }
+    },
+    "dashboard": {
+      "profile-editor": {
+        "edit__profile": "Edit Profile",
+        "enter_your_username": "Enter your username"
+      }
+    },
+    "blueprints": {
+      "blueprint-actions": {
+        "like": "Like",
+        "add_to__favorites": "Add to Favorites"
+      }
+    }
+  }
+}

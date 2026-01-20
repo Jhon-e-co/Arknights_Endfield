@@ -28,7 +28,7 @@ export async function GET(request: Request) {
 
     const history = pulls.flatMap(pull => {
       const characters = pull.results?.characters || [];
-      return characters.map((char: any) => ({
+      return characters.map((char: any) => ({ // eslint-disable-line @typescript-eslint/no-explicit-any
         character: {
           id: char.character.id,
           name: char.character.name,

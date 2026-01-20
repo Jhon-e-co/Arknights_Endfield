@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useGachaStore } from '@/app/headhunt/use-gacha-store';
+import { useGachaStore } from '@/app/[locale]/headhunt/use-gacha-store';
 import LuckyTicker from './lucky-ticker';
 import LeaderboardModal from './leaderboard-modal';
 import { AlertCircle } from 'lucide-react';

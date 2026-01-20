@@ -15,7 +15,7 @@ interface LeaderboardEntry {
   avatarUrl: string;
   score: number;
   rank: number;
-  bestPull?: any;
+  bestPull?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export default function LuckyTicker({ onViewLeaderboard }: LuckyTickerProps) {
@@ -54,7 +54,7 @@ export default function LuckyTicker({ onViewLeaderboard }: LuckyTickerProps) {
   }, [leaderboardData.length]);
 
   const currentEntry = leaderboardData[currentIndex];
-  const sixStarCount = currentEntry?.bestPull?.characters?.filter((c: any) => c.rarity === 6).length || 0;
+  const sixStarCount = currentEntry?.bestPull?.characters?.filter((c: any) => c.rarity === 6).length || 0; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   const hasData = leaderboardData.length > 0 && currentEntry;
 

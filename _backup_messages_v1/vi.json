@@ -1,0 +1,253 @@
+{
+  "common": {
+    "app_name": "ENDFIELD LAB",
+    "org_name": "Endfield Industries",
+    "player_role": "Người quản lý",
+    "system_aic": "Automated Industry Complex (AIC)",
+    "currency": "Digi-Cash",
+    "resource_core": "Oroberyl",
+    "planet": "Talos-II",
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "retry": "Thử lại",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "close": "Đóng",
+    "back": "Quay lại",
+    "next": "Tiếp theo",
+    "previous": "Trước",
+    "search": "Tìm kiếm",
+    "filter": "Bộ lọc",
+    "sort": "Sắp xếp",
+    "share": "Chia sẻ",
+    "copy": "Sao chép",
+    "download": "Tải xuống",
+    "upload": "Tải lên",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "register": "Đăng ký",
+    "profile": "Hồ sơ",
+    "settings": "Cài đặt"
+  },
+  "navigation": {
+    "home": "Trang chủ",
+    "map": "Bản đồ",
+    "headhunt": "Chiêu mộ",
+    "guides": "Hướng dẫn",
+    "blueprints": "Bản thiết kế",
+    "squads": "Đội hình",
+    "dashboard": "Bảng điều khiển"
+  },
+  "home": {
+    "hero": {
+      "title": "Xây dựng. Tối ưu. Chinh phục.",
+      "subtitle": "Bộ công cụ tối thượng cho Arknights: Endfield Global Server.",
+      "construction_notice": "Thông báo hệ thống: Bản xem trước sớm / Tính năng đang được xây dựng"
+    },
+    "features": {
+      "title": "Khám phá Endfield Lab",
+      "subtitle": "Các công cụ mạnh mẽ được thiết kế để nâng cao trải nghiệm Arknights: Endfield của bạn",
+      "interactive_map": {
+        "title": "Bản đồ tương tác",
+        "description": "Vị trí tài nguyên và địa danh"
+      },
+      "headhunt_simulator": {
+        "title": "Giả lập Chiêu mộ",
+        "description": "Thử vận may và phân tích thống kê gacha của bạn"
+      },
+      "strategy_guides": {
+        "title": "Hướng dẫn chiến thuật",
+        "description": "Phân tích cơ chế chuyên sâu và hướng dẫn chơi"
+      },
+      "automated_blueprints": {
+        "title": "Bản thiết kế tự động",
+        "description": "Chia sẻ và sao chép bố cục nhà máy hiệu quả"
+      },
+      "tactical_squads": {
+        "title": "Đội hình chiến thuật",
+        "description": "Tối ưu hóa đội hình Operator cho các màn chơi độ khó cao"
+      }
+    },
+    "feedback": {
+      "title": "Đang phát triển",
+      "subtitle": "Endfield Lab hiện đang được phát triển tích cực. Các tính năng có thể thay đổi khi chúng tôi cải thiện nền tảng.",
+      "need_feedback": "Chúng tôi cần phản hồi của bạn",
+      "feedback_description": "Có đề xuất hoặc tìm thấy lỗi? Hãy giúp chúng tôi xây dựng bộ công cụ tối thượng cho người chơi Arknights: Endfield.",
+      "contact_email": "endfieldlabs@gmail.com",
+      "join_discord": "Tham gia Discord"
+    }
+  },
+  "auth": {
+    "sign_in": "Đăng nhập",
+    "sign_out": "Đăng xuất",
+    "welcome_back": "Chào mừng trở lại",
+    "no_account": "Chưa có tài khoản?",
+    "have_account": "Đã có tài khoản?",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "remember_me": "Ghi nhớ tôi",
+    "forgot_password": "Quên mật khẩu?",
+    "sign_in_with_google": "Đăng nhập bằng Google",
+    "sign_in_with_discord": "Đăng nhập bằng Discord"
+  },
+  "blueprints": {
+    "title": "Bản thiết kế",
+    "create_new": "Tạo bản thiết kế mới",
+    "no_blueprints": "Không tìm thấy bản thiết kế",
+    "sort_by": "Sắp xếp theo",
+    "filter_by": "Lọc theo",
+    "newest": "Mới nhất",
+    "oldest": "Cũ nhất",
+    "popular": "Phổ biến",
+    "likes": "Lượt thích",
+    "downloads": "Lượt tải",
+    "description": "Mô tả",
+    "code": "Mã",
+    "tags": "Thẻ",
+    "author": "Tác giả",
+    "created_at": "Được tạo lúc"
+  },
+  "squads": {
+    "title": "Đội hình",
+    "create_new": "Tạo đội hình mới",
+    "no_squads": "Không tìm thấy đội hình",
+    "sort_by": "Sắp xếp theo",
+    "filter_by": "Lọc theo",
+    "newest": "Mới nhất",
+    "oldest": "Cũ nhất",
+    "popular": "Phổ biến",
+    "likes": "Lượt thích",
+    "description": "Mô tả",
+    "members": "Thành viên",
+    "author": "Tác giả",
+    "created_at": "Được tạo lúc"
+  },
+  "characters": {
+    "title": "Nhân vật",
+    "name": "Tên",
+    "rarity": "Độ hiếm",
+    "element": "Nguyên tố",
+    "role": "Vai trò",
+    "overview": "Tổng quan",
+    "skill_priority": "Ưu tiên kỹ năng",
+    "equipment": "Trang bị",
+    "teams": "Đội"
+  },
+  "gacha": {
+    "title": "Giả lập Chiêu mộ",
+    "pull": "Chiêu mộ",
+    "pull_10": "Chiêu mộ x10",
+    "history": "Lịch sử",
+    "statistics": "Thống kê",
+    "pity": "Bảo hiểm (Pity)",
+    "guaranteed": "Đảm bảo",
+    "total_pulls": "Tổng lượt quay",
+    "rarity_6": "6 Sao",
+    "rarity_5": "5 Sao",
+    "rarity_4": "4 Sao"
+  },
+  "map": {
+    "title": "Bản đồ tương tác",
+    "search_location": "Tìm địa điểm",
+    "filter_resources": "Lọc tài nguyên",
+    "show_all": "Hiện tất cả",
+    "hide_all": "Ẩn tất cả",
+    "resource_nodes": "Điểm tài nguyên",
+    "landmarks": "Địa danh",
+    "zoom_in": "Phóng to",
+    "zoom_out": "Thu nhỏ",
+    "reset_view": "Đặt lại chế độ xem"
+  },
+  "privacy": {
+    "title": "Chính sách quyền riêng tư",
+    "last_updated": "Cập nhật lần cuối: 17 tháng 1, 2026",
+    "disclaimer": "Tuyên bố từ chối trách nhiệm",
+    "disclaimer_content": "ENDFIELD LAB là một dự án không chính thức của người hâm mộ và không liên kết, được xác nhận, tài trợ hoặc phê duyệt cụ thể bởi GRYPHLINE hoặc Hypergryph. Tất cả nội dung liên quan đến trò chơi, bao gồm nhân vật, hình ảnh và cơ chế trò chơi, đều là tài sản của chủ sở hữu tương ứng.",
+    "information_we_collect": "Thông tin chúng tôi thu thập",
+    "authentication_data": "Dữ liệu xác thực",
+    "gacha_records": "Hồ sơ Gacha",
+    "cookies_and_local_storage": "Cookies và Lưu trữ cục bộ",
+    "how_we_use_your_information": "Cách chúng tôi sử dụng thông tin của bạn",
+    "data_storage_and_security": "Lưu trữ và bảo mật dữ liệu",
+    "your_rights": "Quyền của bạn",
+    "third_party_services": "Dịch vụ bên thứ ba",
+    "changes_to_this_policy": "Thay đổi chính sách này",
+    "contact": "Liên hệ"
+  },
+  "app": {
+    "dashboard": {
+      "page": {
+        "avatar": "Ảnh đại diện"
+      }
+    },
+    "users": {
+      "page": {
+        "avatar": "Ảnh đại diện"
+      }
+    },
+    "teams": {
+      "create": {
+        "page": {
+          "enter_squad_title": "Nhập tên đội hình...",
+          "describe_your_squad_strategy": "Mô tả chiến thuật đội hình của bạn...",
+          "select__character": "Chọn nhân vật"
+        }
+      },
+      "page": {
+        "author": "Tác giả"
+      }
+    },
+    "blueprints": {
+      "create": {
+        "page": {
+          "paste_your__a_i_c_code_string_here": "Dán mã AIC của bạn vào đây...",
+          "enter_blueprint_title": "Nhập tên bản thiết kế...",
+          "describe_your_blueprint": "Mô tả bản thiết kế của bạn..."
+        }
+      }
+    }
+  },
+  "components": {
+    "ui": {
+      "image-uploader": {
+        "preview": "Xem trước"
+      }
+    },
+    "teams": {
+      "squad-actions": {
+        "endorse": "Đề xuất",
+        "add_to__favorites": "Thêm vào yêu thích"
+      }
+    },
+    "gacha": {
+      "leaderboard-modal": {
+        "empty": "trống",
+        "refresh": "Làm mới",
+        "empty_1": "trống"
+      }
+    },
+    "layout": {
+      "navbar": {
+        "discord__community": "Cộng đồng Discord"
+      },
+      "feedback-button": {
+        "click_to_copy_email": "Nhấn để sao chép email"
+      }
+    },
+    "dashboard": {
+      "profile-editor": {
+        "edit__profile": "Chỉnh sửa hồ sơ",
+        "enter_your_username": "Nhập tên người dùng của bạn"
+      }
+    },
+    "blueprints": {
+      "blueprint-actions": {
+        "like": "Thích",
+        "add_to__favorites": "Thêm vào yêu thích"
+      }
+    }
+  }
+}

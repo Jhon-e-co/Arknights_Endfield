@@ -1,0 +1,274 @@
+{
+  "common": {
+    "app_name": "ENDFIELD LAB",
+    "org_name": "Endfield Industries",
+    "player_role": "Эндministrator",
+    "system_aic": "AIC",
+    "currency": "Digi-Cash",
+    "resource_core": "Ороберил",
+    "planet": "Talos-II",
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "retry": "Повтор",
+    "cancel": "Отмена",
+    "confirm": "ОК",
+    "save": "Сохранить",
+    "delete": "Удалить",
+    "edit": "Изменить",
+    "close": "Закрыть",
+    "back": "Назад",
+    "next": "Далее",
+    "previous": "Назад",
+    "search": "Поиск",
+    "filter": "Фильтр",
+    "sort": "Сортировка",
+    "share": "Поделиться",
+    "copy": "Копия",
+    "download": "Скачать",
+    "upload": "Загрузить",
+    "login": "Войти",
+    "logout": "Выйти",
+    "register": "Регистрация",
+    "profile": "Профиль",
+    "settings": "Настройки"
+  },
+  "navigation": {
+    "home": "Главная",
+    "map": "Карта",
+    "headhunt": "Поиск",
+    "guides": "Гайды",
+    "blueprints": "Чертежи",
+    "squads": "Отряды",
+    "dashboard": "Панель"
+  },
+  "home": {
+    "hero": {
+      "title": "Стройте. Улучшайте. Покоряйте.",
+      "subtitle": "Лучший инструментарий для глобального сервера Arknights: Endfield.",
+      "construction_notice": "Системное уведомление: Ранний доступ / Функции в разработке"
+    },
+    "features": {
+      "title": "Изучите Endfield Lab",
+      "subtitle": "Мощные инструменты для улучшения вашего опыта в Arknights: Endfield",
+      "interactive_map": {
+        "title": "Интерактивная карта",
+        "description": "Ресурсы и ключевые точки"
+      },
+      "headhunt_simulator": {
+        "title": "Симулятор поиска",
+        "description": "Проверьте удачу и статистику гачи"
+      },
+      "strategy_guides": {
+        "title": "Стратегии и гайды",
+        "description": "Анализ механик и прохождения"
+      },
+      "automated_blueprints": {
+        "title": "Авто-чертежи",
+        "description": "Делитесь и копируйте схемы фабрик"
+      },
+      "tactical_squads": {
+        "title": "Тактические отряды",
+        "description": "Оптимизация команд для сложных этапов"
+      }
+    },
+    "feedback": {
+      "title": "В разработке",
+      "subtitle": "Endfield Lab активно развивается. Функции могут меняться по мере улучшения платформы.",
+      "need_feedback": "Нам нужны ваши отзывы",
+      "feedback_description": "Есть предложение или нашли баг? Помогите нам создать лучший инструмент для игроков.",
+      "contact_email": "endfieldlabs@gmail.com",
+      "join_discord": "Discord"
+    }
+  },
+  "auth": {
+    "sign_in": "Вход",
+    "sign_out": "Выход",
+    "welcome_back": "С возвращением",
+    "no_account": "Нет аккаунта?",
+    "have_account": "Есть аккаунт?",
+    "email": "Email",
+    "password": "Пароль",
+    "remember_me": "Запомнить",
+    "forgot_password": "Забыли пароль?",
+    "sign_in_with_google": "Войти через Google",
+    "sign_in_with_discord": "Войти через Discord"
+  },
+  "blueprints": {
+    "title": "Чертежи",
+    "create_new": "Создать чертеж",
+    "no_blueprints": "Чертежи не найдены",
+    "sort_by": "Сортировка",
+    "filter_by": "Фильтр",
+    "newest": "Новые",
+    "oldest": "Старые",
+    "popular": "Популярные",
+    "likes": "Лайки",
+    "downloads": "Загрузки",
+    "description": "Описание",
+    "code": "Код",
+    "tags": "Теги",
+    "author": "Автор",
+    "created_at": "Дата"
+  },
+  "squads": {
+    "title": "Отряды",
+    "create_new": "Создать отряд",
+    "no_squads": "Отряды не найдены",
+    "sort_by": "Сортировка",
+    "filter_by": "Фильтр",
+    "newest": "Новые",
+    "oldest": "Старые",
+    "popular": "Популярные",
+    "likes": "Лайки",
+    "description": "Описание",
+    "members": "Состав",
+    "author": "Автор",
+    "created_at": "Дата"
+  },
+  "characters": {
+    "title": "Персонажи",
+    "name": "Имя",
+    "rarity": "Редкость",
+    "element": "Элемент",
+    "role": "Роль",
+    "overview": "Обзор",
+    "skill_priority": "Навыки",
+    "equipment": "Снаряжение",
+    "teams": "Команды"
+  },
+  "gacha": {
+    "title": "Симулятор поиска",
+    "pull": "Поиск (1)",
+    "pull_10": "Поиск (10)",
+    "history": "История",
+    "statistics": "Статистика",
+    "pity": "Гарант",
+    "guaranteed": "Обеспечено",
+    "total_pulls": "Всего попыток",
+    "rarity_6": "6 Звезд",
+    "rarity_5": "5 Звезд",
+    "rarity_4": "4 Звезды"
+  },
+  "map": {
+    "title": "Интерактивная карта",
+    "search_location": "Поиск места",
+    "filter_resources": "Ресурсы",
+    "show_all": "Показать все",
+    "hide_all": "Скрыть все",
+    "resource_nodes": "Узлы ресурсов",
+    "landmarks": "Ориентиры",
+    "zoom_in": "Приблизить",
+    "zoom_out": "Отдалить",
+    "reset_view": "Сброс"
+  },
+  "privacy": {
+    "title": "Конфиденциальность",
+    "last_updated": "Обновлено: 17 января 2026",
+    "disclaimer": "Отказ от ответственности",
+    "disclaimer_content": "ENDFIELD LAB — это неофициальный фанатский проект, не связанный, не поддерживаемый и не одобренный GRYPHLINE или Hypergryph. Весь игровой контент, включая персонажей и изображения, принадлежит их владельцам.",
+    "information_we_collect": "Сбор информации",
+    "authentication_data": "Данные аутентификации",
+    "gacha_records": "История гачи",
+    "cookies_and_local_storage": "Cookies и локальное хранилище",
+    "how_we_use_your_information": "Использование информации",
+    "data_storage_and_security": "Хранение и безопасность",
+    "your_rights": "Ваши права",
+    "third_party_services": "Сторонние сервисы",
+    "changes_to_this_policy": "Изменения политики",
+    "contact": "Контакты"
+  },
+  "app": {
+    "dashboard": {
+      "page": {
+        "avatar": "Аватар"
+      }
+    },
+    "users": {
+      "page": {
+        "avatar": "Аватар"
+      }
+    },
+    "teams": {
+      "create": {
+        "page": {
+          "enter_squad_title": "Название отряда...",
+          "describe_your_squad_strategy": "Опишите стратегию...",
+          "select__character": "Выбор персонажа"
+        }
+      },
+      "page": {
+        "author": "Автор"
+      }
+    },
+    "blueprints": {
+      "create": {
+        "page": {
+          "paste_your__a_i_c_code_string_here": "Вставьте код AIC здесь...",
+          "enter_blueprint_title": "Название чертежа...",
+          "describe_your_blueprint": "Описание чертежа..."
+        }
+      }
+    },
+    "headhunt": {
+      "page": {
+        "loading": "Загрузка...",
+        "h_e_a_d_h_u_n_t": "ПОИСК",
+        "s_i_m_u_l_a_t_o_r": "СИМУЛЯТОР\n          ",
+        "headhunt__simulator": "Симулятор поиска\n          ",
+        "history__stats": "История и статистика\n          ",
+        "total__pulls": "Всего попыток",
+        "6__count": "Количество 6★",
+        "5__count": "Количество 5★",
+        "4__count": "Количество 4★",
+        "luck__analysis": "Анализ удачи\n              ",
+        "average_6__pity": "Средний гарант 6★",
+        "lower_is_better": "Чем ниже, тем лучше",
+        "6__rate": "Шанс 6★",
+        "expected_0_8": "Ожидание: 0.8%",
+        "inventory": "Инвентарь",
+        "no_characters_recruited_yet": "Персонажи еще не получены",
+        "reset__all__data": "Сбросить все данные\n                "
+      }
+    }
+  },
+  "components": {
+    "ui": {
+      "image-uploader": {
+        "preview": "Превью"
+      }
+    },
+    "teams": {
+      "squad-actions": {
+        "endorse": "Одобрить",
+        "add_to__favorites": "В избранное"
+      }
+    },
+    "gacha": {
+      "leaderboard-modal": {
+        "empty": "Пусто",
+        "refresh": "Обновить",
+        "empty_1": "Пусто"
+      }
+    },
+    "layout": {
+      "navbar": {
+        "discord__community": "Сообщество Discord"
+      },
+      "feedback-button": {
+        "click_to_copy_email": "Скопировать email"
+      }
+    },
+    "dashboard": {
+      "profile-editor": {
+        "edit__profile": "Изменить профиль",
+        "enter_your_username": "Введите имя пользователя"
+      }
+    },
+    "blueprints": {
+      "blueprint-actions": {
+        "like": "Нравится",
+        "add_to__favorites": "В избранное"
+      }
+    }
+  }
+}

@@ -1,0 +1,239 @@
+{
+  "_meta": {
+    "version": "1.1",
+    "updated": "2026-01-19",
+    "note": "Source of Truth for Project Terminology. Characters section updated with additional operators."
+  },
+  "brand": {
+    "arknights_endfield": {
+      "en": "Arknights: Endfield",
+      "zh-CN": "明日方舟：终末地",
+      "ja": "アークナイツ：エンドフィールド",
+      "ko": "명일방주: 엔드필드",
+      "zh-TW": "明日方舟：終末地",
+      "ru": "Arknights: Endfield",
+      "th": "Arknights: Endfield",
+      "vi": "Arknights: Endfield"
+    },
+    "endfield_industries": {
+      "en": "Endfield Industries",
+      "zh-CN": "终末地工业",
+      "ja": "エンドフィールド工業",
+      "ko": "엔드필드 공업",
+      "zh-TW": "終末地工業",
+      "ru": "Endfield Industries",
+      "th": "Endfield Industries",
+      "vi": "Endfield Industries"
+    },
+    "gryphline": {
+      "en": "GRYPHLINE",
+      "zh-CN": "鹰角网络",
+      "ja": "GRYPHLINE",
+      "ko": "GRYPHLINE",
+      "zh-TW": "GRYPHLINE",
+      "ru": "GRYPHLINE",
+      "th": "GRYPHLINE",
+      "vi": "GRYPHLINE"
+    }
+  },
+  "roles": {
+    "endministrator": {
+      "en": "Endministrator",
+      "zh-CN": "管理员",
+      "ja": "管理人",
+      "ko": "관리자",
+      "zh-TW": "管理員",
+      "ru": "Эндministrator",
+      "th": "ผู้ดูแล",
+      "vi": "Người quản lý"
+    },
+    "perlica": {
+      "en": "Perlica",
+      "zh-CN": "佩丽卡",
+      "ja": "ペル莉カ",
+      "ko": "ペルリカ",
+      "zh-TW": "佩麗卡",
+      "ru": "Perlica",
+      "th": "Perlica",
+      "vi": "Perlica"
+    },
+    "chen_qianyu": {
+      "en": "Chen Qianyu",
+      "zh-CN": "陈千语",
+      "ja": "チェン・センユー",
+      "ko": "진천우",
+      "zh-TW": "陳千語",
+      "ru": "Чэнь Цяньюй",
+      "th": "Chen Qianyu",
+      "vi": "Chen Qianyu"
+    },
+    "wulfgard": {
+      "en": "Wulfgard",
+      "zh-CN": "沃尔夫加德",
+      "ja": "ウルフガード",
+      "ko": "울프가드",
+      "zh-TW": "沃爾夫加德",
+      "ru": "Вульфгард",
+      "th": "Wulfgard",
+      "vi": "Wulfgard"
+    },
+    "ember": {
+      "en": "Ember",
+      "zh-CN": "余烬",
+      "ja": "エンバー",
+      "ko": "엠버",
+      "zh-TW": "餘燼",
+      "ru": "Эмбер",
+      "th": "Ember",
+      "vi": "Ember"
+    },
+    "ardelia": {
+      "en": "Ardelia",
+      "zh-CN": "艾尔黛拉",
+      "ja": "アルデリア",
+      "ko": "아델리아",
+      "zh-TW": "艾爾黛拉",
+      "ru": "Арделия",
+      "th": "Ardelia",
+      "vi": "Ardelia"
+    }
+  },
+  "classes": {
+    "guard": {
+      "en": "Guard",
+      "zh-CN": "近卫",
+      "ja": "前衛",
+      "ko": "가드",
+      "zh-TW": "近衛",
+      "ru": "Страж",
+      "th": "การ์ด",
+      "vi": "Vệ Binh"
+    },
+    "vanguard": {
+      "en": "Vanguard",
+      "zh-CN": "先锋",
+      "ja": "先鋒",
+      "ko": "뱅가드",
+      "zh-TW": "先鋒",
+      "ru": "Авангард",
+      "th": "แวนการ์ด",
+      "vi": "Tiên Phong"
+    },
+    "defender": {
+      "en": "Defender",
+      "zh-CN": "重装",
+      "ja": "重装",
+      "ko": "디펜더",
+      "zh-TW": "重裝",
+      "ru": "Защитник",
+      "th": "ดีเฟนเดอร์",
+      "vi": "Hộ Vệ"
+    },
+    "caster": {
+      "en": "Caster",
+      "zh-CN": "术师",
+      "ja": "術師",
+      "ko": "캐스터",
+      "zh-TW": "術師",
+      "ru": "Заклинатель",
+      "th": "แคสเตอร์",
+      "vi": "Thuật Sư"
+    },
+    "supporter": {
+      "en": "Supporter",
+      "zh-CN": "辅助",
+      "ja": "補助",
+      "ko": "서포터",
+      "zh-TW": "輔助",
+      "ru": "Помощник",
+      "th": "ซัพพอร์ตเตอร์",
+      "vi": "Hỗ Trợ"
+    },
+    "striker": {
+      "en": "Striker",
+      "zh-CN": "突击",
+      "ja": "ストライカー",
+      "ko": "스트라이커",
+      "zh-TW": "突擊",
+      "ru": "Штурмовик",
+      "th": "สไตรเกอร์",
+      "vi": "Đột Kích"
+    }
+  },
+  "lore": {
+    "talos_ii": {
+      "en": "Talos-II",
+      "zh-CN": "塔卫二",
+      "ja": "タロII",
+      "ko": "탈로스-II",
+      "zh-TW": "塔衛二",
+      "ru": "Talos-II",
+      "th": "Talos-II",
+      "vi": "Talos-II"
+    },
+    "originium": {
+      "en": "Originium",
+      "zh-CN": "源石",
+      "ja": "源石",
+      "ko": "오리지늄",
+      "zh-TW": "源石",
+      "ru": "Ориджиниум",
+      "th": "Originium",
+      "vi": "Originium"
+    },
+    "aggelos": {
+      "en": "Aggelos",
+      "zh-CN": "天使",
+      "ja": "アンゲロス",
+      "ko": "아겔로스",
+      "zh-TW": "天使",
+      "ru": "Aggelos",
+      "th": "Aggelos",
+      "vi": "Aggelos"
+    },
+    "blight": {
+      "en": "Blight",
+      "zh-CN": "侵蚀",
+      "ja": "侵蝕",
+      "ko": "침식",
+      "zh-TW": "侵蝕",
+      "ru": "Скверна",
+      "th": "Blight",
+      "vi": "Blight"
+    },
+    "aic": {
+      "en": "Automated Industry Complex",
+      "zh-CN": "集成工业系统",
+      "ja": "自動化工業複合体",
+      "ko": "자동화 공업 복합체",
+      "zh-TW": "集成工業系統",
+      "ru": "AIC",
+      "th": "AIC",
+      "vi": "AIC"
+    }
+  },
+  "system": {
+    "operator": {
+      "en": "Operator",
+      "zh-CN": "干员",
+      "ja": "オペレーター",
+      "ko": "오퍼레이터",
+      "zh-TW": "幹員",
+      "ru": "Оперативник",
+      "th": "Operator",
+      "vi": "Operator"
+    },
+    "sanity": {
+      "en": "Sanity",
+      "zh-CN": "理智",
+      "ja": "理性",
+      "ko": "이성",
+      "zh-TW": "理智",
+      "ru": "Рассудок",
+      "th": "Sanity",
+      "vi": "Sanity"
+    }
+  },
+  "app": {},
+  "components": {}
+}

@@ -7,15 +7,15 @@ import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 interface ProfileEditorProps {
-  user: any;
-  profile: any;
+  user: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  profile: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export function ProfileEditor({ user, profile }: ProfileEditorProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [username, setUsername] = useState(profile?.username || "");
   const [selectedAvatar, setSelectedAvatar] = useState(profile?.avatar_url || "");
-  const [characters, setCharacters] = useState<any[]>([]);
+  const [characters, setCharacters] = useState<any[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 

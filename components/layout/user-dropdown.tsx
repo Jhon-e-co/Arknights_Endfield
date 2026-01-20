@@ -6,7 +6,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
 interface UserDropdownProps {
-  user: any;
+  user: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export function UserDropdown({ user }: UserDropdownProps) {

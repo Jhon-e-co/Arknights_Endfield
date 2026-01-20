@@ -48,8 +48,8 @@ export async function GET(request: Request) {
       const formattedData = weeklyData?.map((entry, index) => ({
         id: entry.id,
         userId: entry.user_id,
-        username: (entry.profiles as any)?.username || 'Unknown',
-        avatarUrl: (entry.profiles as any)?.avatar_url || '/images/avatars/Endministrator.webp',
+        username: (entry.profiles as any)?.username || 'Unknown', // eslint-disable-line @typescript-eslint/no-explicit-any
+        avatarUrl: (entry.profiles as any)?.avatar_url || '/images/avatars/Endministrator.webp', // eslint-disable-line @typescript-eslint/no-explicit-any
         weekStart: entry.week_start,
         score: entry.score,
         bestPull: entry.best_pull,

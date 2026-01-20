@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
-import { GoogleAnalytics } from '@next/third-parties/google'
-import { MusicProvider } from "@/context/music-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -60,12 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col bg-white text-zinc-900`}>
-        <MusicProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
-        </MusicProvider>
+        {children}
       </body>
     </html>
   );

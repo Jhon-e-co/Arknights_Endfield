@@ -1,0 +1,274 @@
+{
+  "common": {
+    "app_name": "엔드필드 랩",
+    "org_name": "엔드필드 공업",
+    "player_role": "관리자",
+    "system_aic": "자동화 공업 복합체 (AIC)",
+    "currency": "디지캐시",
+    "resource_core": "오로베릴",
+    "planet": "탈로스-II",
+    "loading": "로딩 중...",
+    "error": "오류",
+    "retry": "재시도",
+    "cancel": "취소",
+    "confirm": "확인",
+    "save": "저장",
+    "delete": "삭제",
+    "edit": "편집",
+    "close": "닫기",
+    "back": "뒤로",
+    "next": "다음",
+    "previous": "이전",
+    "search": "검색",
+    "filter": "필터",
+    "sort": "정렬",
+    "share": "공유",
+    "copy": "복사",
+    "download": "다운로드",
+    "upload": "업로드",
+    "login": "로그인",
+    "logout": "로그아웃",
+    "register": "회원가입",
+    "profile": "프로필",
+    "settings": "설정"
+  },
+  "navigation": {
+    "home": "홈",
+    "map": "지도",
+    "headhunt": "헤드헌팅",
+    "guides": "가이드",
+    "blueprints": "설계도",
+    "squads": "편성",
+    "dashboard": "대시보드"
+  },
+  "home": {
+    "hero": {
+      "title": "건설. 최적화. 정복.",
+      "subtitle": "명일방주: 엔드필드 글로벌 서버를 위한 궁극의 툴킷.",
+      "construction_notice": "시스템 알림: 얼리 프리뷰 / 기능 개발 중"
+    },
+    "features": {
+      "title": "엔드필드 랩 탐색",
+      "subtitle": "당신의 명일방주: 엔드필드 경험을 향상시키기 위해 설계된 강력한 도구들",
+      "interactive_map": {
+        "title": "인터랙티브 맵",
+        "description": "자원 노드 및 랜드마크 위치"
+      },
+      "headhunt_simulator": {
+        "title": "헤드헌팅 시뮬레이터",
+        "description": "운을 시험하고 가챠 통계를 분석하세요"
+      },
+      "strategy_guides": {
+        "title": "전술 가이드",
+        "description": "심층 메커니즘 분석 및 공략"
+      },
+      "automated_blueprints": {
+        "title": "자동화 설계도",
+        "description": "효율적인 공장 배치를 공유하고 복제하세요"
+      },
+      "tactical_squads": {
+        "title": "전술 편성",
+        "description": "고난이도 스테이지를 위한 오퍼레이터 팀 최적화"
+      }
+    },
+    "feedback": {
+      "title": "개발 진행 중",
+      "subtitle": "엔드필드 랩은 현재 활발히 개발 중입니다. 플랫폼 개선에 따라 기능이 변경될 수 있습니다.",
+      "need_feedback": "여러분의 피드백이 필요합니다",
+      "feedback_description": "제안 사항이 있거나 버그를 발견하셨나요? 명일방주: 엔드필드 플레이어를 위한 최고의 툴킷을 만들 수 있도록 도와주세요.",
+      "contact_email": "endfieldlabs@gmail.com",
+      "join_discord": "Discord 참여"
+    }
+  },
+  "auth": {
+    "sign_in": "로그인",
+    "sign_out": "로그아웃",
+    "welcome_back": "환영합니다",
+    "no_account": "계정이 없으신가요?",
+    "have_account": "이미 계정이 있으신가요?",
+    "email": "이메일",
+    "password": "비밀번호",
+    "remember_me": "로그인 유지",
+    "forgot_password": "비밀번호를 잊으셨나요?",
+    "sign_in_with_google": "Google로 로그인",
+    "sign_in_with_discord": "Discord로 로그인"
+  },
+  "blueprints": {
+    "title": "설계도",
+    "create_new": "새 설계도 생성",
+    "no_blueprints": "설계도를 찾을 수 없습니다",
+    "sort_by": "정렬 기준",
+    "filter_by": "필터 기준",
+    "newest": "최신순",
+    "oldest": "오래된순",
+    "popular": "인기순",
+    "likes": "좋아요순",
+    "downloads": "다운로드순",
+    "description": "설명",
+    "code": "코드",
+    "tags": "태그",
+    "author": "작성자",
+    "created_at": "작성일"
+  },
+  "squads": {
+    "title": "편성",
+    "create_new": "새 편성 생성",
+    "no_squads": "편성을 찾을 수 없습니다",
+    "sort_by": "정렬 기준",
+    "filter_by": "필터 기준",
+    "newest": "최신순",
+    "oldest": "오래된순",
+    "popular": "인기순",
+    "likes": "좋아요순",
+    "description": "설명",
+    "members": "멤버",
+    "author": "작성자",
+    "created_at": "작성일"
+  },
+  "characters": {
+    "title": "캐릭터",
+    "name": "이름",
+    "rarity": "희귀도",
+    "element": "속성",
+    "role": "역할",
+    "overview": "개요",
+    "skill_priority": "스킬 우선순위",
+    "equipment": "장비",
+    "teams": "팀"
+  },
+  "gacha": {
+    "title": "헤드헌팅 시뮬레이터",
+    "pull": "1회 헤드헌팅",
+    "pull_10": "10회 헤드헌팅",
+    "history": "기록",
+    "statistics": "통계",
+    "pity": "천장(Pity)",
+    "guaranteed": "확정 획득",
+    "total_pulls": "총 횟수",
+    "rarity_6": "6성",
+    "rarity_5": "5성",
+    "rarity_4": "4성"
+  },
+  "map": {
+    "title": "인터랙티브 맵",
+    "search_location": "장소 검색",
+    "filter_resources": "자원 필터",
+    "show_all": "모두 표시",
+    "hide_all": "모두 숨기기",
+    "resource_nodes": "자원 노드",
+    "landmarks": "랜드마크",
+    "zoom_in": "확대",
+    "zoom_out": "축소",
+    "reset_view": "뷰 초기화"
+  },
+  "privacy": {
+    "title": "개인정보 처리방침",
+    "last_updated": "최종 업데이트: 2026년 1월 17일",
+    "disclaimer": "면책 조항",
+    "disclaimer_content": "ENDFIELD LAB은 비공식 팬 프로젝트이며 GRYPHLINE 또는 Hypergryph와 제휴, 보증, 후원 또는 특별 승인을 받지 않았습니다. 캐릭터, 이미지, 게임 메커니즘을 포함한 모든 게임 관련 콘텐츠의 저작권은 해당 소유자에게 있습니다.",
+    "information_we_collect": "수집하는 정보",
+    "authentication_data": "인증 데이터",
+    "gacha_records": "가챠 기록",
+    "cookies_and_local_storage": "쿠키 및 로컬 스토리지",
+    "how_we_use_your_information": "정보 사용 방법",
+    "data_storage_and_security": "데이터 저장 및 보안",
+    "your_rights": "사용자의 권리",
+    "third_party_services": "제3자 서비스",
+    "changes_to_this_policy": "정책 변경",
+    "contact": "문의하기"
+  },
+  "app": {
+    "dashboard": {
+      "page": {
+        "avatar": "아바타"
+      }
+    },
+    "users": {
+      "page": {
+        "avatar": "아바타"
+      }
+    },
+    "teams": {
+      "create": {
+        "page": {
+          "enter_squad_title": "편성 제목 입력...",
+          "describe_your_squad_strategy": "편성 전략 설명...",
+          "select__character": "캐릭터 선택"
+        }
+      },
+      "page": {
+        "author": "작성자"
+      }
+    },
+    "blueprints": {
+      "create": {
+        "page": {
+          "paste_your__a_i_c_code_string_here": "AIC 코드를 여기에 붙여넣으세요...",
+          "enter_blueprint_title": "설계도 제목 입력...",
+          "describe_your_blueprint": "설계도 설명..."
+        }
+      }
+    },
+    "headhunt": {
+      "page": {
+        "loading": "로딩 중...",
+        "h_e_a_d_h_u_n_t": "헤드헌팅",
+        "s_i_m_u_l_a_t_o_r": "시뮬레이터\n          ",
+        "headhunt__simulator": "헤드헌팅 시뮬레이터\n          ",
+        "history__stats": "기록 및 통계\n          ",
+        "total__pulls": "총 횟수",
+        "6__count": "6★ 수",
+        "5__count": "5★ 수",
+        "4__count": "4★ 수",
+        "luck__analysis": "운 분석\n              ",
+        "average_6__pity": "평균 6★ 천장",
+        "lower_is_better": "낮을수록 좋음",
+        "6__rate": "6★ 확률",
+        "expected_0_8": "기댓값: 0.8%",
+        "inventory": "보유 캐릭터",
+        "no_characters_recruited_yet": "아직 획득한 캐릭터가 없습니다",
+        "reset__all__data": "모든 데이터 초기화\n                "
+      }
+    }
+  },
+  "components": {
+    "ui": {
+      "image-uploader": {
+        "preview": "미리보기"
+      }
+    },
+    "teams": {
+      "squad-actions": {
+        "endorse": "추천",
+        "add_to__favorites": "즐겨찾기"
+      }
+    },
+    "gacha": {
+      "leaderboard-modal": {
+        "empty": "비어 있음",
+        "refresh": "새로고침",
+        "empty_1": "비어 있음"
+      }
+    },
+    "layout": {
+      "navbar": {
+        "discord__community": "Discord 커뮤니티"
+      },
+      "feedback-button": {
+        "click_to_copy_email": "이메일 복사"
+      }
+    },
+    "dashboard": {
+      "profile-editor": {
+        "edit__profile": "프로필 편집",
+        "enter_your_username": "사용자 이름 입력"
+      }
+    },
+    "blueprints": {
+      "blueprint-actions": {
+        "like": "좋아요",
+        "add_to__favorites": "즐겨찾기"
+      }
+    }
+  }
+}

@@ -1,6 +1,9 @@
 import { MetadataRoute } from 'next';
 import { createClient } from '@/lib/supabase/server';
 
+const locales = ['en', 'zh-CN', 'ja', 'ko', 'zh-TW', 'ru', 'th', 'vi'];
+const basePaths = ['', '/headhunt', '/map', '/blueprints', '/teams', '/guides'];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://endfieldlab.info';
   const supabase = await createClient();
@@ -35,11 +38,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  const staticUrls: MetadataRoute.Sitemap = [];
+
+  for (const locale of locales) {
+    for (const path of basePaths) {
+      staticUrls.push({
+        url: `${baseUrl}/${locale}${path}`,
+        lastModified: new Date(),
+        changeFrequency: 'daily' as const,
+        priority: path === '' ? 1 : 0.9,
+      });
+    }
+  }
+
   return [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
-    { url: `${baseUrl}/blueprints`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
-    { url: `${baseUrl}/teams`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
-    { url: `${baseUrl}/guides`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
+    ...staticUrls,
     ...blueprintUrls,
     ...squadUrls,
   ];

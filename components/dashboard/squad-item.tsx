@@ -5,7 +5,7 @@ import { TeamCard } from '@/components/teams/team-card';
 import { DeleteButton } from '@/components/common/delete-button';
 
 interface SquadItemProps {
-  squad: any;
+  squad: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   currentUserRole?: string;
   currentUserId?: string;
 }

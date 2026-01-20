@@ -1,0 +1,253 @@
+{
+  "common": {
+    "app_name": "ENDFIELD LAB",
+    "org_name": "エンドフィールド工業",
+    "player_role": "管理人",
+    "system_aic": "自動化工業複合体 (AIC)",
+    "currency": "デジキャッシュ",
+    "resource_core": "オロベリル",
+    "planet": "タロII",
+    "loading": "ロード中...",
+    "error": "エラー",
+    "retry": "再試行",
+    "cancel": "キャンセル",
+    "confirm": "決定",
+    "save": "保存",
+    "delete": "削除",
+    "edit": "編集",
+    "close": "閉じる",
+    "back": "戻る",
+    "next": "次へ",
+    "previous": "前へ",
+    "search": "検索",
+    "filter": "絞り込み",
+    "sort": "並べ替え",
+    "share": "共有",
+    "copy": "コピー",
+    "download": "ダウンロード",
+    "upload": "アップロード",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "register": "登録",
+    "profile": "プロフィール",
+    "settings": "設定"
+  },
+  "navigation": {
+    "home": "ホーム",
+    "map": "マップ",
+    "headhunt": "人材発掘",
+    "guides": "ガイド",
+    "blueprints": "設計図",
+    "squads": "編成",
+    "dashboard": "ダッシュボード"
+  },
+  "home": {
+    "hero": {
+      "title": "構築。最適化。征服。",
+      "subtitle": "アークナイツ：エンドフィールド グローバルサーバー向け究極のツールキット。",
+      "construction_notice": "システム通知：早期プレビュー / 機能開発中"
+    },
+    "features": {
+      "title": "Endfield Labを探索",
+      "subtitle": "アークナイツ：エンドフィールドの体験を向上させる強力なツール群",
+      "interactive_map": {
+        "title": "インタラクティブマップ",
+        "description": "資源ノードとランドマークの位置情報"
+      },
+      "headhunt_simulator": {
+        "title": "人材発掘シミュレーター",
+        "description": "運試しとガチャ統計の分析"
+      },
+      "strategy_guides": {
+        "title": "戦術ガイド",
+        "description": "詳細なメカニクス分析と攻略情報"
+      },
+      "automated_blueprints": {
+        "title": "自動化設計図",
+        "description": "効率的な工場レイアウトの共有と複製"
+      },
+      "tactical_squads": {
+        "title": "戦術編成",
+        "description": "高難易度ステージ向けのオペレーターチーム最適化"
+      }
+    },
+    "feedback": {
+      "title": "開発進行中",
+      "subtitle": "Endfield Labは現在鋭意開発中です。プラットフォームの改善に伴い、機能が変更される場合があります。",
+      "need_feedback": "フィードバック募集中",
+      "feedback_description": "ご提案やバグ報告はありませんか？アークナイツ：エンドフィールドのプレイヤーにとって最高のツールキットを作るためにご協力ください。",
+      "contact_email": "endfieldlabs@gmail.com",
+      "join_discord": "Discordに参加"
+    }
+  },
+  "auth": {
+    "sign_in": "ログイン",
+    "sign_out": "ログアウト",
+    "welcome_back": "おかえりなさい",
+    "no_account": "アカウントをお持ちでないですか？",
+    "have_account": "すでにアカウントをお持ちですか？",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "remember_me": "ログイン状態を保持",
+    "forgot_password": "パスワードをお忘れですか？",
+    "sign_in_with_google": "Googleでログイン",
+    "sign_in_with_discord": "Discordでログイン"
+  },
+  "blueprints": {
+    "title": "設計図",
+    "create_new": "新規設計図作成",
+    "no_blueprints": "設計図が見つかりません",
+    "sort_by": "並べ替え",
+    "filter_by": "絞り込み",
+    "newest": "最新",
+    "oldest": "古い順",
+    "popular": "人気",
+    "likes": "いいね数",
+    "downloads": "ダウンロード数",
+    "description": "説明",
+    "code": "コード",
+    "tags": "タグ",
+    "author": "作成者",
+    "created_at": "作成日"
+  },
+  "squads": {
+    "title": "編成",
+    "create_new": "新規編成作成",
+    "no_squads": "編成が見つかりません",
+    "sort_by": "並べ替え",
+    "filter_by": "絞り込み",
+    "newest": "最新",
+    "oldest": "古い順",
+    "popular": "人気",
+    "likes": "いいね数",
+    "description": "説明",
+    "members": "メンバー",
+    "author": "作成者",
+    "created_at": "作成日"
+  },
+  "characters": {
+    "title": "キャラクター",
+    "name": "名前",
+    "rarity": "レアリティ",
+    "element": "元素",
+    "role": "職分",
+    "overview": "概要",
+    "skill_priority": "スキル優先度",
+    "equipment": "装備",
+    "teams": "チーム"
+  },
+  "gacha": {
+    "title": "人材発掘シミュレーター",
+    "pull": "1回スカウト",
+    "pull_10": "10回スカウト",
+    "history": "履歴",
+    "statistics": "統計",
+    "pity": "確定までの回数",
+    "guaranteed": "確定",
+    "total_pulls": "スカウト総数",
+    "rarity_6": "★6",
+    "rarity_5": "★5",
+    "rarity_4": "★4"
+  },
+  "map": {
+    "title": "インタラクティブマップ",
+    "search_location": "場所を検索",
+    "filter_resources": "資源フィルター",
+    "show_all": "すべて表示",
+    "hide_all": "すべて非表示",
+    "resource_nodes": "資源ノード",
+    "landmarks": "ランドマーク",
+    "zoom_in": "拡大",
+    "zoom_out": "縮小",
+    "reset_view": "表示リセット"
+  },
+  "privacy": {
+    "title": "プライバシーポリシー",
+    "last_updated": "最終更新日：2026年1月17日",
+    "disclaimer": "免責事項",
+    "disclaimer_content": "ENDFIELD LABは非公式のファンプロジェクトであり、GRYPHLINEまたはHypergryphとの提携、支持、後援、または承認を受けていません。キャラクター、画像、ゲームメカニクスを含むすべてのゲーム関連コンテンツの権利は、それぞれの所有者に帰属します。",
+    "information_we_collect": "収集する情報",
+    "authentication_data": "認証データ",
+    "gacha_records": "ガチャ履歴",
+    "cookies_and_local_storage": "Cookieおよびローカルストレージ",
+    "how_we_use_your_information": "情報の利用方法",
+    "data_storage_and_security": "データの保存とセキュリティ",
+    "your_rights": "お客様の権利",
+    "third_party_services": "第三者サービス",
+    "changes_to_this_policy": "本ポリシーの変更",
+    "contact": "お問い合わせ"
+  },
+  "app": {
+    "dashboard": {
+      "page": {
+        "avatar": "アバター"
+      }
+    },
+    "users": {
+      "page": {
+        "avatar": "アバター"
+      }
+    },
+    "teams": {
+      "create": {
+        "page": {
+          "enter_squad_title": "編成タイトルを入力...",
+          "describe_your_squad_strategy": "編成の戦略を記述...",
+          "select__character": "キャラクター選択"
+        }
+      },
+      "page": {
+        "author": "作成者"
+      }
+    },
+    "blueprints": {
+      "create": {
+        "page": {
+          "paste_your__a_i_c_code_string_here": "AICコードをここに貼り付け...",
+          "enter_blueprint_title": "設計図タイトルを入力...",
+          "describe_your_blueprint": "設計図の説明..."
+        }
+      }
+    }
+  },
+  "components": {
+    "ui": {
+      "image-uploader": {
+        "preview": "プレビュー"
+      }
+    },
+    "teams": {
+      "squad-actions": {
+        "endorse": "おすすめ",
+        "add_to__favorites": "お気に入りに追加"
+      }
+    },
+    "gacha": {
+      "leaderboard-modal": {
+        "empty": "データなし",
+        "refresh": "更新",
+        "empty_1": "データなし"
+      }
+    },
+    "layout": {
+      "navbar": {
+        "discord__community": "Discordコミュニティ"
+      },
+      "feedback-button": {
+        "click_to_copy_email": "クリックしてメールをコピー"
+      }
+    },
+    "dashboard": {
+      "profile-editor": {
+        "edit__profile": "プロフィール編集",
+        "enter_your_username": "ユーザー名を入力"
+      }
+    },
+    "blueprints": {
+      "blueprint-actions": {
+        "like": "いいね",
+        "add_to__favorites": "お気に入りに追加"
+      }
+    }
+  }
+}

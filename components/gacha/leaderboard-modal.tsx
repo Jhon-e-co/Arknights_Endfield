@@ -27,7 +27,7 @@ interface LeaderboardEntry {
   score: number;
   rank: number;
   weekStart?: string;
-  bestPull?: any;
+  bestPull?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   totalPulls?: number;
   total6Star?: number;
   total5Star?: number;
@@ -38,7 +38,7 @@ interface LeaderboardEntry {
   createdAt?: string;
 }
 
-function PullPreview({ pullData, rank }: { pullData: any; rank: number }) {
+function PullPreview({ pullData, rank }: { pullData: any; rank: number }) { // eslint-disable-line @typescript-eslint/no-explicit-any
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
   if (!pullData) {
@@ -51,7 +51,7 @@ function PullPreview({ pullData, rank }: { pullData: any; rank: number }) {
     return <div className="text-xs text-zinc-400">No characters</div>;
   }
 
-  const characters = rawData.map((item: any) => {
+  const characters = rawData.map((item: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
     if (item.character) return item.character;
     return item;
   });

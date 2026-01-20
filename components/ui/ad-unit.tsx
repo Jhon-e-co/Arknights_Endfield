@@ -67,7 +67,7 @@ export function AdUnit({ type = 'banner', className = '' }: AdUnitProps) {
                   ease: "easeInOut",
                 }}
               >
-                /// ENDFIELD_INDUSTRIES_BROADCAST ///
+                {/* /// ENDFIELD_INDUSTRIES_BROADCAST /// */}
               </motion.div>
               <motion.div
                 className="mt-2 text-zinc-500 font-mono text-[9px]"

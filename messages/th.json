@@ -1,0 +1,274 @@
+{
+  "common": {
+    "app_name": "ENDFIELD LAB",
+    "org_name": "Endfield Industries",
+    "player_role": "ผู้ดูแล",
+    "system_aic": "Automated Industry Complex (AIC)",
+    "currency": "Digi-Cash",
+    "resource_core": "Oroberyl",
+    "planet": "Talos-II",
+    "loading": "กำลังโหลด...",
+    "error": "ข้อผิดพลาด",
+    "retry": "ลองใหม่",
+    "cancel": "ยกเลิก",
+    "confirm": "ยืนยัน",
+    "save": "บันทึก",
+    "delete": "ลบ",
+    "edit": "แก้ไข",
+    "close": "ปิด",
+    "back": "กลับ",
+    "next": "ถัดไป",
+    "previous": "ก่อนหน้า",
+    "search": "ค้นหา",
+    "filter": "ตัวกรอง",
+    "sort": "เรียงลำดับ",
+    "share": "แชร์",
+    "copy": "คัดลอก",
+    "download": "ดาวน์โหลด",
+    "upload": "อัปโหลด",
+    "login": "เข้าสู่ระบบ",
+    "logout": "ออกจากระบบ",
+    "register": "ลงทะเบียน",
+    "profile": "โปรไฟล์",
+    "settings": "การตั้งค่า"
+  },
+  "navigation": {
+    "home": "หน้าแรก",
+    "map": "แผนที่",
+    "headhunt": "Headhunt",
+    "guides": "ไกด์",
+    "blueprints": "พิมพ์เขียว",
+    "squads": "ทีม",
+    "dashboard": "แดชบอร์ด"
+  },
+  "home": {
+    "hero": {
+      "title": "สร้าง เพิ่มประสิทธิภาพ พิชิต",
+      "subtitle": "ชุดเครื่องมือที่ดีที่สุดสำหรับ Arknights: Endfield เซิร์ฟเวอร์ Global",
+      "construction_notice": "ประกาศระบบ: ตัวอย่างช่วงแรก / ฟีเจอร์อยู่ระหว่างการปรับปรุง"
+    },
+    "features": {
+      "title": "สำรวจ Endfield Lab",
+      "subtitle": "เครื่องมืออันทรงพลังที่ออกแบบมาเพื่อยกระดับประสบการณ์ Arknights: Endfield ของคุณ",
+      "interactive_map": {
+        "title": "แผนที่แบบโต้ตอบ",
+        "description": "ตำแหน่งจุดทรัพยากรและสถานที่สำคัญ"
+      },
+      "headhunt_simulator": {
+        "title": "โปรแกรมจำลอง Headhunt",
+        "description": "ทดสอบดวงและวิเคราะห์สถิติกาชาของคุณ"
+      },
+      "strategy_guides": {
+        "title": "ไกด์กลยุทธ์",
+        "description": "การวิเคราะห์กลไกเชิงลึกและบทสรุป"
+      },
+      "automated_blueprints": {
+        "title": "พิมพ์เขียวอัตโนมัติ",
+        "description": "แบ่งปันและจำลองผังโรงงานที่มีประสิทธิภาพ"
+      },
+      "tactical_squads": {
+        "title": "ทีมยุทธวิธี",
+        "description": "จัดทีม Operator ให้เหมาะสมสำหรับด่านที่มีความยากสูง"
+      }
+    },
+    "feedback": {
+      "title": "อยู่ระหว่างดำเนินการ",
+      "subtitle": "Endfield Lab กำลังอยู่ในระหว่างการพัฒนา ฟีเจอร์อาจมีการเปลี่ยนแปลงในขณะที่เราปรับปรุงแพลตฟอร์ม",
+      "need_feedback": "เราต้องการความคิดเห็นของคุณ",
+      "feedback_description": "มีข้อเสนอเนะหรือพบข้อผิดพลาด? ช่วยเราสร้างชุดเครื่องมือที่ดีที่สุดสำหรับผู้เล่น Arknights: Endfield",
+      "contact_email": "endfieldlabs@gmail.com",
+      "join_discord": "เข้าร่วม Discord"
+    }
+  },
+  "auth": {
+    "sign_in": "เข้าสู่ระบบ",
+    "sign_out": "ออกจากระบบ",
+    "welcome_back": "ยินดีต้อนรับกลับ",
+    "no_account": "ยังไม่มีบัญชีใช่ไหม?",
+    "have_account": "มีบัญชีอยู่แล้ว?",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "remember_me": "จดจำฉัน",
+    "forgot_password": "ลืมรหัสผ่าน?",
+    "sign_in_with_google": "เข้าสู่ระบบด้วย Google",
+    "sign_in_with_discord": "เข้าสู่ระบบด้วย Discord"
+  },
+  "blueprints": {
+    "title": "พิมพ์เขียว",
+    "create_new": "สร้างพิมพ์เขียวใหม่",
+    "no_blueprints": "ไม่พบพิมพ์เขียว",
+    "sort_by": "เรียงตาม",
+    "filter_by": "กรองตาม",
+    "newest": "ใหม่ล่าสุด",
+    "oldest": "เก่าที่สุด",
+    "popular": "ยอดนิยม",
+    "likes": "ถูกใจ",
+    "downloads": "ดาวน์โหลด",
+    "description": "คำอธิบาย",
+    "code": "รหัส",
+    "tags": "แท็ก",
+    "author": "ผู้สร้าง",
+    "created_at": "สร้างเมื่อ"
+  },
+  "squads": {
+    "title": "ทีม",
+    "create_new": "สร้างทีมใหม่",
+    "no_squads": "ไม่พบทีม",
+    "sort_by": "เรียงตาม",
+    "filter_by": "กรองตาม",
+    "newest": "ใหม่ล่าสุด",
+    "oldest": "เก่าที่สุด",
+    "popular": "ยอดนิยม",
+    "likes": "ถูกใจ",
+    "description": "คำอธิบาย",
+    "members": "สมาชิก",
+    "author": "ผู้สร้าง",
+    "created_at": "สร้างเมื่อ"
+  },
+  "characters": {
+    "title": "ตัวละคร",
+    "name": "ชื่อ",
+    "rarity": "ความหายาก",
+    "element": "ธาตุ",
+    "role": "บทบาท",
+    "overview": "ภาพรวม",
+    "skill_priority": "ลำดับความสำคัญสกิล",
+    "equipment": "อุปกรณ์",
+    "teams": "ทีม"
+  },
+  "gacha": {
+    "title": "โปรแกรมจำลอง Headhunt",
+    "pull": "สุ่ม",
+    "pull_10": "สุ่ม 10 ครั้ง",
+    "history": "ประวัติ",
+    "statistics": "สถิติ",
+    "pity": "Pity",
+    "guaranteed": "การันตี",
+    "total_pulls": "สุ่มทั้งหมด",
+    "rarity_6": "6 ดาว",
+    "rarity_5": "5 ดาว",
+    "rarity_4": "4 ดาว"
+  },
+  "map": {
+    "title": "แผนที่แบบโต้ตอบ",
+    "search_location": "ค้นหาสถานที่",
+    "filter_resources": "กรองทรัพยากร",
+    "show_all": "แสดงทั้งหมด",
+    "hide_all": "ซ่อนทั้งหมด",
+    "resource_nodes": "จุดทรัพยากร",
+    "landmarks": "สถานที่สำคัญ",
+    "zoom_in": "ซูมเข้า",
+    "zoom_out": "ซูมออก",
+    "reset_view": "รีเซ็ตมุมมอง"
+  },
+  "privacy": {
+    "title": "นโยบายความเป็นส่วนตัว",
+    "last_updated": "อัปเดตล่าสุด: 17 มกราคม 2026",
+    "disclaimer": "ข้อจำกัดความรับผิดชอบ",
+    "disclaimer_content": "ENDFIELD LAB เป็นโปรเจกต์แฟนเมดที่ไม่เป็นทางการและไม่มีส่วนเกี่ยวข้อง รับรอง สนับสนุน หรือได้รับการอนุมัติโดยเฉพาะจาก GRYPHLINE หรือ Hypergryph เนื้อหาที่เกี่ยวข้องกับเกมทั้งหมด รวมถึงตัวละคร รูปภาพ และกลไกของเกม เป็นทรัพย์สินของเจ้าของที่เกี่ยวข้อง",
+    "information_we_collect": "ข้อมูลที่เราเก็บรวบรวม",
+    "authentication_data": "ข้อมูลการยืนยันตัวตน",
+    "gacha_records": "บันทึกกาชา",
+    "cookies_and_local_storage": "คุกกี้และพื้นที่จัดเก็บข้อมูลในเครื่อง",
+    "how_we_use_your_information": "เราใช้ข้อมูลของคุณอย่างไร",
+    "data_storage_and_security": "การจัดเก็บและความปลอดภัยของข้อมูล",
+    "your_rights": "สิทธิ์ของคุณ",
+    "third_party_services": "บริการของบุคคลที่สาม",
+    "changes_to_this_policy": "การเปลี่ยนแปลงนโยบายนี้",
+    "contact": "ติดต่อ"
+  },
+  "app": {
+    "dashboard": {
+      "page": {
+        "avatar": "อวตาร"
+      }
+    },
+    "users": {
+      "page": {
+        "avatar": "อวตาร"
+      }
+    },
+    "teams": {
+      "create": {
+        "page": {
+          "enter_squad_title": "ใส่ชื่อทีม...",
+          "describe_your_squad_strategy": "อธิบายกลยุทธ์ทีมของคุณ...",
+          "select__character": "เลือกตัวละคร"
+        }
+      },
+      "page": {
+        "author": "ผู้สร้าง"
+      }
+    },
+    "blueprints": {
+      "create": {
+        "page": {
+          "paste_your__a_i_c_code_string_here": "วางรหัส AIC ของคุณที่นี่...",
+          "enter_blueprint_title": "ใส่ชื่อพิมพ์เขียว...",
+          "describe_your_blueprint": "อธิบายพิมพ์เขียวของคุณ..."
+        }
+      }
+    },
+    "headhunt": {
+      "page": {
+        "loading": "กำลังโหลด...",
+        "h_e_a_d_h_u_n_t": "HEADHUNT",
+        "s_i_m_u_l_a_t_o_r": "โปรแกรมจำลอง\n          ",
+        "headhunt__simulator": "โปรแกรมจำลอง Headhunt\n          ",
+        "history__stats": "ประวัติและสถิติ\n          ",
+        "total__pulls": "สุ่มทั้งหมด",
+        "6__count": "จำนวน 6★",
+        "5__count": "จำนวน 5★",
+        "4__count": "จำนวน 4★",
+        "luck__analysis": "วิเคราะห์ดวง\n              ",
+        "average_6__pity": "Pity 6★ เฉลี่ย",
+        "lower_is_better": "ยิ่งต่ำยิ่งดี",
+        "6__rate": "อัตรา 6★",
+        "expected_0_8": "คาดหวัง: 0.8%",
+        "inventory": "คลัง",
+        "no_characters_recruited_yet": "ยังไม่มีตัวละครที่รับสมัคร",
+        "reset__all__data": "รีเซ็ตข้อมูลทั้งหมด\n                "
+      }
+    }
+  },
+  "components": {
+    "ui": {
+      "image-uploader": {
+        "preview": "ตัวอย่าง"
+      }
+    },
+    "teams": {
+      "squad-actions": {
+        "endorse": "รับรอง",
+        "add_to__favorites": "เพิ่มในรายการโปรด"
+      }
+    },
+    "gacha": {
+      "leaderboard-modal": {
+        "empty": "ว่างเปล่า",
+        "refresh": "รีเฟรช",
+        "empty_1": "ว่างเปล่า"
+      }
+    },
+    "layout": {
+      "navbar": {
+        "discord__community": "ชุมชน Discord"
+      },
+      "feedback-button": {
+        "click_to_copy_email": "คลิกเพื่อคัดลอกอีเมล"
+      }
+    },
+    "dashboard": {
+      "profile-editor": {
+        "edit__profile": "แก้ไขโปรไฟล์",
+        "enter_your_username": "ใส่ชื่อผู้ใช้ของคุณ"
+      }
+    },
+    "blueprints": {
+      "blueprint-actions": {
+        "like": "ถูกใจ",
+        "add_to__favorites": "เพิ่มในรายการโปรด"
+      }
+    }
+  }
+}

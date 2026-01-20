@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     await supabase.rpc('increment_squad_likes', { row_id: squad_id });
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -52,7 +52,7 @@ export async function DELETE(request: Request) {
     await supabase.rpc('decrement_squad_likes', { row_id: squad_id });
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

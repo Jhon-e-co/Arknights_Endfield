@@ -1,0 +1,19 @@
+{
+  "app.headhunt.page.loading": "Loading...",
+  "app.headhunt.page.h_e_a_d_h_u_n_t": "HEADHUNT",
+  "app.headhunt.page.s_i_m_u_l_a_t_o_r": "SIMULATOR\n          ",
+  "app.headhunt.page.headhunt__simulator": "Headhunt Simulator\n          ",
+  "app.headhunt.page.history__stats": "History & Stats\n          ",
+  "app.headhunt.page.total__pulls": "Total Pulls",
+  "app.headhunt.page.6__count": "6★ Count",
+  "app.headhunt.page.5__count": "5★ Count",
+  "app.headhunt.page.4__count": "4★ Count",
+  "app.headhunt.page.luck__analysis": "Luck Analysis\n              ",
+  "app.headhunt.page.average_6__pity": "Average 6★ Pity",
+  "app.headhunt.page.lower_is_better": "Lower is better",
+  "app.headhunt.page.6__rate": "6★ Rate",
+  "app.headhunt.page.expected_0_8": "Expected: 0.8%",
+  "app.headhunt.page.inventory": "Inventory",
+  "app.headhunt.page.no_characters_recruited_yet": "No characters recruited yet",
+  "app.headhunt.page.reset__all__data": "Reset All Data\n                "
+}

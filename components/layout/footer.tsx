@@ -1,7 +1,13 @@
-import Link from 'next/link';
+"use client";
+
+import { useTranslations } from "next-intl";
+import { Link } from "@/src/i18n/navigation";
 import { FeedbackButton } from "./feedback-button";
 
 export default function Footer() {
+  const t = useTranslations('navigation');
+  const tPrivacy = useTranslations('privacy');
+
   return (
     <footer className="border-t border-zinc-200 bg-zinc-900 py-8 text-zinc-400">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -20,7 +26,7 @@ export default function Footer() {
           </a>
           <FeedbackButton />
           <Link href="/privacy" className="hover:text-zinc-200 transition-colors">
-            Privacy Policy
+            {tPrivacy('title')}
           </Link>
           <span>[ STATUS: ONLINE ]</span>
           <span>[ VER: 1.0.0 ]</span>

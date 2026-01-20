@@ -1,3 +1,5 @@
+import createNextIntlPlugin from 'next-intl/plugin';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
@@ -28,4 +30,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default createNextIntlPlugin(nextConfig, './src/i18n/request');

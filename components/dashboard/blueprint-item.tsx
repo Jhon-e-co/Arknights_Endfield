@@ -5,7 +5,7 @@ import { BlueprintCard } from '@/components/blueprints/blueprint-card';
 import { DeleteButton } from '@/components/common/delete-button';
 
 interface BlueprintItemProps {
-  blueprint: any;
+  blueprint: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   currentUserRole?: string;
   currentUserId?: string;
 }

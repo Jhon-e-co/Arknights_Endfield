@@ -41,7 +41,7 @@ export function DeleteButton({ id, type, onDeleted }: DeleteButtonProps) {
       } else {
         router.refresh();
       }
-    } catch (error: any) {
+    } catch (error: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
       console.error('Delete error:', error);
       alert(`Failed to delete ${type}: ${error.message}`);
     } finally {

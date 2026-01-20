@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useGachaStore } from '@/app/headhunt/use-gacha-store';
+import { useGachaStore } from '@/app/[locale]/headhunt/use-gacha-store';
 import { RARITY_COLORS, Character } from '@/lib/gacha/data';
 import { Sparkles, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';

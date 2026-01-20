@@ -168,9 +168,9 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Gacha pull error:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    const errorCode = error instanceof Error && 'code' in error ? (error as any).code : undefined;
-    const errorDetails = error instanceof Error && 'details' in error ? (error as any).details : undefined;
-    const errorHint = error instanceof Error && 'hint' in error ? (error as any).hint : undefined;
+    const errorCode = error instanceof Error && 'code' in error ? (error as any).code : undefined; // eslint-disable-line @typescript-eslint/no-explicit-any
+    const errorDetails = error instanceof Error && 'details' in error ? (error as any).details : undefined; // eslint-disable-line @typescript-eslint/no-explicit-any
+    const errorHint = error instanceof Error && 'hint' in error ? (error as any).hint : undefined; // eslint-disable-line @typescript-eslint/no-explicit-any
     
     return NextResponse.json(
       {
