@@ -59,7 +59,7 @@ export default function Navbar() {
         <div className="md:hidden">
           <Button
             variant="ghost"
-            size="icon"
+            className="h-10 w-10 p-2"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
           >
