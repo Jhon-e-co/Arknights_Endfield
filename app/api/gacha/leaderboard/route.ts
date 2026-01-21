@@ -10,13 +10,12 @@ export async function GET(request: Request) {
 
     if (type === 'weekly') {
       const now = new Date();
-      const currentWeekStart = new Date(now);
-      currentWeekStart.setUTCHours(currentWeekStart.getUTCHours() + 5, 0, 0, 0);
-      const dayOfWeek = currentWeekStart.getUTCDay();
-      const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-      currentWeekStart.setUTCDate(currentWeekStart.getUTCDate() - daysToSubtract);
-      currentWeekStart.setUTCHours(0, 0, 0, 0);
-      const currentWeekStartStr = currentWeekStart.toISOString().split('T')[0];
+      const day = now.getUTCDay();
+      const diff = now.getUTCDate() - day + (day === 0 ? -6 : 1);
+      const monday = new Date(now);
+      monday.setUTCDate(diff);
+      monday.setUTCHours(0, 0, 0, 0);
+      const currentWeekStartStr = monday.toISOString().split('T')[0];
 
       const { data: weeklyData, error: weeklyError } = await supabase
         .from('gacha_weekly_leaderboard')
@@ -57,13 +56,9 @@ export async function GET(request: Request) {
         createdAt: entry.created_at,
       })) || [];
 
-      const nextWeekStart = new Date(currentWeekStart);
-      nextWeekStart.setUTCDate(nextWeekStart.getUTCDate() + 7);
-      const secondsUntilNextWeek = Math.max(0, Math.floor((nextWeekStart.getTime() - now.getTime()) / 1000));
-
       return NextResponse.json({ data: formattedData, type: 'weekly' }, {
         headers: {
-          'Cache-Control': `public, s-maxage=${secondsUntilNextWeek}, stale-while-revalidate=3600`
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300'
         }
       });
     } else {
