@@ -20,18 +20,9 @@ declare
   old_best_pull_score integer;
   old_best_pull jsonb;
   current_best_pull jsonb;
-  user_stats_6star integer;
-  user_stats_best_pity integer;
   weekly_score integer;
 begin
   current_week_start := date_trunc('week', new.created_at at time zone 'UTC')::date;
-  
-  select 
-    COALESCE(total_6star, 0),
-    COALESCE(best_6star_pity, 0)
-  into user_stats_6star, user_stats_best_pity
-  from public.gacha_user_stats
-  where user_id = new.user_id;
   
   new_pull_score := COALESCE((new.results->>'six_star_count')::int, 0) * 10000 +
                     COALESCE((new.results->>'five_star_count')::int, 0) * 100 +
@@ -54,11 +45,9 @@ begin
     current_best_pull := new.results;
   end if;
   
-  weekly_score := user_stats_6star * 10000 +
-                 case when user_stats_best_pity > 0 and user_stats_best_pity <= 80 
-                      then (80 - user_stats_best_pity) 
-                      else 0 
-                 end;
+  weekly_score := COALESCE((current_best_pull->>'six_star_count')::int, 0) * 10000 +
+                  COALESCE((current_best_pull->>'five_star_count')::int, 0) * 100 +
+                  COALESCE((current_best_pull->>'four_star_count')::int, 0) * 10;
   
   insert into public.gacha_weekly_leaderboard (user_id, week_start, score, best_pull)
   values (new.user_id, current_week_start, weekly_score, current_best_pull)
