@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/src/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./language-switcher";
 
 interface MobileNavProps {
@@ -12,6 +13,7 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ open, onClose }: MobileNavProps) {
+  const t = useTranslations('navigation');
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -24,11 +26,11 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
   }, [open]);
 
   const navLinks = [
-    { href: "/map", label: "Map" },
-    { href: "/headhunt", label: "Headhunt" },
-    { href: "/guides", label: "Guides" },
-    { href: "/blueprints", label: "Blueprints" },
-    { href: "/teams", label: "Squads" }
+    { href: "/map", label: t('map') },
+    { href: "/headhunt", label: t('headhunt') },
+    { href: "/guides", label: t('guides') },
+    { href: "/blueprints", label: t('blueprints') },
+    { href: "/teams", label: t('squads') }
   ];
 
   return (

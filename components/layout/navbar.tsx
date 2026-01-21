@@ -8,10 +8,12 @@ import { createClient } from "@/lib/supabase/client";
 import { UserDropdown } from "./user-dropdown";
 import { MusicWidget } from "@/components/music/music-widget";
 import { LanguageSwitcher } from "./language-switcher";
+import { MobileNav } from "./mobile-nav";
 
 export default function Navbar() {
   const [user, setUser] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [loading, setLoading] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = useTranslations('navigation');
   const tCommon = useTranslations('common');
 
@@ -53,8 +55,24 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Auth Button */}
-        <div className="flex items-center gap-4">
+        {/* Mobile Menu Button */}
+        <div className="md:hidden">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
+          >
+            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </Button>
+        </div>
+
+        {/* Auth Button - Desktop Only */}
+        <div className="hidden md:flex items-center gap-4">
           <a
             href="https://discord.gg/dgdMsSYYxs"
             target="_blank"
@@ -81,6 +99,9 @@ export default function Navbar() {
           )}
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      <MobileNav open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
     </nav>
   );
 }
