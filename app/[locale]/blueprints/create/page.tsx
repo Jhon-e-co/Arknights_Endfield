@@ -154,7 +154,7 @@ export default function CreateBlueprintPage() {
 
       setUploadProgress(100);
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push('/blueprints');
       }, 500);
 
     } catch (err: any) { // eslint-disable-line @typescript-eslint/no-explicit-any

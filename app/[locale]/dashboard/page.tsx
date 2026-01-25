@@ -88,22 +88,30 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         .filter((c: any) => c !== undefined) // eslint-disable-line @typescript-eslint/no-explicit-any
     }));
   } else if (activeTab === 'favorites') {
-    revalidatePath('/dashboard');
     const { data: savedBlueprintsRaw } = await supabase
       .from("saved_blueprints")
-      .select("*, blueprints!inner(*, profiles(username, avatar_url))")
+      .select("*, blueprints!left(*, profiles(username, avatar_url))")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
 
-    mySavedBlueprints = savedBlueprintsRaw?.map((item: any) => item.blueprints) || []; // eslint-disable-line @typescript-eslint/no-explicit-any
+    mySavedBlueprints = savedBlueprintsRaw
+      ?.filter((item: any) => item.blueprints !== null) // eslint-disable-line @typescript-eslint/no-explicit-any
+      .map((item: any) => ({ // eslint-disable-line @typescript-eslint/no-explicit-any
+        ...item.blueprints,
+        image: item.blueprints.image_url,
+        initialIsCollected: true,
+        author: item.blueprints.profiles?.username || 'Unknown'
+      })) || [];
 
     const { data: savedSquadsRaw } = await supabase
       .from("saved_squads")
-      .select("*, squads!inner(*, profiles(username, avatar_url))")
+      .select("*, squads!left(*, profiles(username, avatar_url))")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
 
-    const rawSavedSquads = savedSquadsRaw?.map((item: any) => item.squads) || []; // eslint-disable-line @typescript-eslint/no-explicit-any
+    const rawSavedSquads = savedSquadsRaw
+      ?.filter((item: any) => item.squads !== null) // eslint-disable-line @typescript-eslint/no-explicit-any
+      .map((item: any) => item.squads) || []; // eslint-disable-line @typescript-eslint/no-explicit-any
     const { data: allChars } = await supabase.from("characters").select("*");
     const charMap = new Map((allChars || []).map((c: any) => [c.id, c])); // eslint-disable-line @typescript-eslint/no-explicit-any
 
