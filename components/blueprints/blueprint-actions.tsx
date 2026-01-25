@@ -20,10 +20,13 @@ export function BlueprintActions({ blueprintId, initialLikes, initialIsLiked = f
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLike = async () => {
+    if (isLoading) return;
+
     const previousState = isLiked;
     const previousLikes = likes;
     setIsLiked(!isLiked);
     setLikes(prev => isLiked ? prev - 1 : prev + 1);
+    setIsLoading(true);
 
     try {
       const response = await fetch('/api/likes/blueprints', {
@@ -35,6 +38,10 @@ export function BlueprintActions({ blueprintId, initialLikes, initialIsLiked = f
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          router.push('/auth/login?redirect=' + encodeURIComponent(window.location.pathname));
+          return;
+        }
         throw new Error('Failed to update like');
       }
 
@@ -42,11 +49,15 @@ export function BlueprintActions({ blueprintId, initialLikes, initialIsLiked = f
       if (!data.success) {
         throw new Error('Operation failed');
       }
+      
+      router.refresh();
     } catch (error) {
       console.error('Error updating like:', error);
       setIsLiked(previousState);
       setLikes(previousLikes);
       alert('Failed to update like. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -87,6 +98,7 @@ export function BlueprintActions({ blueprintId, initialLikes, initialIsLiked = f
     <div className="flex items-center gap-2">
       <button
         onClick={handleLike}
+        disabled={isLoading}
         className={cn(
             "w-10 h-10 flex items-center justify-center border-2 font-bold transition-all active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed",
             isLiked

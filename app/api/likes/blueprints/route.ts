@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -23,6 +24,10 @@ export async function POST(request: Request) {
     }
 
     await supabase.rpc('increment_blueprint_likes', { row_id: blueprint_id });
+
+    revalidatePath('/blueprints');
+    revalidatePath('/dashboard');
+    revalidatePath(`/blueprints/${blueprint_id}`);
 
     return NextResponse.json({ success: true });
   } catch (error: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -50,6 +55,10 @@ export async function DELETE(request: Request) {
     if (error) throw error;
 
     await supabase.rpc('decrement_blueprint_likes', { row_id: blueprint_id });
+
+    revalidatePath('/blueprints');
+    revalidatePath('/dashboard');
+    revalidatePath(`/blueprints/${blueprint_id}`);
 
     return NextResponse.json({ success: true });
   } catch (error: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
