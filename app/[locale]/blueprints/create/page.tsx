@@ -91,6 +91,14 @@ export default function CreateBlueprintPage() {
       const fileExt = imageFile.name.split('.').pop();
       const fileName = `${Date.now()}-${user.id}.${fileExt}`;
 
+      console.log('[Blueprint Upload] Starting upload...');
+      console.log('[Blueprint Upload] File info:', {
+        name: imageFile.name,
+        size: imageFile.size,
+        type: imageFile.type,
+        fileName: fileName
+      });
+
       const { error: uploadError } = await supabase.storage
         .from('blueprints')
         .upload(fileName, imageFile, {
@@ -101,14 +109,31 @@ export default function CreateBlueprintPage() {
         });
 
       if (uploadError) {
+        console.error('[Blueprint Upload] Upload failed with error:', uploadError);
+        console.error('[Blueprint Upload] Full error object:', JSON.stringify(uploadError, null, 2));
         throw new Error(`Image upload failed: ${uploadError.message}`);
       }
+
+      console.log('[Blueprint Upload] File uploaded successfully:', fileName);
 
       setUploadProgress(60);
 
       const { data: { publicUrl } } = supabase.storage
         .from('blueprints')
         .getPublicUrl(fileName);
+
+      console.log('[Blueprint Upload] Generated public URL:', publicUrl);
+      console.log('[Blueprint Upload] Public URL accessible at:', publicUrl);
+
+      const expectedUrlPrefix = 'https://pghctuhvosxqadlfhutl.supabase.co/storage/v1/object/public/blueprints/';
+      if (!publicUrl.startsWith(expectedUrlPrefix)) {
+        console.error('[Blueprint Upload] Invalid public URL format!');
+        console.error('[Blueprint Upload] Expected prefix:', expectedUrlPrefix);
+        console.error('[Blueprint Upload] Actual URL:', publicUrl);
+        throw new Error(`Generated URL format is invalid. Expected to start with: ${expectedUrlPrefix}`);
+      }
+
+      console.log('[Blueprint Upload] URL format validation passed');
 
       setUploadProgress(80);
 

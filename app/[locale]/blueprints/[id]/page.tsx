@@ -1,7 +1,6 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { Link } from '@/src/i18n/navigation';
-import Image from 'next/image';
 import { User, Calendar, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -9,6 +8,7 @@ import { Metadata } from "next";
 import { CopyButton } from '@/components/blueprints/copy-button';
 import { AdUnit } from '@/components/ui/ad-unit';
 import { BlueprintActions } from '@/components/blueprints/blueprint-actions';
+import { BlueprintImage } from '@/components/blueprints/blueprint-image';
 import { createClient } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
@@ -125,7 +125,7 @@ export default async function BlueprintDetail({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
           <div className="relative aspect-video border border-zinc-200 bg-zinc-100">
-            <Image
+            <BlueprintImage
               src={blueprint.image_url}
               alt={blueprint.title}
               width={1280}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ThumbsUp, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +14,7 @@ interface SquadActionsProps {
 }
 
 export function SquadActions({ squadId, initialLikes, initialIsLiked = false, initialIsCollected = false, variant = 'default' }: SquadActionsProps) {
+  const router = useRouter();
   const [likes, setLikes] = useState(initialLikes);
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [isCollected, setIsCollected] = useState(initialIsCollected);
@@ -71,6 +73,8 @@ export function SquadActions({ squadId, initialLikes, initialIsLiked = false, in
       if (!data.success) {
         throw new Error('Operation failed');
       }
+      
+      router.refresh();
     } catch (error) {
       console.error('Error updating favorite:', error);
       setIsCollected(previousState);

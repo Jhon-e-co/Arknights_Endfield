@@ -12,7 +12,7 @@ export default createMiddleware({
   localePrefix: 'always',
   
   // 排除的路径
-  localeDetection: true,
+  localeDetection: false,
   
   // 需要排除的路径（静态资源、API等）
   // 这些路径不会被添加locale前缀

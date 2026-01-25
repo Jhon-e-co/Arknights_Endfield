@@ -1,7 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
+import { revalidatePath } from "next/cache";
+import { Link } from '@/src/i18n/navigation';
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Book, LayoutGrid, Users, Star, Plus, Heart } from "lucide-react";
@@ -87,6 +88,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         .filter((c: any) => c !== undefined) // eslint-disable-line @typescript-eslint/no-explicit-any
     }));
   } else if (activeTab === 'favorites') {
+    revalidatePath('/dashboard');
     const { data: savedBlueprintsRaw } = await supabase
       .from("saved_blueprints")
       .select("*, blueprints!inner(*, profiles(username, avatar_url))")

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Heart, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +13,7 @@ interface BlueprintActionsProps {
 }
 
 export function BlueprintActions({ blueprintId, initialLikes, initialIsLiked = false, initialIsCollected = false }: BlueprintActionsProps) {
+  const router = useRouter();
   const [likes, setLikes] = useState(initialLikes);
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [isCollected, setIsCollected] = useState(initialIsCollected);
@@ -70,6 +72,8 @@ export function BlueprintActions({ blueprintId, initialLikes, initialIsLiked = f
       if (!data.success) {
         throw new Error('Operation failed');
       }
+      
+      router.refresh();
     } catch (error) {
       console.error('Error updating favorite:', error);
       setIsCollected(previousState);

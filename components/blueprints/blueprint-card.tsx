@@ -1,14 +1,16 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Copy } from 'lucide-react';
+import { Copy, AlertCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { BlueprintActions } from '@/components/blueprints/blueprint-actions';
 import { DeleteButton } from '@/components/common/delete-button';
 import { Blueprint } from '@/lib/mock-data';
+
+const PLACEHOLDER_IMAGE = '/images/icons/icon-aic.webp';
 
 interface BlueprintCardProps {
   blueprint: Blueprint & {
@@ -23,6 +25,7 @@ export function BlueprintCard({ blueprint, currentUserId, currentUserRole = 'use
   const canDelete = blueprint.author_id === currentUserId || currentUserRole === 'admin';
   const initialIsLiked = blueprint.initialIsLiked || false;
   const initialIsCollected = blueprint.initialIsCollected || false;
+  const [imageError, setImageError] = useState(false);
 
   const handleCopyCode = async () => {
     try {
@@ -31,6 +34,11 @@ export function BlueprintCard({ blueprint, currentUserId, currentUserRole = 'use
     } catch (err) {
       console.error('Failed to copy:', err);
     }
+  };
+
+  const handleImageError = () => {
+    console.error('[Blueprint Card] Failed to load image:', blueprint.image);
+    setImageError(true);
   };
 
   return (
@@ -42,17 +50,32 @@ export function BlueprintCard({ blueprint, currentUserId, currentUserRole = 'use
       )}
       {/* Image Section */}
       <Link href={`/blueprints/${blueprint.id}`} className="block relative aspect-video bg-zinc-800 overflow-hidden">
-        {blueprint.image ? (
+        {blueprint.image && !imageError ? (
           <Image
             src={blueprint.image}
             alt={blueprint.title}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            onError={handleImageError}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="text-zinc-600 text-sm">No Preview</span>
+          <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-900">
+            <Image
+              src={PLACEHOLDER_IMAGE}
+              alt="AIC Blueprint Placeholder"
+              width={64}
+              height={64}
+              className="opacity-50 mb-2"
+            />
+            <span className="text-sm font-medium text-zinc-500">
+              {imageError ? '图片加载失败' : 'No Preview'}
+            </span>
+            {imageError && (
+              <span className="text-xs text-zinc-600 mt-1">
+                请检查图片链接或重新上传
+              </span>
+            )}
           </div>
         )}
         {/* Version Tag */}
