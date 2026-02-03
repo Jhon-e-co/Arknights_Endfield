@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { TeamCard } from '@/components/teams/team-card';
-import { DeleteButton } from '@/components/common/delete-button';
 
 interface SquadItemProps {
   squad: any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -14,9 +13,7 @@ export function SquadItem({ squad, currentUserRole, currentUserId }: SquadItemPr
   return (
     <div className="relative group">
       <TeamCard squad={squad} currentUserRole={currentUserRole} currentUserId={currentUserId} />
-      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-        <DeleteButton id={squad.id} type="squad" />
-      </div>
+      {/* 编辑和删除按钮已由 TeamCard 内部处理 */}
     </div>
   );
 }

@@ -80,9 +80,27 @@ export class GachaSystem {
 
   rollTen(): GachaResult[] {
     const results: GachaResult[] = [];
-    for (let i = 0; i < 10; i++) {
-      results.push(this.rollSingle());
+    let hasFiveStarOrHigher = false;
+
+    // 执行前 9 抽
+    for (let i = 0; i < 9; i++) {
+      const result = this.rollSingle();
+      if (result.character.rarity >= 5) {
+        hasFiveStarOrHigher = true;
+      }
+      results.push(result);
     }
+
+    // 第 10 抽保底检查
+    // 如果前 9 抽没有 5 星或 6 星，强制将 pity5 设为 10
+    // 这样 rollSingle() 内部计算 5 星概率时会返回 1.0 (100%)
+    if (!hasFiveStarOrHigher && this.pity5 < 10) {
+      this.pity5 = 10;
+    }
+
+    // 执行第 10 抽（此时如果触发保底，rollSingle 内部会自动重置 pity5 为 0）
+    results.push(this.rollSingle());
+
     return results;
   }
 

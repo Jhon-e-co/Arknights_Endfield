@@ -3,8 +3,9 @@ import { Link } from "@/src/i18n/navigation";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Edit } from "lucide-react";
 import { SquadActions } from "@/components/teams/squad-actions";
+import { DeleteButton } from "@/components/common/delete-button";
 import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -225,6 +226,19 @@ export default async function SquadDetailPage({ params }: PageProps) {
               </div>
 
               <SquadActions squadId={squad.id} initialLikes={squad.likes || 0} initialIsLiked={isLiked} initialIsCollected={isCollected} />
+
+              {/* 作者专属操作栏 */}
+              {user?.id === squad.author_id && (
+                <div className="mt-6 pt-6 border-t border-zinc-200 flex gap-3">
+                  <Link href={`/teams/${squad.id}/edit`} className="flex-1">
+                    <Button variant="outline" className="w-full gap-2">
+                      <Edit className="h-4 w-4" />
+                      Edit Squad
+                    </Button>
+                  </Link>
+                  <DeleteButton id={squad.id} type="squad" />
+                </div>
+              )}
            </div>
            
            {/* Tags (Optional) */}

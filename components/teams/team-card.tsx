@@ -3,10 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { SquadActions } from '@/components/teams/squad-actions';
 import { DeleteButton } from '@/components/common/delete-button';
+import { Edit } from 'lucide-react';
 
 interface DBCharacter {
   id: string;
@@ -46,6 +48,7 @@ const elementColors = {
 };
 
 export function TeamCard({ squad, currentUserId, currentUserRole = 'user' }: TeamCardProps) {
+  const router = useRouter();
   const members = squad.members || [];
   const authorName = squad.profiles?.username || squad.author || 'Unknown';
   const canDelete = squad.author_id === currentUserId || currentUserRole === 'admin';
@@ -142,7 +145,19 @@ export function TeamCard({ squad, currentUserId, currentUserRole = 'user' }: Tea
 
           <div className="flex items-center gap-3 relative z-20 pointer-events-auto">
             {canDelete && (
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                {/* [Fix] Removed nested <Link>, used onClick + router.push instead */}
+                <Button
+                  variant="outline"
+                  className="h-8 w-8 bg-white/90 backdrop-blur-sm hover:bg-white"
+                  onClick={(e) => {
+                    e.preventDefault(); // 阻止默认事件
+                    e.stopPropagation(); // 阻止冒泡触发外层卡片跳转
+                    router.push(`/teams/${squad.id}/edit`);
+                  }}
+                >
+                  <Edit className="h-4 w-4 text-zinc-700" />
+                </Button>
                 <DeleteButton id={squad.id} type="squad" />
               </div>
             )}

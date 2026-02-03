@@ -158,6 +158,21 @@ export async function POST(request: Request) {
       );
     }
 
+    // [Fix] 更新用户的保底计数器状态 (修复计数器不涨的 Bug)
+    const { error: upsertError } = await supabase
+      .from('gacha_user_stats')
+      .upsert({
+        user_id: user.id,
+        current_pity6: finalState.pity6,
+        current_pity5: finalState.pity5,
+        last_pull_at: new Date().toISOString()
+      }, { onConflict: 'user_id' });
+
+    if (upsertError) {
+      console.error('Failed to update user stats:', upsertError);
+      // 记录错误但不阻断返回，因为抽卡记录已保存
+    }
+
     return NextResponse.json({
       data: {
         results: resultsJson,
